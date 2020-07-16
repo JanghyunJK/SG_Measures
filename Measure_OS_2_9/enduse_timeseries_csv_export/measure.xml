@@ -1,0 +1,137 @@
+<measure>
+  <schema_version>3.0</schema_version>
+  <name>enduse_timeseries_csv_export</name>
+  <uid>024d24dc-4ec5-462c-baa8-2e9da7b6aa19</uid>
+  <version_id>2e329b6e-6e3a-41e5-98c1-f78a3eb3707b</version_id>
+  <version_modified>20180626T202700Z</version_modified>
+  <xml_checksum>C9740617</xml_checksum>
+  <class_name>EnduseTimeseriesCSVExport</class_name>
+  <display_name>Enduse Timeseries CSV Export</display_name>
+  <description>Exports all available hourly timeseries enduses to CSV.</description>
+  <modeler_description>Exports all available hourly timeseries enduses to CSV.</modeler_description>
+  <arguments>
+    <argument>
+      <name>reporting_frequency</name>
+      <display_name>Reporting Frequency</display_name>
+      <type>Choice</type>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>Hourly</default_value>
+      <choices>
+        <choice>
+          <value>Detailed</value>
+          <display_name>Detailed</display_name>
+        </choice>
+        <choice>
+          <value>Timestep</value>
+          <display_name>Timestep</display_name>
+        </choice>
+        <choice>
+          <value>Hourly</value>
+          <display_name>Hourly</display_name>
+        </choice>
+        <choice>
+          <value>Daily</value>
+          <display_name>Daily</display_name>
+        </choice>
+        <choice>
+          <value>Monthly</value>
+          <display_name>Monthly</display_name>
+        </choice>
+        <choice>
+          <value>Runperiod</value>
+          <display_name>Runperiod</display_name>
+        </choice>
+      </choices>
+    </argument>
+  </arguments>
+  <outputs/>
+  <provenances/>
+  <tags>
+    <tag>Reporting.QAQC</tag>
+  </tags>
+  <attributes>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>OpenStudio Application</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>Parametric Analysis Tool</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>OpenStudio Application</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>Parametric Analysis Tool</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>OpenStudio Application</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>Parametric Analysis Tool</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Measure Type</name>
+      <value>ReportingMeasure</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>OpenStudio Application</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>Parametric Analysis Tool</value>
+      <datatype>string</datatype>
+    </attribute>
+  </attributes>
+  <files>
+    <file>
+      <filename>test_model.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>10E2E771</checksum>
+    </file>
+    <file>
+      <filename>USA_TX_Houston-Bush.Intercontinental.AP.722430_TMY3.epw</filename>
+      <filetype>epw</filetype>
+      <usage_type>test</usage_type>
+      <checksum>EE565FCC</checksum>
+    </file>
+    <file>
+      <filename>report.html.erb</filename>
+      <filetype>erb</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>276F956E</checksum>
+    </file>
+    <file>
+      <version>
+        <software_program>OpenStudio</software_program>
+        <identifier>2.0.0</identifier>
+        <min_compatible>2.0.0</min_compatible>
+      </version>
+      <filename>measure.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>script</usage_type>
+      <checksum>4ABB02A2</checksum>
+    </file>
+    <file>
+      <filename>enduse_timeseries_csv_export_test.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>test</usage_type>
+      <checksum>9B4E326F</checksum>
+    </file>
+  </files>
+</measure>

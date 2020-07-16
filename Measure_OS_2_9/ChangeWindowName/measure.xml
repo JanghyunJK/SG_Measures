@@ -1,0 +1,94 @@
+<measure>
+  <schema_version>3.0</schema_version>
+  <name>change_window_construction</name>
+  <uid>75ad65c1-1f17-4fa3-be05-13a3bb415fbe</uid>
+  <version_id>f24a67c7-67ba-4192-9c1f-71d9ee416887</version_id>
+  <version_modified>20200221T215759Z</version_modified>
+  <xml_checksum>B7427881</xml_checksum>
+  <class_name>ChangeWindowConstruction</class_name>
+  <display_name>Change construction name in fenestration surfaces</display_name>
+  <description>changing the construction name assigned in FenestrationSurface:Detailed objects to the specified argument string.</description>
+  <modeler_description>this is to use with Inject_IDF measure to assign correct window construction names when glazing materials are imported via Inject_IDF measure.</modeler_description>
+  <arguments>
+    <argument>
+      <name>choice</name>
+      <display_name>Choice of window.</display_name>
+      <type>Choice</type>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>All fenestration surfaces</default_value>
+      <choices>
+        <choice>
+          <value>All fenestration surfaces</value>
+          <display_name>All fenestration surfaces</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>name_construction</name>
+      <display_name>Window construction name that is imported through Inject_IDF measure.</display_name>
+      <type>String</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>GlzSys_6</default_value>
+    </argument>
+  </arguments>
+  <outputs/>
+  <provenances/>
+  <tags>
+    <tag>HVAC.HVAC Controls</tag>
+  </tags>
+  <attributes>
+    <attribute>
+      <name>Measure Type</name>
+      <value>EnergyPlusMeasure</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>OpenStudio Application</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>Parametric Analysis Tool</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>Analysis Spreadsheet</value>
+      <datatype>string</datatype>
+    </attribute>
+  </attributes>
+  <files>
+    <file>
+      <filename>misc_eplus_func.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>435C6B82</checksum>
+    </file>
+    <file>
+      <filename>ControllerOutdoorAirFlow_T.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>1E151538</checksum>
+    </file>
+    <file>
+      <filename>README.md</filename>
+      <filetype>md</filetype>
+      <usage_type>readme</usage_type>
+      <checksum>389D85DA</checksum>
+    </file>
+    <file>
+      <version>
+        <software_program>OpenStudio</software_program>
+        <identifier>1.5.0</identifier>
+        <min_compatible>1.5.0</min_compatible>
+      </version>
+      <filename>measure.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>script</usage_type>
+      <checksum>D8C50F5A</checksum>
+    </file>
+  </files>
+</measure>

@@ -1,0 +1,304 @@
+<measure>
+  <schema_version>3.0</schema_version>
+  <name>add_redirecting_bipv_with_pce_schedule</name>
+  <uid>bce484cb-fe17-41bb-a594-8ec360367bab</uid>
+  <version_id>e07352a3-a039-4257-aef1-b821afb93678</version_id>
+  <version_modified>20200616T194449Z</version_modified>
+  <xml_checksum>34B177FF</xml_checksum>
+  <class_name>AddRedirectingBIPVWithPCESchedule</class_name>
+  <display_name>Add Redirecting BIPV with PCE Schedule</display_name>
+  <description>Add 'UbiQD' PV technology to windows</description>
+  <modeler_description>Adds PV to selected windows. Efficiency is scaled to represent theoretical efficiency of quantum dot energy redirection to PV mounted in IGU framing. Scaling factors for QD impacts on visible transmittance and SHGC are provided</modeler_description>
+  <arguments>
+    <argument>
+      <name>dot_coverage</name>
+      <display_name>QD Surface Coverage</display_name>
+      <type>Double</type>
+      <units>fraction</units>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>1</default_value>
+    </argument>
+    <argument>
+      <name>pce_type</name>
+      <display_name>PV power conversion efficiency based on schedule?</display_name>
+      <type>Boolean</type>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>false</default_value>
+      <choices>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>pv_eff</name>
+      <display_name>Fixed PV power conversion efficiency</display_name>
+      <type>Double</type>
+      <units>fraction</units>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>0.05</default_value>
+    </argument>
+    <argument>
+      <name>folder</name>
+      <display_name>Path to the folder that contains schedule files</display_name>
+      <description>Example: 'C:/Projects/'</description>
+      <type>String</type>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>C:/Users/JKIM4/Box Sync/Project Files/5 NEXT_SwitchGlaze/SimulationResults</default_value>
+    </argument>
+    <argument>
+      <name>wwr</name>
+      <display_name>temporary argument: window wall ratio scenario</display_name>
+      <type>Double</type>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>0.4</default_value>
+    </argument>
+    <argument>
+      <name>ori</name>
+      <display_name>temporary argument: PV orientation scenario</display_name>
+      <type>String</type>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>ESW</default_value>
+    </argument>
+    <argument>
+      <name>switch_t</name>
+      <display_name>temporary argument: thermochromic switching temperature scenario</display_name>
+      <type>Double</type>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>10</default_value>
+    </argument>
+    <argument>
+      <name>inverter_eff</name>
+      <display_name>Inverter Efficiency</display_name>
+      <type>Double</type>
+      <units>fraction</units>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>1</default_value>
+    </argument>
+    <argument>
+      <name>facade</name>
+      <display_name>facade</display_name>
+      <type>Choice</type>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>ESW</default_value>
+      <choices>
+        <choice>
+          <value>N</value>
+          <display_name>N</display_name>
+        </choice>
+        <choice>
+          <value>E</value>
+          <display_name>E</display_name>
+        </choice>
+        <choice>
+          <value>S</value>
+          <display_name>S</display_name>
+        </choice>
+        <choice>
+          <value>W</value>
+          <display_name>W</display_name>
+        </choice>
+        <choice>
+          <value>ESW</value>
+          <display_name>ESW</display_name>
+        </choice>
+        <choice>
+          <value>ALL</value>
+          <display_name>ALL</display_name>
+        </choice>
+        <choice>
+          <value>NONE</value>
+          <display_name>NONE</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>debug_mode</name>
+      <display_name>Debug Mode</display_name>
+      <description>Print debugging info</description>
+      <type>Boolean</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>false</default_value>
+      <choices>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+  </arguments>
+  <outputs>
+    <output>
+      <name>panel_rated_output</name>
+      <display_name>panel_rated_output</display_name>
+      <short_name>panel_rated_output</short_name>
+      <type>Double</type>
+      <model_dependent>false</model_dependent>
+    </output>
+    <output>
+      <name>panel_rated_output_ip</name>
+      <display_name>panel_rated_output_ip</display_name>
+      <short_name>panel_rated_output_ip</short_name>
+      <type>Double</type>
+      <model_dependent>false</model_dependent>
+    </output>
+    <output>
+      <name>system_rated_output</name>
+      <display_name>system_rated_output</display_name>
+      <short_name>system_rated_output</short_name>
+      <type>Double</type>
+      <model_dependent>false</model_dependent>
+    </output>
+    <output>
+      <name>pv_area_total_ip</name>
+      <display_name>pv_area_total_ip</display_name>
+      <short_name>pv_area_total_ip</short_name>
+      <type>Double</type>
+      <model_dependent>false</model_dependent>
+    </output>
+    <output>
+      <name>facade</name>
+      <display_name>facade</display_name>
+      <short_name>facade</short_name>
+      <type>String</type>
+      <model_dependent>false</model_dependent>
+    </output>
+  </outputs>
+  <provenances/>
+  <tags>
+    <tag>Onsite Power Generation.Photovoltaic</tag>
+  </tags>
+  <attributes>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>Apply Measure Now</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>OpenStudio Application</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>Parametric Analysis Tool</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>Analysis Spreadsheet</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Use Case</name>
+      <value>Model Articulation</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Use Case</name>
+      <value>New Construction EE</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Use Case</name>
+      <value>Retrofit EE</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Measure Type</name>
+      <value>ModelMeasure</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>Apply Measure Now</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>OpenStudio Application</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>Parametric Analysis Tool</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>Analysis Spreadsheet</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Use Case</name>
+      <value>Model Articulation</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Use Case</name>
+      <value>New Construction EE</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Use Case</name>
+      <value>Retrofit EE</value>
+      <datatype>string</datatype>
+    </attribute>
+  </attributes>
+  <files>
+    <file>
+      <filename>os_lib_helper_methods.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>A6430141</checksum>
+    </file>
+    <file>
+      <filename>os_lib_schedules.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>C4185CAA</checksum>
+    </file>
+    <file>
+      <filename>HVACSizing.Model.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>8FDE9459</checksum>
+    </file>
+    <file>
+      <filename>Standards.Construction.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>F408C706</checksum>
+    </file>
+    <file>
+      <version>
+        <software_program>OpenStudio</software_program>
+        <identifier>1.9.0</identifier>
+        <min_compatible>1.9.0</min_compatible>
+      </version>
+      <filename>measure.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>script</usage_type>
+      <checksum>0CDBB099</checksum>
+    </file>
+  </files>
+</measure>
