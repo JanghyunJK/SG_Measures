@@ -1,9 +1,10 @@
+<?xml version="1.0"?>
 <measure>
   <schema_version>3.0</schema_version>
   <name>a_inject_window_specific_idf_objects</name>
   <uid>b5cd7571-8ee9-4657-845b-43513fd2b983</uid>
-  <version_id>abd8ce32-96cb-4d4e-b79c-14e2e94d8bb9</version_id>
-  <version_modified>20200619T233545Z</version_modified>
+  <version_id>4925f1a5-49d0-4090-9b63-d5d588b746a8</version_id>
+  <version_modified>20200716T151358Z</version_modified>
   <xml_checksum>79C5D5D1</xml_checksum>
   <class_name>AInjectWindowSpecificIDFObjects</class_name>
   <display_name> Inject Window Specific IDF Objects</display_name>
@@ -18,7 +19,7 @@ This measure works for when you just need to add new IDF objects. If you need to
       <type>Choice</type>
       <required>true</required>
       <model_dependent>false</model_dependent>
-      <default_value>Baseline_ASHRAE</default_value>
+      <default_value>SwitchGlaze</default_value>
       <choices>
         <choice>
           <value>Baseline_ASHRAE</value>
@@ -61,32 +62,12 @@ This measure works for when you just need to add new IDF objects. If you need to
           <display_name>GlzSys_13_withPV</display_name>
         </choice>
         <choice>
-          <value>GlzSys_Dark</value>
-          <display_name>GlzSys_Dark</display_name>
+          <value>Baseline_ASHRAE_Detail</value>
+          <display_name>Baseline_ASHRAE_Detail</display_name>
         </choice>
         <choice>
-          <value>GlzSys_Light</value>
-          <display_name>GlzSys_Light</display_name>
-        </choice>
-        <choice>
-          <value>GlzSys_Thermochromic_40C</value>
-          <display_name>GlzSys_Thermochromic_40C</display_name>
-        </choice>
-        <choice>
-          <value>GlzSys_Thermochromic_35C</value>
-          <display_name>GlzSys_Thermochromic_35C</display_name>
-        </choice>
-        <choice>
-          <value>GlzSys_Thermochromic_30C</value>
-          <display_name>GlzSys_Thermochromic_30C</display_name>
-        </choice>
-        <choice>
-          <value>FrameTest_woFrame</value>
-          <display_name>FrameTest_woFrame</display_name>
-        </choice>
-        <choice>
-          <value>FrameTest_wFrame</value>
-          <display_name>FrameTest_wFrame</display_name>
+          <value>SwitchGlaze</value>
+          <display_name>SwitchGlaze</display_name>
         </choice>
         <choice>
           <value>VeryHot_ASHRAE</value>
@@ -206,8 +187,8 @@ This measure works for when you just need to add new IDF objects. If you need to
       </choices>
     </argument>
   </arguments>
-  <outputs/>
-  <provenances/>
+  <outputs />
+  <provenances />
   <tags>
     <tag>Envelope.Fenestration</tag>
   </tags>
@@ -303,7 +284,7 @@ This measure works for when you just need to add new IDF objects. If you need to
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>9B5858B3</checksum>
+      <checksum>30C36D73</checksum>
     </file>
   </files>
 </measure>

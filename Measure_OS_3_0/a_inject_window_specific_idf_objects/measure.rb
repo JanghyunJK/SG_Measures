@@ -36,13 +36,8 @@ class AInjectWindowSpecificIDFObjects < OpenStudio::Ruleset::WorkspaceUserScript
     glzsys << "GlzSys_13_withoutPV"
     glzsys << "GlzSys_6_withPV"
     glzsys << "GlzSys_13_withPV"
-    glzsys << "GlzSys_Dark"
-    glzsys << "GlzSys_Light"
-    glzsys << "GlzSys_Thermochromic_40C"
-    glzsys << "GlzSys_Thermochromic_35C"
-    glzsys << "GlzSys_Thermochromic_30C"
-    glzsys << "FrameTest_woFrame"
-    glzsys << "FrameTest_wFrame"
+    glzsys << "Baseline_ASHRAE_Detail"
+    glzsys << "SwitchGlaze"
     glzsys << "VeryHot_ASHRAE"
     glzsys << "VeryHot_SwitchGlaze"
     glzsys << "VeryHot_Dark"
@@ -62,7 +57,7 @@ class AInjectWindowSpecificIDFObjects < OpenStudio::Ruleset::WorkspaceUserScript
     
     glztype = OpenStudio::Ruleset::OSArgument::makeChoiceArgument('glztype', glzsys, true)
     glztype.setDisplayName("Choice of IGU")
-    glztype.setDefaultValue("Baseline_ASHRAE")
+    glztype.setDefaultValue("SwitchGlaze")
     args << glztype
     
     #make choice arguments for fenestration surface
@@ -178,25 +173,33 @@ class AInjectWindowSpecificIDFObjects < OpenStudio::Ruleset::WorkspaceUserScript
     }
     
     ####################################################################################
-    
+    runner.registerInfo("##################################################")
     # check if thermochromic was defined in upstream measure AddThermochromicBIPV
-    thermochromicwindow = check_upstream_measure_for_arg(runner, 'windowscenario')
-    thermochromicwindow = thermochromicwindow[:value]
+    pce_scenario = check_upstream_measure_for_arg(runner, 'pce_scenario')
+    pce_scenario = pce_scenario[:value]
+    
+    runner.registerInfo("PV PCE scenario type defined in AddThermochromicBIPV measure = #{pce_scenario}")
         
-    if thermochromicwindow=='SwitchGlaze'
-      thermochromicwindow = true
-    elsif thermochromicwindow=='Baseline'
-      thermochromicwindow = false
+    if pce_scenario=='SwitchGlaze'
+      pce_scenario = true
+    elsif pce_scenario=='Static'
+      pce_scenario = false
     end
     
+    # check PV orientation from upstream measure AddThermochromicBIPV
+    # TODO: modify fenestration selection in this measure to apply only on the same orientation grabbed from AddThermochromicBIPV measure
+    pv_orientation = check_upstream_measure_for_arg(runner, 'facade')
+    pv_orientation = pv_orientation[:value]
+    
+    runner.registerInfo("PV orientation defined in AddThermochromicBIPV measure = #{pv_orientation}")
+    
     ####################################################################################
-    runner.registerInfo("##################################################")
     if glztype == "Baseline_ASHRAE"
     
       runner.registerInfo("Skipping this measure since using Baseline ASHRAE window.")
       return false
       
-    elsif thermochromicwindow == false
+    elsif (glztype == "Baseline_ASHRAE_Detail")
     
       glztype = "ASHRAE"
       
@@ -210,7 +213,7 @@ class AInjectWindowSpecificIDFObjects < OpenStudio::Ruleset::WorkspaceUserScript
       glztype = climateregion.concat("_#{glztype.to_s}")
       runner.registerInfo("Window name to be implemented = #{glztype}")
                     
-    elsif thermochromicwindow == true
+    elsif (glztype == "SwitchGlaze")
     
       glztype = "SwitchGlaze"
       
@@ -252,13 +255,6 @@ class AInjectWindowSpecificIDFObjects < OpenStudio::Ruleset::WorkspaceUserScript
         "GlzSys_13_withoutPV" => "../../../lib/resources/GlzSys_11F-air-3000_Spec.idf",
         "GlzSys_6_withPV" => "../../../lib/resources/GlzSys19_13F-air-9_Spec.idf",
         "GlzSys_13_withPV" => "../../../lib/resources/GlzSys20_14F-air-3000_Spec.idf",
-        "GlzSys_Dark" => "../../../lib/resources/GlzSys_Dark_PV_Spec.idf",
-        "GlzSys_Light" => "../../../lib/resources/GlzSys_Light_PV_Spec.idf",
-        "GlzSys_Thermochromic_40C" => "../../../lib/resources/GlzSys_Thermochromic_40C.idf",
-        "GlzSys_Thermochromic_35C" => "../../../lib/resources/GlzSys_Thermochromic_35C.idf",
-        "GlzSys_Thermochromic_30C" => "../../../lib/resources/GlzSys_Thermochromic_30C.idf",
-        "FrameTest_wFrame" => "../../../lib/resources/Window_PV_frame_Spec.idf",
-        "FrameTest_woFrame" => "../../../lib/resources/Window_PV_No_frame_Spec_Spec.idf",
         "VeryHot_ASHRAE" => "../../../lib/resources/ASHRAE_zone12_Spec.idf",
         "Hot_ASHRAE" => "../../../lib/resources/ASHRAE_zone3_Spec.idf",
         "Cold_ASHRAE" => "../../../lib/resources/ASHRAE_zone456_Spec.idf",
@@ -288,13 +284,6 @@ class AInjectWindowSpecificIDFObjects < OpenStudio::Ruleset::WorkspaceUserScript
         "GlzSys_13_withoutPV" => "#{idf_path}/GlzSys_11F-air-3000_Spec.idf",
         "GlzSys_6_withPV" => "#{idf_path}/GlzSys19_13F-air-9_Spec.idf",
         "GlzSys_13_withPV" => "#{idf_path}/GlzSys20_14F-air-3000_Spec.idf",
-        "GlzSys_Dark" => "#{idf_path}/GlzSys_Dark_PV_Spec.idf",
-        "GlzSys_Light" => "#{idf_path}/GlzSys_Light_PV_Spec.idf",
-        "GlzSys_Thermochromic_40C" => "#{idf_path}/GlzSys_Thermochromic_40C.idf",
-        "GlzSys_Thermochromic_35C" => "#{idf_path}/GlzSys_Thermochromic_35C.idf",
-        "GlzSys_Thermochromic_30C" => "#{idf_path}/GlzSys_Thermochromic_30C.idf",
-        "FrameTest_wFrame" => "#{idf_path}/Window_PV_frame_Spec.idf",
-        "FrameTest_woFrame" => "#{idf_path}/Window_PV_No_frame_Spec_Spec.idf",
         "VeryHot_ASHRAE" => "#{idf_path}/ASHRAE_zone12_Spec.idf",
         "Hot_ASHRAE" => "#{idf_path}/ASHRAE_zone3_Spec.idf",
         "Cold_ASHRAE" => "#{idf_path}/ASHRAE_zone456_Spec.idf",
@@ -351,7 +340,7 @@ class AInjectWindowSpecificIDFObjects < OpenStudio::Ruleset::WorkspaceUserScript
     ####################################################################################
     #find the thermochromic object and replace switching temperature based on input
     ####################################################################################
-    if thermochromicwindow==true 
+    if pce_scenario==true 
       applicable = true
       tcglazings = workspace.getObjectsByType("WindowMaterial:GlazingGroup:Thermochromic".to_IddObjectType)
       tcglazings.each do |tcglazing|

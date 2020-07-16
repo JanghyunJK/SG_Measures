@@ -59,13 +59,13 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
     args << facade
     
     # thermochromic window implementation 
-    windowscenarios = OpenStudio::StringVector.new
-    windowscenarios << "Baseline"
-    windowscenarios << "SwitchGlaze"    
-    windowscenario = OpenStudio::Ruleset::OSArgument::makeChoiceArgument('windowscenario', windowscenarios, true)
-    windowscenario.setDisplayName("Choice of scenario")
-    windowscenario.setDefaultValue("Baseline")
-    args << windowscenario
+    pce_scenarios = OpenStudio::StringVector.new
+    pce_scenarios << "Static"
+    pce_scenarios << "SwitchGlaze"    
+    pce_scenario = OpenStudio::Ruleset::OSArgument::makeChoiceArgument('pce_scenario', pce_scenarios, true)
+    pce_scenario.setDisplayName("Choice of power conversion efficiency modeling scenario")
+    pce_scenario.setDefaultValue("Static")
+    args << pce_scenario
     
     # pv module efficiency (%)
     pv_eff_light = OpenStudio::Ruleset::OSArgument.makeDoubleArgument("pv_eff_light", true)
@@ -85,7 +85,7 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
     switch_t = OpenStudio::Ruleset::OSArgument.makeDoubleArgument('switch_t', true)
     switch_t.setDisplayName('State switching temperature for thermochromic window')
     switch_t.setUnits("C")
-    switch_t.setDefaultValue(10.0)
+    switch_t.setDefaultValue(30.0)
     args << switch_t
 
     debug_mode = OpenStudio::Ruleset::OSArgument::makeBoolArgument('debug_mode', false)
@@ -127,7 +127,7 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
     panel_rated_output = (dot_coverage * pv_eff) * 1000 #w/m^2 (basis 50w/m^2, 0.05 eff, 0.50 coverage (5% conversion, 1Kw/m^2))
     facade = runner.getStringArgumentValue('facade',user_arguments)
     debug_mode = runner.getStringArgumentValue('debug_mode',user_arguments)
-    windowscenario = runner.getStringArgumentValue('windowscenario',user_arguments)
+    pce_scenario = runner.getStringArgumentValue('pce_scenario',user_arguments)
     pv_eff_light = runner.getDoubleArgumentValue('pv_eff_light',user_arguments)
     pv_eff_dark = runner.getDoubleArgumentValue('pv_eff_dark',user_arguments)
     switch_t = runner.getDoubleArgumentValue('switch_t', user_arguments)
@@ -242,7 +242,7 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
       ######################################################
       ######################################################            
       runner.registerInfo("################################################")
-      if windowscenario == "SwitchGlaze"
+      if pce_scenario == "SwitchGlaze"
       
         surfacename = surface.name.to_s
         surfacename_strip = surfacename.gsub(/\s+/, "")
@@ -286,7 +286,7 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
         ems_prgm_calling_mngr.setCallingPoint("BeginTimestepBeforePredictor")
         ems_prgm_calling_mngr.addProgram(ems_pce_prg)
         runner.registerInfo("EMS Program Calling Manager object named '#{ems_prgm_calling_mngr.name}' added to call #{ems_pce_prg.name} EMS program.") 
-      elsif windowscenario == "Baseline"
+      elsif pce_scenario == "Static"
         simplepv.setFixedEfficiency(pv_eff)
         runner.registerInfo("Constant power conversion efficiency of #{pv_eff} applied to #{simplepv.name.to_s}")
       end
