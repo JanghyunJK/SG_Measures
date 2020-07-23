@@ -152,6 +152,7 @@ class AInjectWindowSpecificIDFObjects < OpenStudio::Ruleset::WorkspaceUserScript
     dictionary_weather = {
       'USA_AK_Fairbanks.Intl.AP.702610_TMY3.epw' => 'VeryCold',
       'USA_MN_International.Falls.Intl.AP.727470_TMY3.epw' => 'VeryCold',
+      'USA_WI_Milwaukee-Mitchell.Intl.AP.726400_TMY3.epw' => 'Cold',
       'USA_NM_Albuquerque.Intl.AP.723650_TMY3.epw' => 'Cold',
       'USA_NY_Buffalo-Greater.Buffalo.Intl.AP.725280_TMY3.epw' => 'Cold',
       'USA_CO_Denver.Intl.AP.725650_TMY3.epw' => 'Cold',

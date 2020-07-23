@@ -1,10 +1,10 @@
 
 OS:Version,
-  {d757ffd8-07dc-4748-97b5-4228b17f0cb3}, !- Handle
+  {6f6012bc-171c-4fa7-a307-a43d4f9dbd1f}, !- Handle
   3.0.0;                                  !- Version Identifier
 
 OS:Site,
-  {febc7949-a2dc-4c74-ac7b-377659192172}, !- Handle
+  {b8c4e0c3-5320-4063-a40d-e2b932b38822}, !- Handle
   Site 1,                                 !- Name
   ,                                       !- Latitude {deg}
   ,                                       !- Longitude {deg}
@@ -13,10 +13,10 @@ OS:Site,
   ;                                       !- Terrain
 
 OS:YearDescription,
-  {3b56c551-f993-4005-9c7c-5480241ebb9e}; !- Handle
+  {6ebfeaf0-bdac-46a5-b1dd-9b6b07641d5f}; !- Handle
 
 OS:ClimateZones,
-  {921fb1b1-fa2d-497f-b578-bb079dacbc03}, !- Handle
+  {a610abd7-c43a-4190-b9ee-3bb702f638aa}, !- Handle
   ASHRAE,                                 !- Climate Zone Institution Name 1
   ANSI/ASHRAE Standard 169,               !- Climate Zone Document Name 1
   2006,                                   !- Climate Zone Document Year 1
@@ -27,7 +27,7 @@ OS:ClimateZones,
   ;                                       !- Climate Zone Value 2
 
 OS:Building,
-  {676bd492-37f3-4a36-ab00-6d139779e1e0}, !- Handle
+  {137ebcb9-b288-4fc2-9342-584ac6ea3491}, !- Handle
   Building 1,                             !- Name
   ,                                       !- Building Sector Type
   ,                                       !- North Axis {deg}
@@ -37,22 +37,22 @@ OS:Building,
   ;                                       !- Default Schedule Set Name
 
 OS:Facility,
-  {1fa7bddc-b35d-4b65-86f1-a8ef1a50f86b}; !- Handle
+  {c04056e7-b76f-4d32-a6fc-981f9535c956}; !- Handle
 
 OS:SimulationControl,
-  {e46fa614-7718-4915-96c5-4341dd536ece}; !- Handle
+  {bb235713-e843-4673-9057-548223238320}; !- Handle
 
 OS:Sizing:Parameters,
-  {8486e31d-42a5-4b0e-9774-babd792b8522}, !- Handle
+  {3e7bb607-f1ea-4448-8974-f96aee156e4c}, !- Handle
   1.25,                                   !- Heating Sizing Factor
   1.15;                                   !- Cooling Sizing Factor
 
 OS:Timestep,
-  {9904db88-62f1-4d1d-95be-20909715611b}, !- Handle
+  {59540bcd-0b12-4b84-ac2b-f1e5cfea9ea6}, !- Handle
   4;                                      !- Number of Timesteps per Hour
 
 OS:ShadowCalculation,
-  {d8b93ab4-099e-47e9-a821-0e6dbd852baf}, !- Handle
+  {4240ffea-64fe-4ed2-a998-6c4f3845496d}, !- Handle
   PolygonClipping,                        !- Shading Calculation Method
   ,                                       !- Shading Calculation Update Frequency Method
   20,                                     !- Shading Calculation Update Frequency
@@ -65,17 +65,17 @@ OS:ShadowCalculation,
   No;                                     !- Disable Self-Shading From Shading Zone Groups to Other Zones
 
 OS:HeatBalanceAlgorithm,
-  {68e81134-bc0c-4a42-b10f-db276fc74a3b}, !- Handle
+  {1a28ebb5-0cfa-4fc4-8b90-9f408f3ba745}, !- Handle
   ConductionTransferFunction,             !- Algorithm
   200;                                    !- Surface Temperature Upper Limit {C}
 
 OS:RunPeriod,
-  {57324981-05db-45f6-9c9f-c840fd123510}, !- Handle
+  {439dce60-650e-473a-8a92-bd56f4495ad1}, !- Handle
   Run Period 1,                           !- Name
-  7,                                      !- Begin Month
-  6,                                      !- Begin Day of Month
-  7,                                      !- End Month
-  10,                                     !- End Day of Month
+  1,                                      !- Begin Month
+  1,                                      !- Begin Day of Month
+  12,                                     !- End Month
+  31,                                     !- End Day of Month
   ,                                       !- Use Weather File Holidays and Special Days
   ,                                       !- Use Weather File Daylight Saving Period
   ,                                       !- Apply Weekend Holiday Rule
@@ -84,7 +84,7 @@ OS:RunPeriod,
   ;                                       !- Number of Times Runperiod to be Repeated
 
 OS:LifeCycleCost:Parameters,
-  {3aa2b49d-c1af-4905-8b3f-ce7c76e4679a}, !- Handle
+  {7132ece4-20e6-483a-ae80-c633f31803df}, !- Handle
   ,                                       !- Analysis Type
   ,                                       !- Discounting Convention
   ,                                       !- Inflation Approach
@@ -98,7 +98,7 @@ OS:LifeCycleCost:Parameters,
   ;                                       !- Length of Study Period in Years
 
 OS:RadianceParameters,
-  {ab1e94eb-c295-46cc-9164-1136e9bc629a}, !- Handle
+  {78e86059-61a6-43f3-ad18-7a8503d71eb9}, !- Handle
   1,                                      !- Accumulated Rays per Record
   0,                                      !- Direct Threshold
   1,                                      !- Direct Certainty
@@ -115,32 +115,32 @@ OS:RadianceParameters,
   146;                                    !- Sky Discretization Resolution
 
 OS:ProgramControl,
-  {1f808c32-ac42-4211-8104-a2e450ef570b}; !- Handle
+  {532e740a-b37f-459f-8847-fa43ef0c72b1}; !- Handle
 
 OS:OutputControl:ReportingTolerances,
-  {23d7ce3e-a02b-445a-a649-c6e420f3c84d}; !- Handle
+  {4c6bf87e-7beb-4a82-993d-5e1758c668ff}; !- Handle
 
 OS:ConvergenceLimits,
-  {d6aefb5e-7af6-4248-8f5d-abca83ff041a}, !- Handle
+  {2665bec6-cde2-44fb-aa52-28c1a6ad3513}, !- Handle
   1;                                      !- Minimum System Timestep {minutes}
 
 OS:SurfaceConvectionAlgorithm:Inside,
-  {3f36e40c-b7d2-4a07-8b36-0674ae0c543d}, !- Handle
+  {4713ad99-5079-412b-8dca-4300012552df}, !- Handle
   TARP;                                   !- Algorithm
 
 OS:SurfaceConvectionAlgorithm:Outside,
-  {085f4eef-8a0e-4907-b4fc-13bc3d15b909}, !- Handle
+  {7df52203-a80d-45a6-8216-0031ce0a165c}, !- Handle
   DOE-2;                                  !- Algorithm
 
 OS:ZoneAirHeatBalanceAlgorithm,
-  {a15d152d-b232-46cd-99e4-06d3ec73ad4f}, !- Handle
+  {20c3b9a7-ce9e-4f36-adfc-ee26b4bcd036}, !- Handle
   ThirdOrderBackwardDifference;           !- Algorithm
 
 OS:ZoneAirContaminantBalance,
-  {1632c275-8111-48b3-9f0e-7a5f67ae96f6}; !- Handle
+  {6f43c48a-dd08-4c47-b226-7b91aed8d9d4}; !- Handle
 
 OS:ZoneCapacitanceMultiplier:ResearchSpecial,
-  {cc0f538d-6300-4fa9-8c23-88b0e105ad24}, !- Handle
+  {77259d54-66df-4234-b88b-16f157dc1c5a}, !- Handle
   ,                                       !- Temperature Capacity Multiplier
   ,                                       !- Humidity Capacity Multiplier
   ;                                       !- Carbon Dioxide Capacity Multiplier
