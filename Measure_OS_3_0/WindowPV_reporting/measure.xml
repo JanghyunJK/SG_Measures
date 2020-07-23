@@ -1,15 +1,16 @@
+<?xml version="1.0"?>
 <measure>
   <schema_version>3.0</schema_version>
   <name>window_pv_reporting</name>
   <uid>431bcf0c-88e8-43be-97f6-40b274da8bd3</uid>
-  <version_id>981d630c-3c6a-4375-a810-693770d66931</version_id>
-  <version_modified>20200611T193914Z</version_modified>
+  <version_id>fb92e0d1-68dc-4833-b2a0-5378fd027caa</version_id>
+  <version_modified>20200723T164901Z</version_modified>
   <xml_checksum>909877B3</xml_checksum>
   <class_name>WindowPVReporting</class_name>
   <display_name>WindowPV Reporting</display_name>
   <description>Report PV</description>
   <modeler_description>Report measure</modeler_description>
-  <arguments/>
+  <arguments />
   <outputs>
     <output>
       <name>total_pv</name>
@@ -54,9 +55,72 @@
       <model_dependent>false</model_dependent>
     </output>
     <output>
-      <name>total_electricity_lighting</name>
-      <display_name>total_electricity_lighting</display_name>
-      <short_name>total_electricity_lighting</short_name>
+      <name>total_electricity_lighting_interior</name>
+      <display_name>total_electricity_lighting_interior</display_name>
+      <short_name>total_electricity_lighting_interior</short_name>
+      <type>Double</type>
+      <model_dependent>false</model_dependent>
+    </output>
+    <output>
+      <name>total_electricity_lighting_exterior</name>
+      <display_name>total_electricity_lighting_exterior</display_name>
+      <short_name>total_electricity_lighting_exterior</short_name>
+      <type>Double</type>
+      <model_dependent>false</model_dependent>
+    </output>
+    <output>
+      <name>total_electricity_equipment_interior</name>
+      <display_name>total_electricity_equipment_interior</display_name>
+      <short_name>total_electricity_equipment_interior</short_name>
+      <type>Double</type>
+      <model_dependent>false</model_dependent>
+    </output>
+    <output>
+      <name>total_electricity_fan</name>
+      <display_name>total_electricity_fan</display_name>
+      <short_name>total_electricity_fan</short_name>
+      <type>Double</type>
+      <model_dependent>false</model_dependent>
+    </output>
+    <output>
+      <name>total_electricity_pump</name>
+      <display_name>total_electricity_pump</display_name>
+      <short_name>total_electricity_pump</short_name>
+      <type>Double</type>
+      <model_dependent>false</model_dependent>
+    </output>
+    <output>
+      <name>total_electricity_heatrejection</name>
+      <display_name>total_electricity_heatrejection</display_name>
+      <short_name>total_electricity_heatrejection</short_name>
+      <type>Double</type>
+      <model_dependent>false</model_dependent>
+    </output>
+    <output>
+      <name>total_electricity_humidification</name>
+      <display_name>total_electricity_humidification</display_name>
+      <short_name>total_electricity_humidification</short_name>
+      <type>Double</type>
+      <model_dependent>false</model_dependent>
+    </output>
+    <output>
+      <name>total_electricity_heatrecovery</name>
+      <display_name>total_electricity_heatrecovery</display_name>
+      <short_name>total_electricity_heatrecovery</short_name>
+      <type>Double</type>
+      <model_dependent>false</model_dependent>
+    </output>
+    <output>
+      <name>total_electricity_watersystem</name>
+      <display_name>total_electricity_watersystem</display_name>
+      <short_name>total_electricity_watersystem</short_name>
+      <type>Double</type>
+      <model_dependent>false</model_dependent>
+    </output>
+    <output>
+      <name>total_electricity_refrigeration</name>
+      <display_name>total_electricity_refrigeration</display_name>
+      <short_name>total_electricity_refrigeration</short_name>
       <type>Double</type>
       <model_dependent>false</model_dependent>
     </output>
@@ -71,6 +135,20 @@
       <name>total_gas_heating</name>
       <display_name>total_gas_heating</display_name>
       <short_name>total_gas_heating</short_name>
+      <type>Double</type>
+      <model_dependent>false</model_dependent>
+    </output>
+    <output>
+      <name>total_gas_equipment_interior</name>
+      <display_name>total_gas_equipment_interior</display_name>
+      <short_name>total_gas_equipment_interior</short_name>
+      <type>Double</type>
+      <model_dependent>false</model_dependent>
+    </output>
+    <output>
+      <name>total_gas_watersystem</name>
+      <display_name>total_gas_watersystem</display_name>
+      <short_name>total_gas_watersystem</short_name>
       <type>Double</type>
       <model_dependent>false</model_dependent>
     </output>
@@ -411,7 +489,7 @@
       <model_dependent>false</model_dependent>
     </output>
   </outputs>
-  <provenances/>
+  <provenances />
   <tags>
     <tag>Reporting.QAQC</tag>
   </tags>
@@ -487,7 +565,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>52E5EC03</checksum>
+      <checksum>889B2F87</checksum>
     </file>
   </files>
 </measure>
