@@ -147,6 +147,7 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
 
     # get the windows
     ext_windows = []
+    ext_windows_name = []
     model.getSubSurfaces.each do |s|
       ext_windows << s if s.subSurfaceType == "FixedWindow" && s.outsideBoundaryCondition == "Outdoors"
     end
@@ -164,6 +165,7 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
         azimuth = OpenStudio::convert(azimuth,OpenStudio::createIPAngle).get.value
         if facade == "ALL"
           candidate_windows << s
+          ext_windows_name << s.name.to_s
           next
         end
         candidate_windows << s if (azimuth >= 315.0 or azimuth < 45.0) && facade == 'N'
@@ -171,9 +173,15 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
         candidate_windows << s if (azimuth >= 135.0 and azimuth < 225.0) && facade == 'S'
         candidate_windows << s if (azimuth >= 225.0 and azimuth < 315.0) && facade == 'W'
         candidate_windows << s if (azimuth >= 45.0 and azimuth < 315.0) && facade == 'ESW'
+        ext_windows_name << s.name.to_s if (azimuth >= 315.0 or azimuth < 45.0) && facade == 'N'
+        ext_windows_name << s.name.to_s if (azimuth >= 45.0 and azimuth < 135.0) && facade == 'E'
+        ext_windows_name << s.name.to_s if (azimuth >= 135.0 and azimuth < 225.0) && facade == 'S'
+        ext_windows_name << s.name.to_s if (azimuth >= 225.0 and azimuth < 315.0) && facade == 'W'
+        ext_windows_name << s.name.to_s if (azimuth >= 45.0 and azimuth < 315.0) && facade == 'ESW'
       end
     end
     runner.registerInfo("#{candidate_windows.size.to_s} windows meet facade selection criteria (facade = '#{facade}')")
+    runner.registerInfo("Surface names affected = #{ext_windows_name}")
 
     # create the inverter
     inverter = OpenStudio::Model::ElectricLoadCenterInverterSimple.new(model)

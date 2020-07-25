@@ -26,7 +26,10 @@ class AInjectWindowSpecificIDFObjects < OpenStudio::Ruleset::WorkspaceUserScript
     args = OpenStudio::Ruleset::OSArgumentVector.new
 
     glzsys = OpenStudio::StringVector.new
-    glzsys << "Baseline_ASHRAE"
+    glzsys << "======================"
+    glzsys << "NEXT Energy Scenarios"
+    glzsys << "======================"
+    glzsys << "ASHRAE_Simplified"
     glzsys << "Baseline_GlzSys6"
     glzsys << "Baseline_GlzSys13"
     glzsys << "Baseline_GlzSys15"
@@ -36,22 +39,92 @@ class AInjectWindowSpecificIDFObjects < OpenStudio::Ruleset::WorkspaceUserScript
     glzsys << "GlzSys_13_withoutPV"
     glzsys << "GlzSys_6_withPV"
     glzsys << "GlzSys_13_withPV"
-    glzsys << "Baseline_ASHRAE_Detail"
-    glzsys << "SwitchGlaze"
+    glzsys << "======================"
+    glzsys << "ASHRAE_Detailed"
+    glzsys << "======================"
     glzsys << "VeryHot_ASHRAE"
+    glzsys << "Hot_ASHRAE"
+    glzsys << "Cold_ASHRAE"
+    glzsys << "VeryCold_ASHRAE"
+    glzsys << "======================"
+    glzsys << "Tinted_Base"
+    glzsys << "======================"
+    glzsys << "VeryHot_Tinted"
+    glzsys << "Hot_Tinted"
+    glzsys << "Cold_Tinted"
+    glzsys << "VeryCold_Tinted"
+    glzsys << "======================"
+    glzsys << "Tinted_1"
+    glzsys << "======================"
+    glzsys << "VeryHot_Tinted_25pct_N_IQE0pt4"
+    glzsys << "Hot_Tinted_25pct_N_IQE0pt4"
+    glzsys << "Cold_Tinted_25pct_N_IQE0pt4"
+    glzsys << "VeryCold_Tinted_25pct_N_IQE0pt4"
+    glzsys << "======================"
+    glzsys << "VeryHot_Tinted_25pct_N_IQE0pt6"
+    glzsys << "Hot_Tinted_25pct_N_IQE0pt6"
+    glzsys << "Cold_Tinted_25pct_N_IQE0pt6"
+    glzsys << "VeryCold_Tinted_25pct_N_IQE0pt6"
+    glzsys << "======================"
+    glzsys << "VeryHot_Tinted_25pct_N_IQE0pt8"
+    glzsys << "Hot_Tinted_25pct_N_IQE0pt8"
+    glzsys << "Cold_Tinted_25pct_N_IQE0pt8"
+    glzsys << "VeryCold_Tinted_25pct_N_IQE0pt8"
+    glzsys << "======================"
+    glzsys << "Tinted_2"
+    glzsys << "======================"
+    glzsys << "VeryHot_Tinted_50pct_N_IQE0pt4"
+    glzsys << "Hot_Tinted_50pct_N_IQE0pt4"
+    glzsys << "Cold_Tinted_50pct_N_IQE0pt4"
+    glzsys << "VeryCold_Tinted_50pct_N_IQE0pt4"
+    glzsys << "======================"
+    glzsys << "VeryHot_Tinted_50pct_N_IQE0pt6"
+    glzsys << "Hot_Tinted_50pct_N_IQE0pt6"
+    glzsys << "Cold_Tinted_50pct_N_IQE0pt6"
+    glzsys << "VeryCold_Tinted_50pct_N_IQE0pt6"
+    glzsys << "======================"
+    glzsys << "VeryHot_Tinted_50pct_N_IQE0pt8"
+    glzsys << "Hot_Tinted_50pct_N_IQE0pt8"
+    glzsys << "Cold_Tinted_50pct_N_IQE0pt8"
+    glzsys << "VeryCold_Tinted_50pct_N_IQE0pt8"
+    glzsys << "======================"
+    glzsys << "Tinted_3"
+    glzsys << "======================"
+    glzsys << "VeryHot_Tinted_50pct_S_IQE0pt4"
+    glzsys << "Hot_Tinted_50pct_S_IQE0pt4"
+    glzsys << "Cold_Tinted_50pct_S_IQE0pt4"
+    glzsys << "VeryCold_Tinted_50pct_S_IQE0pt4"
+    glzsys << "======================"
+    glzsys << "VeryHot_Tinted_50pct_S_IQE0pt6"
+    glzsys << "Hot_Tinted_50pct_S_IQE0pt6"
+    glzsys << "Cold_Tinted_50pct_S_IQE0pt6"
+    glzsys << "VeryCold_Tinted_50pct_S_IQE0pt6"
+    glzsys << "======================"
+    glzsys << "VeryHot_Tinted_50pct_S_IQE0pt8"
+    glzsys << "Hot_Tinted_50pct_S_IQE0pt8"
+    glzsys << "Cold_Tinted_50pct_S_IQE0pt8"
+    glzsys << "VeryCold_Tinted_50pct_S_IQE0pt8"
+    glzsys << "======================"
+    glzsys << "SwitchGlaze"
+    glzsys << "======================"
     glzsys << "VeryHot_SwitchGlaze"
+    glzsys << "Hot_SwitchGlaze"
+    glzsys << "Cold_SwitchGlaze"
+    glzsys << "VeryCold_SwitchGlaze"
+    glzsys << "======================"
+    glzsys << "Old Windows"
+    glzsys << "======================"
+    glzsys << "Single_Pane"
+    glzsys << "Double_Pane"
+    glzsys << "======================"
+    glzsys << "Others"
+    glzsys << "======================"
     glzsys << "VeryHot_Dark"
     glzsys << "VeryHot_Light"
-    glzsys << "Hot_ASHRAE"
-    glzsys << "Hot_SwitchGlaze"
     glzsys << "Hot_Dark"
     glzsys << "Hot_Light"
-    glzsys << "Cold_ASHRAE"
-    glzsys << "Cold_SwitchGlaze"
     glzsys << "Cold_Dark"
     glzsys << "Cold_Light"
-    glzsys << "VeryCold_ASHRAE"
-    glzsys << "VeryCold_SwitchGlaze"
     glzsys << "VeryCold_Dark"
     glzsys << "VeryCold_Light"
     
@@ -67,6 +140,7 @@ class AInjectWindowSpecificIDFObjects < OpenStudio::Ruleset::WorkspaceUserScript
       chs << fenestrationsurface.name.to_s
     end
     chs << $allchoices
+    chs << "inferred"
     choice = OpenStudio::Ruleset::OSArgument::makeChoiceArgument('choice', chs, true)
     choice.setDisplayName("Choice of window")
     choice.setDefaultValue($allchoices)
@@ -174,7 +248,8 @@ class AInjectWindowSpecificIDFObjects < OpenStudio::Ruleset::WorkspaceUserScript
     }
     
     ####################################################################################
-    runner.registerInfo("##################################################")
+    ####################################################################################
+    
     # check if thermochromic was defined in upstream measure AddThermochromicBIPV
     pce_scenario = check_upstream_measure_for_arg(runner, 'pce_scenario')
     pce_scenario = pce_scenario[:value]
@@ -187,6 +262,12 @@ class AInjectWindowSpecificIDFObjects < OpenStudio::Ruleset::WorkspaceUserScript
       pce_scenario = false
     end
     
+    pv_eff_fixed = check_upstream_measure_for_arg(runner, 'pv_eff')
+    pv_eff_fixed = pv_eff_fixed[:value]
+    
+    runner.registerInfo("Fixed PCE (if PCE variation is not applied) = #{pv_eff_fixed}")
+    
+    
     # check PV orientation from upstream measure AddThermochromicBIPV
     # TODO: modify fenestration selection in this measure to apply only on the same orientation grabbed from AddThermochromicBIPV measure
     pv_orientation = check_upstream_measure_for_arg(runner, 'facade')
@@ -195,12 +276,14 @@ class AInjectWindowSpecificIDFObjects < OpenStudio::Ruleset::WorkspaceUserScript
     runner.registerInfo("PV orientation defined in AddThermochromicBIPV measure = #{pv_orientation}")
     
     ####################################################################################
-    if glztype == "Baseline_ASHRAE"
+    ####################################################################################
+    
+    if glztype == "ASHRAE_Simplified"
     
       runner.registerInfo("Skipping this measure since using Baseline ASHRAE window.")
       return false
       
-    elsif (glztype == "Baseline_ASHRAE_Detail")
+    elsif (glztype == "ASHRAE_Detailed")
     
       glztype = "ASHRAE"
       
@@ -232,9 +315,71 @@ class AInjectWindowSpecificIDFObjects < OpenStudio::Ruleset::WorkspaceUserScript
       t_switching = t_switching[:value].to_f
     
       runner.registerInfo("Thermochromic switching temperature defined in the AddThermochromicBIPV measure = #{t_switching}C")
-     
+    
+    elsif (glztype == "Tinted_1")
+    
+      glztype = "Tinted"
+      
+      location = check_upstream_measure_for_arg(runner, 'weather_file_name')
+      location = location[:value].split("\\")[-1]
+      runner.registerInfo("Weather file defined in the upstream = #{location}")
+      
+      climateregion = dictionary_weather[location]
+      runner.registerInfo("Simple climate classification for this location = #{climateregion}")
+  
+      glztype = climateregion.concat("_#{glztype.to_s}")
+      glztype = glztype.concat("_25pct_N_IQE0pt") #specific string for tinted 1 window files
+      pce_string = (pv_eff_fixed.to_f*100).to_i
+      runner.registerInfo("PCE conversion to string = #{pce_string}")
+      glztype = glztype.concat("#{pce_string.to_s}")
+      runner.registerInfo("glztype = #{glztype}")
+      
+      runner.registerInfo("Window name to be implemented = #{glztype}")
+      
+    elsif (glztype == "Tinted_2")
+    
+      glztype = "Tinted"
+      
+      location = check_upstream_measure_for_arg(runner, 'weather_file_name')
+      location = location[:value].split("\\")[-1]
+      runner.registerInfo("Weather file defined in the upstream = #{location}")
+      
+      climateregion = dictionary_weather[location]
+      runner.registerInfo("Simple climate classification for this location = #{climateregion}")
+  
+      glztype = climateregion.concat("_#{glztype.to_s}")
+      glztype = glztype.concat("_50pct_N_IQE0pt") #specific string for tinted 1 window files
+      pce_string = (pv_eff_fixed.to_f*100).to_i
+      runner.registerInfo("PCE conversion to string = #{pce_string}")
+      glztype = glztype.concat("#{pce_string.to_s}")
+      runner.registerInfo("glztype = #{glztype}")
+      
+      runner.registerInfo("Window name to be implemented = #{glztype}")
+          
+    elsif (glztype == "Tinted_3")
+    
+      glztype = "Tinted"
+      
+      location = check_upstream_measure_for_arg(runner, 'weather_file_name')
+      location = location[:value].split("\\")[-1]
+      runner.registerInfo("Weather file defined in the upstream = #{location}")
+      
+      climateregion = dictionary_weather[location]
+      runner.registerInfo("Simple climate classification for this location = #{climateregion}")
+  
+      glztype = climateregion.concat("_#{glztype.to_s}")
+      glztype = glztype.concat("_50pct_S_IQE0pt") #specific string for tinted 1 window files
+      pce_string = (pv_eff_fixed.to_f*100).to_i
+      runner.registerInfo("PCE conversion to string = #{pce_string}")
+      glztype = glztype.concat("#{pce_string.to_s}")
+      runner.registerInfo("glztype = #{glztype}")
+      
+      runner.registerInfo("Window name to be implemented = #{glztype}")
+                         
     end
-    runner.registerInfo("##################################################")
+    
+    ####################################################################################
+    ####################################################################################
     
     
     # Note for setting up dictionary:
@@ -272,6 +417,44 @@ class AInjectWindowSpecificIDFObjects < OpenStudio::Ruleset::WorkspaceUserScript
         "Cold_Light" => "../../../lib/resources/light_zone456_Spec.idf",
         "VeryCold_Dark" => "../../../lib/resources/dark_zone78_Spec.idf",
         "VeryCold_Light" => "../../../lib/resources/light_zone78_Spec.idf", 
+        "Single_Pane" => "../../../lib/resources/Single_Pane_Spec.idf",
+        "Double_Pane" => "../../../lib/resources/Double_Pane_Spec.idf",
+        "Hot_Tinted_25pct_N_IQE0pt4" => "../../../lib/resources/Hot_Tinted_25pct_N_IQE0pt4.idf",
+        "Hot_Tinted_25pct_N_IQE0pt6" => "../../../lib/resources/Hot_Tinted_25pct_N_IQE0pt6.idf",
+        "Hot_Tinted_25pct_N_IQE0pt8" => "../../../lib/resources/Hot_Tinted_25pct_N_IQE0pt8.idf",
+        "Hot_Tinted_50pct_N_IQE0pt4" => "../../../lib/resources/Hot_Tinted_50pct_N_IQE0pt4.idf",
+        "Hot_Tinted_50pct_N_IQE0pt6" => "../../../lib/resources/Hot_Tinted_50pct_N_IQE0pt6.idf",
+        "Hot_Tinted_50pct_N_IQE0pt8" => "../../../lib/resources/Hot_Tinted_50pct_N_IQE0pt8.idf",
+        "Hot_Tinted_50pct_S_IQE0pt4" => "../../../lib/resources/Hot_Tinted_50pct_S_IQE0pt4.idf",
+        "Hot_Tinted_50pct_S_IQE0pt6" => "../../../lib/resources/Hot_Tinted_50pct_S_IQE0pt6.idf",
+        "Hot_Tinted_50pct_S_IQE0pt8" => "../../../lib/resources/Hot_Tinted_50pct_S_IQE0pt8.idf",
+        "VeryHot_Tinted_25pct_N_IQE0pt4" => "../../../lib/resources/VeryHot_Tinted_25pct_N_IQE0pt4.idf",
+        "VeryHot_Tinted_25pct_N_IQE0pt6" => "../../../lib/resources/VeryHot_Tinted_25pct_N_IQE0pt6.idf",
+        "VeryHot_Tinted_25pct_N_IQE0pt8" => "../../../lib/resources/VeryHot_Tinted_25pct_N_IQE0pt8.idf",
+        "VeryHot_Tinted_50pct_N_IQE0pt4" => "../../../lib/resources/VeryHot_Tinted_50pct_N_IQE0pt4.idf",
+        "VeryHot_Tinted_50pct_N_IQE0pt6" => "../../../lib/resources/VeryHot_Tinted_50pct_N_IQE0pt6.idf",
+        "VeryHot_Tinted_50pct_N_IQE0pt8" => "../../../lib/resources/VeryHot_Tinted_50pct_N_IQE0pt8.idf",
+        "VeryHot_Tinted_50pct_S_IQE0pt4" => "../../../lib/resources/VeryHot_Tinted_50pct_S_IQE0pt4.idf",
+        "VeryHot_Tinted_50pct_S_IQE0pt6" => "../../../lib/resources/VeryHot_Tinted_50pct_S_IQE0pt6.idf",
+        "VeryHot_Tinted_50pct_S_IQE0pt8" => "../../../lib/resources/VeryHot_Tinted_50pct_S_IQE0pt8.idf",
+        "VeryCold_Tinted_25pct_N_IQE0pt4" => "../../../lib/resources/VeryCold_Tinted_25pct_N_IQE0pt4.idf",
+        "VeryCold_Tinted_25pct_N_IQE0pt6" => "../../../lib/resources/VeryCold_Tinted_25pct_N_IQE0pt6.idf",
+        "VeryCold_Tinted_25pct_N_IQE0pt8" => "../../../lib/resources/VeryCold_Tinted_25pct_N_IQE0pt8.idf",
+        "VeryCold_Tinted_50pct_N_IQE0pt4" => "../../../lib/resources/VeryCold_Tinted_50pct_N_IQE0pt4.idf",
+        "VeryCold_Tinted_50pct_N_IQE0pt6" => "../../../lib/resources/VeryCold_Tinted_50pct_N_IQE0pt6.idf",
+        "VeryCold_Tinted_50pct_N_IQE0pt8" => "../../../lib/resources/VeryCold_Tinted_50pct_N_IQE0pt8.idf",
+        "VeryCold_Tinted_50pct_S_IQE0pt4" => "../../../lib/resources/VeryCold_Tinted_50pct_S_IQE0pt4.idf",
+        "VeryCold_Tinted_50pct_S_IQE0pt6" => "../../../lib/resources/VeryCold_Tinted_50pct_S_IQE0pt6.idf",
+        "VeryCold_Tinted_50pct_S_IQE0pt8" => "../../../lib/resources/VeryCold_Tinted_50pct_S_IQE0pt8.idf",
+        "Cold_Tinted_25pct_N_IQE0pt4" => "../../../lib/resources/Cold_Tinted_25pct_N_IQE0pt4.idf",
+        "Cold_Tinted_25pct_N_IQE0pt6" => "../../../lib/resources/Cold_Tinted_25pct_N_IQE0pt6.idf",
+        "Cold_Tinted_25pct_N_IQE0pt8" => "../../../lib/resources/Cold_Tinted_25pct_N_IQE0pt8.idf",
+        "Cold_Tinted_50pct_N_IQE0pt4" => "../../../lib/resources/Cold_Tinted_50pct_N_IQE0pt4.idf",
+        "Cold_Tinted_50pct_N_IQE0pt6" => "../../../lib/resources/Cold_Tinted_50pct_N_IQE0pt6.idf",
+        "Cold_Tinted_50pct_N_IQE0pt8" => "../../../lib/resources/Cold_Tinted_50pct_N_IQE0pt8.idf",
+        "Cold_Tinted_50pct_S_IQE0pt4" => "../../../lib/resources/Cold_Tinted_50pct_S_IQE0pt4.idf",
+        "Cold_Tinted_50pct_S_IQE0pt6" => "../../../lib/resources/Cold_Tinted_50pct_S_IQE0pt6.idf",
+        "Cold_Tinted_50pct_S_IQE0pt8" => "../../../lib/resources/Cold_Tinted_50pct_S_IQE0pt8.idf"
       } 
     elsif serverrun == false
       runner.registerInfo("Reading idf files from the local #{idf_path} directory")
@@ -300,7 +483,45 @@ class AInjectWindowSpecificIDFObjects < OpenStudio::Ruleset::WorkspaceUserScript
         "Cold_Dark" => "#{idf_path}/dark_zone456_Spec.idf",
         "Cold_Light" => "#{idf_path}/light_zone456_Spec.idf",
         "VeryCold_Dark" => "#{idf_path}/dark_zone78_Spec.idf",
-        "VeryCold_Light" => "#{idf_path}/light_zone78_Spec.idf",      
+        "VeryCold_Light" => "#{idf_path}/light_zone78_Spec.idf", 
+        "Single_Pane" => "#{idf_path}/Single_Pane_Spec.idf",
+        "Double_Pane" => "#{idf_path}/Double_Pane_Spec.idf",
+        "Hot_Tinted_25pct_N_IQE0pt4" => "#{idf_path}/Hot_Tinted_25pct_N_IQE0pt4.idf",
+        "Hot_Tinted_25pct_N_IQE0pt6" => "#{idf_path}/Hot_Tinted_25pct_N_IQE0pt6.idf",
+        "Hot_Tinted_25pct_N_IQE0pt8" => "#{idf_path}/Hot_Tinted_25pct_N_IQE0pt8.idf",
+        "Hot_Tinted_50pct_N_IQE0pt4" => "#{idf_path}/Hot_Tinted_50pct_N_IQE0pt4.idf",
+        "Hot_Tinted_50pct_N_IQE0pt6" => "#{idf_path}/Hot_Tinted_50pct_N_IQE0pt6.idf",
+        "Hot_Tinted_50pct_N_IQE0pt8" => "#{idf_path}/Hot_Tinted_50pct_N_IQE0pt8.idf",
+        "Hot_Tinted_50pct_S_IQE0pt4" => "#{idf_path}/Hot_Tinted_50pct_S_IQE0pt4.idf",
+        "Hot_Tinted_50pct_S_IQE0pt6" => "#{idf_path}/Hot_Tinted_50pct_S_IQE0pt6.idf",
+        "Hot_Tinted_50pct_S_IQE0pt8" => "#{idf_path}/Hot_Tinted_50pct_S_IQE0pt8.idf",
+        "VeryHot_Tinted_25pct_N_IQE0pt4" => "#{idf_path}/VeryHot_Tinted_25pct_N_IQE0pt4.idf",
+        "VeryHot_Tinted_25pct_N_IQE0pt6" => "#{idf_path}/VeryHot_Tinted_25pct_N_IQE0pt6.idf",
+        "VeryHot_Tinted_25pct_N_IQE0pt8" => "#{idf_path}/VeryHot_Tinted_25pct_N_IQE0pt8.idf",
+        "VeryHot_Tinted_50pct_N_IQE0pt4" => "#{idf_path}/VeryHot_Tinted_50pct_N_IQE0pt4.idf",
+        "VeryHot_Tinted_50pct_N_IQE0pt6" => "#{idf_path}/VeryHot_Tinted_50pct_N_IQE0pt6.idf",
+        "VeryHot_Tinted_50pct_N_IQE0pt8" => "#{idf_path}/VeryHot_Tinted_50pct_N_IQE0pt8.idf",
+        "VeryHot_Tinted_50pct_S_IQE0pt4" => "#{idf_path}/VeryHot_Tinted_50pct_S_IQE0pt4.idf",
+        "VeryHot_Tinted_50pct_S_IQE0pt6" => "#{idf_path}/VeryHot_Tinted_50pct_S_IQE0pt6.idf",
+        "VeryHot_Tinted_50pct_S_IQE0pt8" => "#{idf_path}/VeryHot_Tinted_50pct_S_IQE0pt8.idf",
+        "VeryCold_Tinted_25pct_N_IQE0pt4" => "#{idf_path}/VeryCold_Tinted_25pct_N_IQE0pt4.idf",
+        "VeryCold_Tinted_25pct_N_IQE0pt6" => "#{idf_path}/VeryCold_Tinted_25pct_N_IQE0pt6.idf",
+        "VeryCold_Tinted_25pct_N_IQE0pt8" => "#{idf_path}/VeryCold_Tinted_25pct_N_IQE0pt8.idf",
+        "VeryCold_Tinted_50pct_N_IQE0pt4" => "#{idf_path}/VeryCold_Tinted_50pct_N_IQE0pt4.idf",
+        "VeryCold_Tinted_50pct_N_IQE0pt6" => "#{idf_path}/VeryCold_Tinted_50pct_N_IQE0pt6.idf",
+        "VeryCold_Tinted_50pct_N_IQE0pt8" => "#{idf_path}/VeryCold_Tinted_50pct_N_IQE0pt8.idf",
+        "VeryCold_Tinted_50pct_S_IQE0pt4" => "#{idf_path}/VeryCold_Tinted_50pct_S_IQE0pt4.idf",
+        "VeryCold_Tinted_50pct_S_IQE0pt6" => "#{idf_path}/VeryCold_Tinted_50pct_S_IQE0pt6.idf",
+        "VeryCold_Tinted_50pct_S_IQE0pt8" => "#{idf_path}/VeryCold_Tinted_50pct_S_IQE0pt8.idf",
+        "Cold_Tinted_25pct_N_IQE0pt4" => "#{idf_path}/Cold_Tinted_25pct_N_IQE0pt4.idf",
+        "Cold_Tinted_25pct_N_IQE0pt6" => "#{idf_path}/Cold_Tinted_25pct_N_IQE0pt6.idf",
+        "Cold_Tinted_25pct_N_IQE0pt8" => "#{idf_path}/Cold_Tinted_25pct_N_IQE0pt8.idf",
+        "Cold_Tinted_50pct_N_IQE0pt4" => "#{idf_path}/Cold_Tinted_50pct_N_IQE0pt4.idf",
+        "Cold_Tinted_50pct_N_IQE0pt6" => "#{idf_path}/Cold_Tinted_50pct_N_IQE0pt6.idf",
+        "Cold_Tinted_50pct_N_IQE0pt8" => "#{idf_path}/Cold_Tinted_50pct_N_IQE0pt8.idf",
+        "Cold_Tinted_50pct_S_IQE0pt4" => "#{idf_path}/Cold_Tinted_50pct_S_IQE0pt4.idf",
+        "Cold_Tinted_50pct_S_IQE0pt6" => "#{idf_path}/Cold_Tinted_50pct_S_IQE0pt6.idf",
+        "Cold_Tinted_50pct_S_IQE0pt8" => "#{idf_path}/Cold_Tinted_50pct_S_IQE0pt8.idf"
       } 
     end
     ####################################################################################
@@ -317,27 +538,70 @@ class AInjectWindowSpecificIDFObjects < OpenStudio::Ruleset::WorkspaceUserScript
     # add everything from the file
     workspace.addObjects(source_idf.objects)    
 
-    runner.registerInitialCondition("Imposing fenestration construction name change on #{choice}.")
+    runner.registerInitialCondition("Imposing fenestration construction name change on #{choice} surface(s).")
  
     ####################################################################################
     #find the fenestration surface to change
     ####################################################################################
+    
+    runner.registerInfo("##################################################")
     no_found = true
     applicable = true
     fenestrationsurfaces = workspace.getObjectsByType("FenestrationSurface:Detailed".to_IddObjectType)
     fenestrationsurfaces.each do |fenestrationsurface|
-      if fenestrationsurface.getString(0).to_s.eql?(choice) || choice.eql?($allchoices)
+    
+      if choice == "inferred"
         no_found = false
-        if applicable  #skip the modeling procedure if the model is not supported
+        ###############################################################
+        #NOTE: this block only works if the building is not rotated
+        #TODO: consider case where building is rotated
+        v1x=fenestrationsurface.getString(9).get.to_f
+        v1y=fenestrationsurface.getString(10).get.to_f
+        v1z=fenestrationsurface.getString(11).get.to_f
+        if pv_orientation.to_s.eql?("S") && v1x<0 && v1y<0 && v1z>0
+          runner.registerInfo("Replacing window on #{fenestrationsurface.getString(0).to_s} which is on #{pv_orientation} orientation") 
           runner.registerInfo("Changing [#{fenestrationsurface.getString(2)}] to [#{glztype}]")
           fenestrationsurface.setString(2,glztype)
+        elsif pv_orientation.to_s.eql?("E") && v1x>0 && v1y<0 && v1z>0
+          runner.registerInfo("Replacing window on #{fenestrationsurface.getString(0).to_s} which is on #{pv_orientation} orientation") 
+          runner.registerInfo("Changing [#{fenestrationsurface.getString(2)}] to [#{glztype}]")
+          fenestrationsurface.setString(2,glztype)
+        elsif pv_orientation.to_s.eql?("N") && v1x>0 && v1y>0 && v1z>0
+          runner.registerInfo("Replacing window on #{fenestrationsurface.getString(0).to_s} which is on #{pv_orientation} orientation") 
+          runner.registerInfo("Changing [#{fenestrationsurface.getString(2)}] to [#{glztype}]")
+          fenestrationsurface.setString(2,glztype)
+        elsif pv_orientation.to_s.eql?("W") && v1x<0 && v1y>0 && v1z>0
+          runner.registerInfo("Replacing window on #{fenestrationsurface.getString(0).to_s} which is on #{pv_orientation} orientation") 
+          runner.registerInfo("Changing [#{fenestrationsurface.getString(2)}] to [#{glztype}]")
+          fenestrationsurface.setString(2,glztype)
+        elsif pv_orientation.to_s.eql?("ESW") && !(v1x>0 && v1y>0 && v1z>0)
+          runner.registerInfo("Replacing window on #{fenestrationsurface.getString(0).to_s} which is on #{pv_orientation} orientation") 
+          runner.registerInfo("Changing [#{fenestrationsurface.getString(2)}] to [#{glztype}]")
+          fenestrationsurface.setString(2,glztype)
+        elsif pv_orientation.to_s.eql?("NONE")
+          #do nothing
+        elsif pv_orientation.to_s.eql?("ALL")
+          runner.registerInfo("Replacing window on #{fenestrationsurface.getString(0).to_s}") 
+          runner.registerInfo("Changing [#{fenestrationsurface.getString(2)}] to [#{glztype}]")
+          fenestrationsurface.setString(2,glztype)
+        end
+        ###############################################################
+      else
+        if fenestrationsurface.getString(0).to_s.eql?(choice) || choice.eql?($allchoices)
+          no_found = false
+          if applicable  #skip the modeling procedure if the model is not supported
+            runner.registerInfo("Replacing window on #{fenestrationsurface.getString(0).to_s}")
+            runner.registerInfo("Changing [#{fenestrationsurface.getString(2)}] to [#{glztype}]")
+            fenestrationsurface.setString(2,glztype)
           
-          #fenestrationsurface.setString(6,"ASHRAE_zone78-Frame") #TODO: change this more interactively/automatically
+            #fenestrationsurface.setString(6,"ASHRAE_zone78-Frame") #TODO: change this more interactively/automatically
           
+          end
         end
       end
     end
-    
+    runner.registerInfo("##################################################")
+        
     ####################################################################################
     #find the thermochromic object and replace switching temperature based on input
     ####################################################################################
@@ -357,7 +621,7 @@ class AInjectWindowSpecificIDFObjects < OpenStudio::Ruleset::WorkspaceUserScript
         end
       end
     end
-    
+        
     ####################################################################################
     #give an error for the name if no surface is changed
     ####################################################################################
