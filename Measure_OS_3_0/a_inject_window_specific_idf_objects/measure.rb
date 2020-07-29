@@ -47,14 +47,12 @@ class AInjectWindowSpecificIDFObjects < OpenStudio::Ruleset::WorkspaceUserScript
     glzsys << "Cold_ASHRAE"
     glzsys << "VeryCold_ASHRAE"
     glzsys << "======================"
-    glzsys << "Tinted_Base"
+    glzsys << "Tinted_25pct_N"
     glzsys << "======================"
-    glzsys << "VeryHot_Tinted"
-    glzsys << "Hot_Tinted"
-    glzsys << "Cold_Tinted"
-    glzsys << "VeryCold_Tinted"
-    glzsys << "======================"
-    glzsys << "Tinted_1"
+    glzsys << "VeryHot_Tinted_25pct_N_IQE0"
+    glzsys << "Hot_Tinted_25pct_N_IQE0"
+    glzsys << "Cold_Tinted_25pct_N_IQE0"
+    glzsys << "VeryCold_Tinted_25pct_N_IQE0"
     glzsys << "======================"
     glzsys << "VeryHot_Tinted_25pct_N_IQE0pt4"
     glzsys << "Hot_Tinted_25pct_N_IQE0pt4"
@@ -71,7 +69,12 @@ class AInjectWindowSpecificIDFObjects < OpenStudio::Ruleset::WorkspaceUserScript
     glzsys << "Cold_Tinted_25pct_N_IQE0pt8"
     glzsys << "VeryCold_Tinted_25pct_N_IQE0pt8"
     glzsys << "======================"
-    glzsys << "Tinted_2"
+    glzsys << "Tinted_50pct_N"
+    glzsys << "======================"
+    glzsys << "VeryHot_Tinted_50pct_N_IQE0"
+    glzsys << "Hot_Tinted_50pct_N_IQE0"
+    glzsys << "Cold_Tinted_50pct_N_IQE0"
+    glzsys << "VeryCold_Tinted_50pct_N_IQE0"
     glzsys << "======================"
     glzsys << "VeryHot_Tinted_50pct_N_IQE0pt4"
     glzsys << "Hot_Tinted_50pct_N_IQE0pt4"
@@ -88,7 +91,12 @@ class AInjectWindowSpecificIDFObjects < OpenStudio::Ruleset::WorkspaceUserScript
     glzsys << "Cold_Tinted_50pct_N_IQE0pt8"
     glzsys << "VeryCold_Tinted_50pct_N_IQE0pt8"
     glzsys << "======================"
-    glzsys << "Tinted_3"
+    glzsys << "Tinted_50pct_S"
+    glzsys << "======================"
+    glzsys << "VeryHot_Tinted_50pct_S_IQE0"
+    glzsys << "Hot_Tinted_50pct_S_IQE0"
+    glzsys << "Cold_Tinted_50pct_S_IQE0"
+    glzsys << "VeryCold_Tinted_50pct_S_IQE0"
     glzsys << "======================"
     glzsys << "VeryHot_Tinted_50pct_S_IQE0pt4"
     glzsys << "Hot_Tinted_50pct_S_IQE0pt4"
@@ -316,7 +324,7 @@ class AInjectWindowSpecificIDFObjects < OpenStudio::Ruleset::WorkspaceUserScript
     
       runner.registerInfo("Thermochromic switching temperature defined in the AddThermochromicBIPV measure = #{t_switching}C")
     
-    elsif (glztype == "Tinted_1")
+    elsif (glztype == "Tinted_25pct_N")
     
       glztype = "Tinted"
       
@@ -331,12 +339,16 @@ class AInjectWindowSpecificIDFObjects < OpenStudio::Ruleset::WorkspaceUserScript
       glztype = glztype.concat("_25pct_N_IQE0pt") #specific string for tinted 1 window files
       pce_string = (pv_eff_fixed.to_f*100).to_i
       runner.registerInfo("PCE conversion to string = #{pce_string}")
-      glztype = glztype.concat("#{pce_string.to_s}")
+      if pce_string == 0
+        glztype = glztype.gsub("pt","")
+      else
+        glztype = glztype.concat("#{pce_string.to_s}")
+      end
       runner.registerInfo("glztype = #{glztype}")
       
       runner.registerInfo("Window name to be implemented = #{glztype}")
       
-    elsif (glztype == "Tinted_2")
+    elsif (glztype == "Tinted_50pct_N")
     
       glztype = "Tinted"
       
@@ -351,12 +363,16 @@ class AInjectWindowSpecificIDFObjects < OpenStudio::Ruleset::WorkspaceUserScript
       glztype = glztype.concat("_50pct_N_IQE0pt") #specific string for tinted 1 window files
       pce_string = (pv_eff_fixed.to_f*100).to_i
       runner.registerInfo("PCE conversion to string = #{pce_string}")
-      glztype = glztype.concat("#{pce_string.to_s}")
+      if pce_string == 0
+        glztype = glztype.gsub("pt","")
+      else
+        glztype = glztype.concat("#{pce_string.to_s}")
+      end
       runner.registerInfo("glztype = #{glztype}")
       
       runner.registerInfo("Window name to be implemented = #{glztype}")
           
-    elsif (glztype == "Tinted_3")
+    elsif (glztype == "Tinted_50pct_S")
     
       glztype = "Tinted"
       
@@ -371,7 +387,11 @@ class AInjectWindowSpecificIDFObjects < OpenStudio::Ruleset::WorkspaceUserScript
       glztype = glztype.concat("_50pct_S_IQE0pt") #specific string for tinted 1 window files
       pce_string = (pv_eff_fixed.to_f*100).to_i
       runner.registerInfo("PCE conversion to string = #{pce_string}")
-      glztype = glztype.concat("#{pce_string.to_s}")
+      if pce_string == 0
+        glztype = glztype.gsub("pt","")
+      else
+        glztype = glztype.concat("#{pce_string.to_s}")
+      end
       runner.registerInfo("glztype = #{glztype}")
       
       runner.registerInfo("Window name to be implemented = #{glztype}")
@@ -419,39 +439,51 @@ class AInjectWindowSpecificIDFObjects < OpenStudio::Ruleset::WorkspaceUserScript
         "VeryCold_Light" => "../../../lib/resources/light_zone78_Spec.idf", 
         "Single_Pane" => "../../../lib/resources/Single_Pane_Spec.idf",
         "Double_Pane" => "../../../lib/resources/Double_Pane_Spec.idf",
+        "Hot_Tinted_25pct_N_IQE0" => "../../../lib/resources/Hot_Tinted_25pct_N_IQE0.idf",
         "Hot_Tinted_25pct_N_IQE0pt4" => "../../../lib/resources/Hot_Tinted_25pct_N_IQE0pt4.idf",
         "Hot_Tinted_25pct_N_IQE0pt6" => "../../../lib/resources/Hot_Tinted_25pct_N_IQE0pt6.idf",
         "Hot_Tinted_25pct_N_IQE0pt8" => "../../../lib/resources/Hot_Tinted_25pct_N_IQE0pt8.idf",
+        "Hot_Tinted_50pct_N_IQE0" => "../../../lib/resources/Hot_Tinted_50pct_N_IQE0.idf",
         "Hot_Tinted_50pct_N_IQE0pt4" => "../../../lib/resources/Hot_Tinted_50pct_N_IQE0pt4.idf",
         "Hot_Tinted_50pct_N_IQE0pt6" => "../../../lib/resources/Hot_Tinted_50pct_N_IQE0pt6.idf",
         "Hot_Tinted_50pct_N_IQE0pt8" => "../../../lib/resources/Hot_Tinted_50pct_N_IQE0pt8.idf",
+        "Hot_Tinted_50pct_S_IQE0" => "../../../lib/resources/Hot_Tinted_50pct_S_IQE0.idf",
         "Hot_Tinted_50pct_S_IQE0pt4" => "../../../lib/resources/Hot_Tinted_50pct_S_IQE0pt4.idf",
         "Hot_Tinted_50pct_S_IQE0pt6" => "../../../lib/resources/Hot_Tinted_50pct_S_IQE0pt6.idf",
         "Hot_Tinted_50pct_S_IQE0pt8" => "../../../lib/resources/Hot_Tinted_50pct_S_IQE0pt8.idf",
+        "VeryHot_Tinted_25pct_N_IQE0" => "../../../lib/resources/VeryHot_Tinted_25pct_N_IQE0.idf",
         "VeryHot_Tinted_25pct_N_IQE0pt4" => "../../../lib/resources/VeryHot_Tinted_25pct_N_IQE0pt4.idf",
         "VeryHot_Tinted_25pct_N_IQE0pt6" => "../../../lib/resources/VeryHot_Tinted_25pct_N_IQE0pt6.idf",
         "VeryHot_Tinted_25pct_N_IQE0pt8" => "../../../lib/resources/VeryHot_Tinted_25pct_N_IQE0pt8.idf",
+        "VeryHot_Tinted_50pct_N_IQE0" => "../../../lib/resources/VeryHot_Tinted_50pct_N_IQE0.idf",
         "VeryHot_Tinted_50pct_N_IQE0pt4" => "../../../lib/resources/VeryHot_Tinted_50pct_N_IQE0pt4.idf",
         "VeryHot_Tinted_50pct_N_IQE0pt6" => "../../../lib/resources/VeryHot_Tinted_50pct_N_IQE0pt6.idf",
         "VeryHot_Tinted_50pct_N_IQE0pt8" => "../../../lib/resources/VeryHot_Tinted_50pct_N_IQE0pt8.idf",
+        "VeryHot_Tinted_50pct_S_IQE0" => "../../../lib/resources/VeryHot_Tinted_50pct_S_IQE0.idf",
         "VeryHot_Tinted_50pct_S_IQE0pt4" => "../../../lib/resources/VeryHot_Tinted_50pct_S_IQE0pt4.idf",
         "VeryHot_Tinted_50pct_S_IQE0pt6" => "../../../lib/resources/VeryHot_Tinted_50pct_S_IQE0pt6.idf",
         "VeryHot_Tinted_50pct_S_IQE0pt8" => "../../../lib/resources/VeryHot_Tinted_50pct_S_IQE0pt8.idf",
+        "VeryCold_Tinted_25pct_N_IQE0" => "../../../lib/resources/VeryCold_Tinted_25pct_N_IQE0.idf",
         "VeryCold_Tinted_25pct_N_IQE0pt4" => "../../../lib/resources/VeryCold_Tinted_25pct_N_IQE0pt4.idf",
         "VeryCold_Tinted_25pct_N_IQE0pt6" => "../../../lib/resources/VeryCold_Tinted_25pct_N_IQE0pt6.idf",
         "VeryCold_Tinted_25pct_N_IQE0pt8" => "../../../lib/resources/VeryCold_Tinted_25pct_N_IQE0pt8.idf",
+        "VeryCold_Tinted_50pct_N_IQE0" => "../../../lib/resources/VeryCold_Tinted_50pct_N_IQE0.idf",
         "VeryCold_Tinted_50pct_N_IQE0pt4" => "../../../lib/resources/VeryCold_Tinted_50pct_N_IQE0pt4.idf",
         "VeryCold_Tinted_50pct_N_IQE0pt6" => "../../../lib/resources/VeryCold_Tinted_50pct_N_IQE0pt6.idf",
         "VeryCold_Tinted_50pct_N_IQE0pt8" => "../../../lib/resources/VeryCold_Tinted_50pct_N_IQE0pt8.idf",
+        "VeryCold_Tinted_50pct_S_IQE0" => "../../../lib/resources/VeryCold_Tinted_50pct_S_IQE0.idf",
         "VeryCold_Tinted_50pct_S_IQE0pt4" => "../../../lib/resources/VeryCold_Tinted_50pct_S_IQE0pt4.idf",
         "VeryCold_Tinted_50pct_S_IQE0pt6" => "../../../lib/resources/VeryCold_Tinted_50pct_S_IQE0pt6.idf",
         "VeryCold_Tinted_50pct_S_IQE0pt8" => "../../../lib/resources/VeryCold_Tinted_50pct_S_IQE0pt8.idf",
+        "Cold_Tinted_25pct_N_IQE0" => "../../../lib/resources/Cold_Tinted_25pct_N_IQE0.idf",
         "Cold_Tinted_25pct_N_IQE0pt4" => "../../../lib/resources/Cold_Tinted_25pct_N_IQE0pt4.idf",
         "Cold_Tinted_25pct_N_IQE0pt6" => "../../../lib/resources/Cold_Tinted_25pct_N_IQE0pt6.idf",
         "Cold_Tinted_25pct_N_IQE0pt8" => "../../../lib/resources/Cold_Tinted_25pct_N_IQE0pt8.idf",
+        "Cold_Tinted_50pct_N_IQE0" => "../../../lib/resources/Cold_Tinted_50pct_N_IQE0.idf",
         "Cold_Tinted_50pct_N_IQE0pt4" => "../../../lib/resources/Cold_Tinted_50pct_N_IQE0pt4.idf",
         "Cold_Tinted_50pct_N_IQE0pt6" => "../../../lib/resources/Cold_Tinted_50pct_N_IQE0pt6.idf",
         "Cold_Tinted_50pct_N_IQE0pt8" => "../../../lib/resources/Cold_Tinted_50pct_N_IQE0pt8.idf",
+        "Cold_Tinted_50pct_S_IQE0" => "../../../lib/resources/Cold_Tinted_50pct_S_IQE0.idf",
         "Cold_Tinted_50pct_S_IQE0pt4" => "../../../lib/resources/Cold_Tinted_50pct_S_IQE0pt4.idf",
         "Cold_Tinted_50pct_S_IQE0pt6" => "../../../lib/resources/Cold_Tinted_50pct_S_IQE0pt6.idf",
         "Cold_Tinted_50pct_S_IQE0pt8" => "../../../lib/resources/Cold_Tinted_50pct_S_IQE0pt8.idf"
@@ -486,39 +518,51 @@ class AInjectWindowSpecificIDFObjects < OpenStudio::Ruleset::WorkspaceUserScript
         "VeryCold_Light" => "#{idf_path}/light_zone78_Spec.idf", 
         "Single_Pane" => "#{idf_path}/Single_Pane_Spec.idf",
         "Double_Pane" => "#{idf_path}/Double_Pane_Spec.idf",
+        "Hot_Tinted_25pct_N_IQE0" => "#{idf_path}/Hot_Tinted_25pct_N_IQE0.idf",
         "Hot_Tinted_25pct_N_IQE0pt4" => "#{idf_path}/Hot_Tinted_25pct_N_IQE0pt4.idf",
         "Hot_Tinted_25pct_N_IQE0pt6" => "#{idf_path}/Hot_Tinted_25pct_N_IQE0pt6.idf",
         "Hot_Tinted_25pct_N_IQE0pt8" => "#{idf_path}/Hot_Tinted_25pct_N_IQE0pt8.idf",
+        "Hot_Tinted_50pct_N_IQE0" => "#{idf_path}/Hot_Tinted_50pct_N_IQE0.idf",
         "Hot_Tinted_50pct_N_IQE0pt4" => "#{idf_path}/Hot_Tinted_50pct_N_IQE0pt4.idf",
         "Hot_Tinted_50pct_N_IQE0pt6" => "#{idf_path}/Hot_Tinted_50pct_N_IQE0pt6.idf",
         "Hot_Tinted_50pct_N_IQE0pt8" => "#{idf_path}/Hot_Tinted_50pct_N_IQE0pt8.idf",
+        "Hot_Tinted_50pct_S_IQE0" => "#{idf_path}/Hot_Tinted_50pct_S_IQE0.idf",
         "Hot_Tinted_50pct_S_IQE0pt4" => "#{idf_path}/Hot_Tinted_50pct_S_IQE0pt4.idf",
         "Hot_Tinted_50pct_S_IQE0pt6" => "#{idf_path}/Hot_Tinted_50pct_S_IQE0pt6.idf",
         "Hot_Tinted_50pct_S_IQE0pt8" => "#{idf_path}/Hot_Tinted_50pct_S_IQE0pt8.idf",
+        "VeryHot_Tinted_25pct_N_IQE0" => "#{idf_path}/VeryHot_Tinted_25pct_N_IQE0.idf",
         "VeryHot_Tinted_25pct_N_IQE0pt4" => "#{idf_path}/VeryHot_Tinted_25pct_N_IQE0pt4.idf",
         "VeryHot_Tinted_25pct_N_IQE0pt6" => "#{idf_path}/VeryHot_Tinted_25pct_N_IQE0pt6.idf",
         "VeryHot_Tinted_25pct_N_IQE0pt8" => "#{idf_path}/VeryHot_Tinted_25pct_N_IQE0pt8.idf",
+        "VeryHot_Tinted_50pct_N_IQE0" => "#{idf_path}/VeryHot_Tinted_50pct_N_IQE0.idf",
         "VeryHot_Tinted_50pct_N_IQE0pt4" => "#{idf_path}/VeryHot_Tinted_50pct_N_IQE0pt4.idf",
         "VeryHot_Tinted_50pct_N_IQE0pt6" => "#{idf_path}/VeryHot_Tinted_50pct_N_IQE0pt6.idf",
         "VeryHot_Tinted_50pct_N_IQE0pt8" => "#{idf_path}/VeryHot_Tinted_50pct_N_IQE0pt8.idf",
+        "VeryHot_Tinted_50pct_S_IQE0" => "#{idf_path}/VeryHot_Tinted_50pct_S_IQE0.idf",
         "VeryHot_Tinted_50pct_S_IQE0pt4" => "#{idf_path}/VeryHot_Tinted_50pct_S_IQE0pt4.idf",
         "VeryHot_Tinted_50pct_S_IQE0pt6" => "#{idf_path}/VeryHot_Tinted_50pct_S_IQE0pt6.idf",
         "VeryHot_Tinted_50pct_S_IQE0pt8" => "#{idf_path}/VeryHot_Tinted_50pct_S_IQE0pt8.idf",
+        "VeryCold_Tinted_25pct_N_IQE0" => "#{idf_path}/VeryCold_Tinted_25pct_N_IQE0.idf",
         "VeryCold_Tinted_25pct_N_IQE0pt4" => "#{idf_path}/VeryCold_Tinted_25pct_N_IQE0pt4.idf",
         "VeryCold_Tinted_25pct_N_IQE0pt6" => "#{idf_path}/VeryCold_Tinted_25pct_N_IQE0pt6.idf",
         "VeryCold_Tinted_25pct_N_IQE0pt8" => "#{idf_path}/VeryCold_Tinted_25pct_N_IQE0pt8.idf",
+        "VeryCold_Tinted_50pct_N_IQE0" => "#{idf_path}/VeryCold_Tinted_50pct_N_IQE0.idf",
         "VeryCold_Tinted_50pct_N_IQE0pt4" => "#{idf_path}/VeryCold_Tinted_50pct_N_IQE0pt4.idf",
         "VeryCold_Tinted_50pct_N_IQE0pt6" => "#{idf_path}/VeryCold_Tinted_50pct_N_IQE0pt6.idf",
         "VeryCold_Tinted_50pct_N_IQE0pt8" => "#{idf_path}/VeryCold_Tinted_50pct_N_IQE0pt8.idf",
+        "VeryCold_Tinted_50pct_S_IQE0" => "#{idf_path}/VeryCold_Tinted_50pct_S_IQE0.idf",
         "VeryCold_Tinted_50pct_S_IQE0pt4" => "#{idf_path}/VeryCold_Tinted_50pct_S_IQE0pt4.idf",
         "VeryCold_Tinted_50pct_S_IQE0pt6" => "#{idf_path}/VeryCold_Tinted_50pct_S_IQE0pt6.idf",
         "VeryCold_Tinted_50pct_S_IQE0pt8" => "#{idf_path}/VeryCold_Tinted_50pct_S_IQE0pt8.idf",
+        "Cold_Tinted_25pct_N_IQE0" => "#{idf_path}/Cold_Tinted_25pct_N_IQE0.idf",
         "Cold_Tinted_25pct_N_IQE0pt4" => "#{idf_path}/Cold_Tinted_25pct_N_IQE0pt4.idf",
         "Cold_Tinted_25pct_N_IQE0pt6" => "#{idf_path}/Cold_Tinted_25pct_N_IQE0pt6.idf",
         "Cold_Tinted_25pct_N_IQE0pt8" => "#{idf_path}/Cold_Tinted_25pct_N_IQE0pt8.idf",
+        "Cold_Tinted_50pct_N_IQE0" => "#{idf_path}/Cold_Tinted_50pct_N_IQE0.idf",
         "Cold_Tinted_50pct_N_IQE0pt4" => "#{idf_path}/Cold_Tinted_50pct_N_IQE0pt4.idf",
         "Cold_Tinted_50pct_N_IQE0pt6" => "#{idf_path}/Cold_Tinted_50pct_N_IQE0pt6.idf",
         "Cold_Tinted_50pct_N_IQE0pt8" => "#{idf_path}/Cold_Tinted_50pct_N_IQE0pt8.idf",
+        "Cold_Tinted_50pct_S_IQE0" => "#{idf_path}/Cold_Tinted_50pct_S_IQE0.idf",
         "Cold_Tinted_50pct_S_IQE0pt4" => "#{idf_path}/Cold_Tinted_50pct_S_IQE0pt4.idf",
         "Cold_Tinted_50pct_S_IQE0pt6" => "#{idf_path}/Cold_Tinted_50pct_S_IQE0pt6.idf",
         "Cold_Tinted_50pct_S_IQE0pt8" => "#{idf_path}/Cold_Tinted_50pct_S_IQE0pt8.idf"
@@ -544,7 +588,6 @@ class AInjectWindowSpecificIDFObjects < OpenStudio::Ruleset::WorkspaceUserScript
     #find the fenestration surface to change
     ####################################################################################
     
-    runner.registerInfo("##################################################")
     no_found = true
     applicable = true
     fenestrationsurfaces = workspace.getObjectsByType("FenestrationSurface:Detailed".to_IddObjectType)
@@ -600,7 +643,6 @@ class AInjectWindowSpecificIDFObjects < OpenStudio::Ruleset::WorkspaceUserScript
         end
       end
     end
-    runner.registerInfo("##################################################")
         
     ####################################################################################
     #find the thermochromic object and replace switching temperature based on input

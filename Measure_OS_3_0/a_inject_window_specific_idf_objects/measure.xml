@@ -3,8 +3,8 @@
   <schema_version>3.0</schema_version>
   <name>a_inject_window_specific_idf_objects</name>
   <uid>b5cd7571-8ee9-4657-845b-43513fd2b983</uid>
-  <version_id>2479b1c3-234e-4cf1-bd48-9761dcd6bd05</version_id>
-  <version_modified>20200725T020411Z</version_modified>
+  <version_id>5fc78ae3-c26a-455c-ab6e-0d6bf095065b</version_id>
+  <version_modified>20200729T182424Z</version_modified>
   <xml_checksum>79C5D5D1</xml_checksum>
   <class_name>AInjectWindowSpecificIDFObjects</class_name>
   <display_name> Inject Window Specific IDF Objects</display_name>
@@ -106,36 +106,28 @@ This measure works for when you just need to add new IDF objects. If you need to
           <display_name>======================</display_name>
         </choice>
         <choice>
-          <value>Tinted_Base</value>
-          <display_name>Tinted_Base</display_name>
+          <value>Tinted_25pct_N</value>
+          <display_name>Tinted_25pct_N</display_name>
         </choice>
         <choice>
           <value>======================</value>
           <display_name>======================</display_name>
         </choice>
         <choice>
-          <value>VeryHot_Tinted</value>
-          <display_name>VeryHot_Tinted</display_name>
+          <value>VeryHot_Tinted_25pct_N_IQE0</value>
+          <display_name>VeryHot_Tinted_25pct_N_IQE0</display_name>
         </choice>
         <choice>
-          <value>Hot_Tinted</value>
-          <display_name>Hot_Tinted</display_name>
+          <value>Hot_Tinted_25pct_N_IQE0</value>
+          <display_name>Hot_Tinted_25pct_N_IQE0</display_name>
         </choice>
         <choice>
-          <value>Cold_Tinted</value>
-          <display_name>Cold_Tinted</display_name>
+          <value>Cold_Tinted_25pct_N_IQE0</value>
+          <display_name>Cold_Tinted_25pct_N_IQE0</display_name>
         </choice>
         <choice>
-          <value>VeryCold_Tinted</value>
-          <display_name>VeryCold_Tinted</display_name>
-        </choice>
-        <choice>
-          <value>======================</value>
-          <display_name>======================</display_name>
-        </choice>
-        <choice>
-          <value>Tinted_1</value>
-          <display_name>Tinted_1</display_name>
+          <value>VeryCold_Tinted_25pct_N_IQE0</value>
+          <display_name>VeryCold_Tinted_25pct_N_IQE0</display_name>
         </choice>
         <choice>
           <value>======================</value>
@@ -202,8 +194,28 @@ This measure works for when you just need to add new IDF objects. If you need to
           <display_name>======================</display_name>
         </choice>
         <choice>
-          <value>Tinted_2</value>
-          <display_name>Tinted_2</display_name>
+          <value>Tinted_50pct_N</value>
+          <display_name>Tinted_50pct_N</display_name>
+        </choice>
+        <choice>
+          <value>======================</value>
+          <display_name>======================</display_name>
+        </choice>
+        <choice>
+          <value>VeryHot_Tinted_50pct_N_IQE0</value>
+          <display_name>VeryHot_Tinted_50pct_N_IQE0</display_name>
+        </choice>
+        <choice>
+          <value>Hot_Tinted_50pct_N_IQE0</value>
+          <display_name>Hot_Tinted_50pct_N_IQE0</display_name>
+        </choice>
+        <choice>
+          <value>Cold_Tinted_50pct_N_IQE0</value>
+          <display_name>Cold_Tinted_50pct_N_IQE0</display_name>
+        </choice>
+        <choice>
+          <value>VeryCold_Tinted_50pct_N_IQE0</value>
+          <display_name>VeryCold_Tinted_50pct_N_IQE0</display_name>
         </choice>
         <choice>
           <value>======================</value>
@@ -270,8 +282,28 @@ This measure works for when you just need to add new IDF objects. If you need to
           <display_name>======================</display_name>
         </choice>
         <choice>
-          <value>Tinted_3</value>
-          <display_name>Tinted_3</display_name>
+          <value>Tinted_50pct_S</value>
+          <display_name>Tinted_50pct_S</display_name>
+        </choice>
+        <choice>
+          <value>======================</value>
+          <display_name>======================</display_name>
+        </choice>
+        <choice>
+          <value>VeryHot_Tinted_50pct_S_IQE0</value>
+          <display_name>VeryHot_Tinted_50pct_S_IQE0</display_name>
+        </choice>
+        <choice>
+          <value>Hot_Tinted_50pct_S_IQE0</value>
+          <display_name>Hot_Tinted_50pct_S_IQE0</display_name>
+        </choice>
+        <choice>
+          <value>Cold_Tinted_50pct_S_IQE0</value>
+          <display_name>Cold_Tinted_50pct_S_IQE0</display_name>
+        </choice>
+        <choice>
+          <value>VeryCold_Tinted_50pct_S_IQE0</value>
+          <display_name>VeryCold_Tinted_50pct_S_IQE0</display_name>
         </choice>
         <choice>
           <value>======================</value>
@@ -580,7 +612,7 @@ This measure works for when you just need to add new IDF objects. If you need to
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>4D8352B3</checksum>
+      <checksum>91168D74</checksum>
     </file>
   </files>
 </measure>
