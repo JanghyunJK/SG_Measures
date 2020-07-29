@@ -3,8 +3,8 @@
   <schema_version>3.0</schema_version>
   <name>a_inject_window_specific_idf_objects</name>
   <uid>b5cd7571-8ee9-4657-845b-43513fd2b983</uid>
-  <version_id>9af3ce69-52cc-49b7-9c36-894dad62362f</version_id>
-  <version_modified>20200719T140207Z</version_modified>
+  <version_id>5fc78ae3-c26a-455c-ab6e-0d6bf095065b</version_id>
+  <version_modified>20200729T182424Z</version_modified>
   <xml_checksum>79C5D5D1</xml_checksum>
   <class_name>AInjectWindowSpecificIDFObjects</class_name>
   <display_name> Inject Window Specific IDF Objects</display_name>
@@ -22,8 +22,20 @@ This measure works for when you just need to add new IDF objects. If you need to
       <default_value>SwitchGlaze</default_value>
       <choices>
         <choice>
-          <value>Baseline_ASHRAE</value>
-          <display_name>Baseline_ASHRAE</display_name>
+          <value>======================</value>
+          <display_name>======================</display_name>
+        </choice>
+        <choice>
+          <value>NEXT Energy Scenarios</value>
+          <display_name>NEXT Energy Scenarios</display_name>
+        </choice>
+        <choice>
+          <value>======================</value>
+          <display_name>======================</display_name>
+        </choice>
+        <choice>
+          <value>ASHRAE_Simplified</value>
+          <display_name>ASHRAE_Simplified</display_name>
         </choice>
         <choice>
           <value>Baseline_GlzSys6</value>
@@ -62,20 +74,356 @@ This measure works for when you just need to add new IDF objects. If you need to
           <display_name>GlzSys_13_withPV</display_name>
         </choice>
         <choice>
-          <value>Baseline_ASHRAE_Detail</value>
-          <display_name>Baseline_ASHRAE_Detail</display_name>
+          <value>======================</value>
+          <display_name>======================</display_name>
         </choice>
         <choice>
-          <value>SwitchGlaze</value>
-          <display_name>SwitchGlaze</display_name>
+          <value>ASHRAE_Detailed</value>
+          <display_name>ASHRAE_Detailed</display_name>
+        </choice>
+        <choice>
+          <value>======================</value>
+          <display_name>======================</display_name>
         </choice>
         <choice>
           <value>VeryHot_ASHRAE</value>
           <display_name>VeryHot_ASHRAE</display_name>
         </choice>
         <choice>
+          <value>Hot_ASHRAE</value>
+          <display_name>Hot_ASHRAE</display_name>
+        </choice>
+        <choice>
+          <value>Cold_ASHRAE</value>
+          <display_name>Cold_ASHRAE</display_name>
+        </choice>
+        <choice>
+          <value>VeryCold_ASHRAE</value>
+          <display_name>VeryCold_ASHRAE</display_name>
+        </choice>
+        <choice>
+          <value>======================</value>
+          <display_name>======================</display_name>
+        </choice>
+        <choice>
+          <value>Tinted_25pct_N</value>
+          <display_name>Tinted_25pct_N</display_name>
+        </choice>
+        <choice>
+          <value>======================</value>
+          <display_name>======================</display_name>
+        </choice>
+        <choice>
+          <value>VeryHot_Tinted_25pct_N_IQE0</value>
+          <display_name>VeryHot_Tinted_25pct_N_IQE0</display_name>
+        </choice>
+        <choice>
+          <value>Hot_Tinted_25pct_N_IQE0</value>
+          <display_name>Hot_Tinted_25pct_N_IQE0</display_name>
+        </choice>
+        <choice>
+          <value>Cold_Tinted_25pct_N_IQE0</value>
+          <display_name>Cold_Tinted_25pct_N_IQE0</display_name>
+        </choice>
+        <choice>
+          <value>VeryCold_Tinted_25pct_N_IQE0</value>
+          <display_name>VeryCold_Tinted_25pct_N_IQE0</display_name>
+        </choice>
+        <choice>
+          <value>======================</value>
+          <display_name>======================</display_name>
+        </choice>
+        <choice>
+          <value>VeryHot_Tinted_25pct_N_IQE0pt4</value>
+          <display_name>VeryHot_Tinted_25pct_N_IQE0pt4</display_name>
+        </choice>
+        <choice>
+          <value>Hot_Tinted_25pct_N_IQE0pt4</value>
+          <display_name>Hot_Tinted_25pct_N_IQE0pt4</display_name>
+        </choice>
+        <choice>
+          <value>Cold_Tinted_25pct_N_IQE0pt4</value>
+          <display_name>Cold_Tinted_25pct_N_IQE0pt4</display_name>
+        </choice>
+        <choice>
+          <value>VeryCold_Tinted_25pct_N_IQE0pt4</value>
+          <display_name>VeryCold_Tinted_25pct_N_IQE0pt4</display_name>
+        </choice>
+        <choice>
+          <value>======================</value>
+          <display_name>======================</display_name>
+        </choice>
+        <choice>
+          <value>VeryHot_Tinted_25pct_N_IQE0pt6</value>
+          <display_name>VeryHot_Tinted_25pct_N_IQE0pt6</display_name>
+        </choice>
+        <choice>
+          <value>Hot_Tinted_25pct_N_IQE0pt6</value>
+          <display_name>Hot_Tinted_25pct_N_IQE0pt6</display_name>
+        </choice>
+        <choice>
+          <value>Cold_Tinted_25pct_N_IQE0pt6</value>
+          <display_name>Cold_Tinted_25pct_N_IQE0pt6</display_name>
+        </choice>
+        <choice>
+          <value>VeryCold_Tinted_25pct_N_IQE0pt6</value>
+          <display_name>VeryCold_Tinted_25pct_N_IQE0pt6</display_name>
+        </choice>
+        <choice>
+          <value>======================</value>
+          <display_name>======================</display_name>
+        </choice>
+        <choice>
+          <value>VeryHot_Tinted_25pct_N_IQE0pt8</value>
+          <display_name>VeryHot_Tinted_25pct_N_IQE0pt8</display_name>
+        </choice>
+        <choice>
+          <value>Hot_Tinted_25pct_N_IQE0pt8</value>
+          <display_name>Hot_Tinted_25pct_N_IQE0pt8</display_name>
+        </choice>
+        <choice>
+          <value>Cold_Tinted_25pct_N_IQE0pt8</value>
+          <display_name>Cold_Tinted_25pct_N_IQE0pt8</display_name>
+        </choice>
+        <choice>
+          <value>VeryCold_Tinted_25pct_N_IQE0pt8</value>
+          <display_name>VeryCold_Tinted_25pct_N_IQE0pt8</display_name>
+        </choice>
+        <choice>
+          <value>======================</value>
+          <display_name>======================</display_name>
+        </choice>
+        <choice>
+          <value>Tinted_50pct_N</value>
+          <display_name>Tinted_50pct_N</display_name>
+        </choice>
+        <choice>
+          <value>======================</value>
+          <display_name>======================</display_name>
+        </choice>
+        <choice>
+          <value>VeryHot_Tinted_50pct_N_IQE0</value>
+          <display_name>VeryHot_Tinted_50pct_N_IQE0</display_name>
+        </choice>
+        <choice>
+          <value>Hot_Tinted_50pct_N_IQE0</value>
+          <display_name>Hot_Tinted_50pct_N_IQE0</display_name>
+        </choice>
+        <choice>
+          <value>Cold_Tinted_50pct_N_IQE0</value>
+          <display_name>Cold_Tinted_50pct_N_IQE0</display_name>
+        </choice>
+        <choice>
+          <value>VeryCold_Tinted_50pct_N_IQE0</value>
+          <display_name>VeryCold_Tinted_50pct_N_IQE0</display_name>
+        </choice>
+        <choice>
+          <value>======================</value>
+          <display_name>======================</display_name>
+        </choice>
+        <choice>
+          <value>VeryHot_Tinted_50pct_N_IQE0pt4</value>
+          <display_name>VeryHot_Tinted_50pct_N_IQE0pt4</display_name>
+        </choice>
+        <choice>
+          <value>Hot_Tinted_50pct_N_IQE0pt4</value>
+          <display_name>Hot_Tinted_50pct_N_IQE0pt4</display_name>
+        </choice>
+        <choice>
+          <value>Cold_Tinted_50pct_N_IQE0pt4</value>
+          <display_name>Cold_Tinted_50pct_N_IQE0pt4</display_name>
+        </choice>
+        <choice>
+          <value>VeryCold_Tinted_50pct_N_IQE0pt4</value>
+          <display_name>VeryCold_Tinted_50pct_N_IQE0pt4</display_name>
+        </choice>
+        <choice>
+          <value>======================</value>
+          <display_name>======================</display_name>
+        </choice>
+        <choice>
+          <value>VeryHot_Tinted_50pct_N_IQE0pt6</value>
+          <display_name>VeryHot_Tinted_50pct_N_IQE0pt6</display_name>
+        </choice>
+        <choice>
+          <value>Hot_Tinted_50pct_N_IQE0pt6</value>
+          <display_name>Hot_Tinted_50pct_N_IQE0pt6</display_name>
+        </choice>
+        <choice>
+          <value>Cold_Tinted_50pct_N_IQE0pt6</value>
+          <display_name>Cold_Tinted_50pct_N_IQE0pt6</display_name>
+        </choice>
+        <choice>
+          <value>VeryCold_Tinted_50pct_N_IQE0pt6</value>
+          <display_name>VeryCold_Tinted_50pct_N_IQE0pt6</display_name>
+        </choice>
+        <choice>
+          <value>======================</value>
+          <display_name>======================</display_name>
+        </choice>
+        <choice>
+          <value>VeryHot_Tinted_50pct_N_IQE0pt8</value>
+          <display_name>VeryHot_Tinted_50pct_N_IQE0pt8</display_name>
+        </choice>
+        <choice>
+          <value>Hot_Tinted_50pct_N_IQE0pt8</value>
+          <display_name>Hot_Tinted_50pct_N_IQE0pt8</display_name>
+        </choice>
+        <choice>
+          <value>Cold_Tinted_50pct_N_IQE0pt8</value>
+          <display_name>Cold_Tinted_50pct_N_IQE0pt8</display_name>
+        </choice>
+        <choice>
+          <value>VeryCold_Tinted_50pct_N_IQE0pt8</value>
+          <display_name>VeryCold_Tinted_50pct_N_IQE0pt8</display_name>
+        </choice>
+        <choice>
+          <value>======================</value>
+          <display_name>======================</display_name>
+        </choice>
+        <choice>
+          <value>Tinted_50pct_S</value>
+          <display_name>Tinted_50pct_S</display_name>
+        </choice>
+        <choice>
+          <value>======================</value>
+          <display_name>======================</display_name>
+        </choice>
+        <choice>
+          <value>VeryHot_Tinted_50pct_S_IQE0</value>
+          <display_name>VeryHot_Tinted_50pct_S_IQE0</display_name>
+        </choice>
+        <choice>
+          <value>Hot_Tinted_50pct_S_IQE0</value>
+          <display_name>Hot_Tinted_50pct_S_IQE0</display_name>
+        </choice>
+        <choice>
+          <value>Cold_Tinted_50pct_S_IQE0</value>
+          <display_name>Cold_Tinted_50pct_S_IQE0</display_name>
+        </choice>
+        <choice>
+          <value>VeryCold_Tinted_50pct_S_IQE0</value>
+          <display_name>VeryCold_Tinted_50pct_S_IQE0</display_name>
+        </choice>
+        <choice>
+          <value>======================</value>
+          <display_name>======================</display_name>
+        </choice>
+        <choice>
+          <value>VeryHot_Tinted_50pct_S_IQE0pt4</value>
+          <display_name>VeryHot_Tinted_50pct_S_IQE0pt4</display_name>
+        </choice>
+        <choice>
+          <value>Hot_Tinted_50pct_S_IQE0pt4</value>
+          <display_name>Hot_Tinted_50pct_S_IQE0pt4</display_name>
+        </choice>
+        <choice>
+          <value>Cold_Tinted_50pct_S_IQE0pt4</value>
+          <display_name>Cold_Tinted_50pct_S_IQE0pt4</display_name>
+        </choice>
+        <choice>
+          <value>VeryCold_Tinted_50pct_S_IQE0pt4</value>
+          <display_name>VeryCold_Tinted_50pct_S_IQE0pt4</display_name>
+        </choice>
+        <choice>
+          <value>======================</value>
+          <display_name>======================</display_name>
+        </choice>
+        <choice>
+          <value>VeryHot_Tinted_50pct_S_IQE0pt6</value>
+          <display_name>VeryHot_Tinted_50pct_S_IQE0pt6</display_name>
+        </choice>
+        <choice>
+          <value>Hot_Tinted_50pct_S_IQE0pt6</value>
+          <display_name>Hot_Tinted_50pct_S_IQE0pt6</display_name>
+        </choice>
+        <choice>
+          <value>Cold_Tinted_50pct_S_IQE0pt6</value>
+          <display_name>Cold_Tinted_50pct_S_IQE0pt6</display_name>
+        </choice>
+        <choice>
+          <value>VeryCold_Tinted_50pct_S_IQE0pt6</value>
+          <display_name>VeryCold_Tinted_50pct_S_IQE0pt6</display_name>
+        </choice>
+        <choice>
+          <value>======================</value>
+          <display_name>======================</display_name>
+        </choice>
+        <choice>
+          <value>VeryHot_Tinted_50pct_S_IQE0pt8</value>
+          <display_name>VeryHot_Tinted_50pct_S_IQE0pt8</display_name>
+        </choice>
+        <choice>
+          <value>Hot_Tinted_50pct_S_IQE0pt8</value>
+          <display_name>Hot_Tinted_50pct_S_IQE0pt8</display_name>
+        </choice>
+        <choice>
+          <value>Cold_Tinted_50pct_S_IQE0pt8</value>
+          <display_name>Cold_Tinted_50pct_S_IQE0pt8</display_name>
+        </choice>
+        <choice>
+          <value>VeryCold_Tinted_50pct_S_IQE0pt8</value>
+          <display_name>VeryCold_Tinted_50pct_S_IQE0pt8</display_name>
+        </choice>
+        <choice>
+          <value>======================</value>
+          <display_name>======================</display_name>
+        </choice>
+        <choice>
+          <value>SwitchGlaze</value>
+          <display_name>SwitchGlaze</display_name>
+        </choice>
+        <choice>
+          <value>======================</value>
+          <display_name>======================</display_name>
+        </choice>
+        <choice>
           <value>VeryHot_SwitchGlaze</value>
           <display_name>VeryHot_SwitchGlaze</display_name>
+        </choice>
+        <choice>
+          <value>Hot_SwitchGlaze</value>
+          <display_name>Hot_SwitchGlaze</display_name>
+        </choice>
+        <choice>
+          <value>Cold_SwitchGlaze</value>
+          <display_name>Cold_SwitchGlaze</display_name>
+        </choice>
+        <choice>
+          <value>VeryCold_SwitchGlaze</value>
+          <display_name>VeryCold_SwitchGlaze</display_name>
+        </choice>
+        <choice>
+          <value>======================</value>
+          <display_name>======================</display_name>
+        </choice>
+        <choice>
+          <value>Old Windows</value>
+          <display_name>Old Windows</display_name>
+        </choice>
+        <choice>
+          <value>======================</value>
+          <display_name>======================</display_name>
+        </choice>
+        <choice>
+          <value>Single_Pane</value>
+          <display_name>Single_Pane</display_name>
+        </choice>
+        <choice>
+          <value>Double_Pane</value>
+          <display_name>Double_Pane</display_name>
+        </choice>
+        <choice>
+          <value>======================</value>
+          <display_name>======================</display_name>
+        </choice>
+        <choice>
+          <value>Others</value>
+          <display_name>Others</display_name>
+        </choice>
+        <choice>
+          <value>======================</value>
+          <display_name>======================</display_name>
         </choice>
         <choice>
           <value>VeryHot_Dark</value>
@@ -86,14 +434,6 @@ This measure works for when you just need to add new IDF objects. If you need to
           <display_name>VeryHot_Light</display_name>
         </choice>
         <choice>
-          <value>Hot_ASHRAE</value>
-          <display_name>Hot_ASHRAE</display_name>
-        </choice>
-        <choice>
-          <value>Hot_SwitchGlaze</value>
-          <display_name>Hot_SwitchGlaze</display_name>
-        </choice>
-        <choice>
           <value>Hot_Dark</value>
           <display_name>Hot_Dark</display_name>
         </choice>
@@ -102,28 +442,12 @@ This measure works for when you just need to add new IDF objects. If you need to
           <display_name>Hot_Light</display_name>
         </choice>
         <choice>
-          <value>Cold_ASHRAE</value>
-          <display_name>Cold_ASHRAE</display_name>
-        </choice>
-        <choice>
-          <value>Cold_SwitchGlaze</value>
-          <display_name>Cold_SwitchGlaze</display_name>
-        </choice>
-        <choice>
           <value>Cold_Dark</value>
           <display_name>Cold_Dark</display_name>
         </choice>
         <choice>
           <value>Cold_Light</value>
           <display_name>Cold_Light</display_name>
-        </choice>
-        <choice>
-          <value>VeryCold_ASHRAE</value>
-          <display_name>VeryCold_ASHRAE</display_name>
-        </choice>
-        <choice>
-          <value>VeryCold_SwitchGlaze</value>
-          <display_name>VeryCold_SwitchGlaze</display_name>
         </choice>
         <choice>
           <value>VeryCold_Dark</value>
@@ -146,6 +470,10 @@ This measure works for when you just need to add new IDF objects. If you need to
         <choice>
           <value>All fenestration surfaces</value>
           <display_name>All fenestration surfaces</display_name>
+        </choice>
+        <choice>
+          <value>inferred</value>
+          <display_name>inferred</display_name>
         </choice>
       </choices>
     </argument>
@@ -284,7 +612,7 @@ This measure works for when you just need to add new IDF objects. If you need to
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>BC68783C</checksum>
+      <checksum>91168D74</checksum>
     </file>
   </files>
 </measure>
