@@ -3,8 +3,8 @@
   <schema_version>3.0</schema_version>
   <name>add_thermochromic_bipv</name>
   <uid>11088181-e92b-42d3-a1d0-91d4d0261dbb</uid>
-  <version_id>ce22cfa8-ce2d-4ef3-864b-ef02fe311f69</version_id>
-  <version_modified>20200724T201729Z</version_modified>
+  <version_id>c663bca0-6519-4ba7-aa48-4a8e568f3391</version_id>
+  <version_modified>20200808T000035Z</version_modified>
   <xml_checksum>894A4CEA</xml_checksum>
   <class_name>AddThermochromicBIPV</class_name>
   <display_name>Add Thermochromic BIPV</display_name>
@@ -28,6 +28,83 @@
       <required>true</required>
       <model_dependent>false</model_dependent>
       <default_value>0.05</default_value>
+    </argument>
+    <argument>
+      <name>use_tint_iqe</name>
+      <display_name>Using tinted level and IQE (Ideal Quantum Efficiency) for PCE lookup?</display_name>
+      <description>Select if selection of window will be based on tinted level and IQE setting (associated PCE value will be automatically applied)</description>
+      <type>Boolean</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>false</default_value>
+      <choices>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>iqe</name>
+      <display_name>iqe</display_name>
+      <type>Choice</type>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>25pct_N_IQE0</default_value>
+      <choices>
+        <choice>
+          <value>25pct_N_IQE0</value>
+          <display_name>25pct_N_IQE0</display_name>
+        </choice>
+        <choice>
+          <value>50pct_N_IQE0</value>
+          <display_name>50pct_N_IQE0</display_name>
+        </choice>
+        <choice>
+          <value>50pct_S_IQE0</value>
+          <display_name>50pct_S_IQE0</display_name>
+        </choice>
+        <choice>
+          <value>50pct_S_IQE0pt4</value>
+          <display_name>50pct_S_IQE0pt4</display_name>
+        </choice>
+        <choice>
+          <value>50pct_S_IQE0pt6</value>
+          <display_name>50pct_S_IQE0pt6</display_name>
+        </choice>
+        <choice>
+          <value>50pct_S_IQE0pt8</value>
+          <display_name>50pct_S_IQE0pt8</display_name>
+        </choice>
+        <choice>
+          <value>50pct_N_IQE0pt4</value>
+          <display_name>50pct_N_IQE0pt4</display_name>
+        </choice>
+        <choice>
+          <value>50pct_N_IQE0pt6</value>
+          <display_name>50pct_N_IQE0pt6</display_name>
+        </choice>
+        <choice>
+          <value>50pct_N_IQE0pt8</value>
+          <display_name>50pct_N_IQE0pt8</display_name>
+        </choice>
+        <choice>
+          <value>25pct_N_IQE0pt4</value>
+          <display_name>25pct_N_IQE0pt4</display_name>
+        </choice>
+        <choice>
+          <value>25pct_N_IQE0pt6</value>
+          <display_name>25pct_N_IQE0pt6</display_name>
+        </choice>
+        <choice>
+          <value>25pct_N_IQE0pt8</value>
+          <display_name>25pct_N_IQE0pt8</display_name>
+        </choice>
+      </choices>
     </argument>
     <argument>
       <name>inverter_eff</name>
@@ -328,7 +405,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>9F6E7E67</checksum>
+      <checksum>DF245CC9</checksum>
     </file>
   </files>
 </measure>

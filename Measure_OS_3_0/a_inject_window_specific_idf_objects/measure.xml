@@ -3,8 +3,8 @@
   <schema_version>3.0</schema_version>
   <name>a_inject_window_specific_idf_objects</name>
   <uid>b5cd7571-8ee9-4657-845b-43513fd2b983</uid>
-  <version_id>5fc78ae3-c26a-455c-ab6e-0d6bf095065b</version_id>
-  <version_modified>20200729T182424Z</version_modified>
+  <version_id>b3e4c86b-2ba9-49f8-b173-70478ebeca11</version_id>
+  <version_modified>20200807T235612Z</version_modified>
   <xml_checksum>79C5D5D1</xml_checksum>
   <class_name>AInjectWindowSpecificIDFObjects</class_name>
   <display_name> Inject Window Specific IDF Objects</display_name>
@@ -100,6 +100,14 @@ This measure works for when you just need to add new IDF objects. If you need to
         <choice>
           <value>VeryCold_ASHRAE</value>
           <display_name>VeryCold_ASHRAE</display_name>
+        </choice>
+        <choice>
+          <value>======================</value>
+          <display_name>======================</display_name>
+        </choice>
+        <choice>
+          <value>Tinted</value>
+          <display_name>Tinted</display_name>
         </choice>
         <choice>
           <value>======================</value>
@@ -612,7 +620,7 @@ This measure works for when you just need to add new IDF objects. If you need to
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>91168D74</checksum>
+      <checksum>19FDDDD9</checksum>
     </file>
   </files>
 </measure>

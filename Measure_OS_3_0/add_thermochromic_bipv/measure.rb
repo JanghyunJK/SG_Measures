@@ -38,6 +38,32 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
     pv_eff.setDefaultValue(0.05)
     args << pv_eff
     
+    # using IQE
+    use_tint_iqe = OpenStudio::Ruleset::OSArgument::makeBoolArgument('use_tint_iqe', false)
+    use_tint_iqe.setDisplayName('Using tinted level and IQE (Ideal Quantum Efficiency) for PCE lookup?')
+    use_tint_iqe.setDefaultValue('false')
+    use_tint_iqe.setDescription('Select if selection of window will be based on tinted level and IQE setting (associated PCE value will be automatically applied)')
+    args << use_tint_iqe
+    
+    # facades to receive BIPV
+    choices = OpenStudio::StringVector.new
+    choices << "25pct_N_IQE0"
+    choices << "50pct_N_IQE0"
+    choices << "50pct_S_IQE0"
+    choices << "50pct_S_IQE0pt4"
+    choices << "50pct_S_IQE0pt6"
+    choices << "50pct_S_IQE0pt8"
+    choices << "50pct_N_IQE0pt4"
+    choices << "50pct_N_IQE0pt6"
+    choices << "50pct_N_IQE0pt8"
+    choices << "25pct_N_IQE0pt4"
+    choices << "25pct_N_IQE0pt6"
+    choices << "25pct_N_IQE0pt8"
+    iqe = OpenStudio::Ruleset::OSArgument::makeChoiceArgument("iqe", choices)
+    iqe.setDisplayName("iqe")
+    iqe.setDefaultValue("25pct_N_IQE0")
+    args << iqe
+    
     inverter_eff = OpenStudio::Ruleset::OSArgument.makeDoubleArgument("inverter_eff", true)
     inverter_eff.setDisplayName("Fixed Inverter Efficiency")
     inverter_eff.setUnits("fraction")
@@ -119,6 +145,8 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
     if !runner.validateUserArguments(arguments(model), user_arguments)
       return false
     end
+    
+    ##########################################################################
 
     # assign the user inputs to variables
     dot_coverage = runner.getDoubleArgumentValue('dot_coverage',user_arguments)
@@ -127,10 +155,34 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
     panel_rated_output = (dot_coverage * pv_eff) * 1000 #w/m^2 (basis 50w/m^2, 0.05 eff, 0.50 coverage (5% conversion, 1Kw/m^2))
     facade = runner.getStringArgumentValue('facade',user_arguments)
     debug_mode = runner.getStringArgumentValue('debug_mode',user_arguments)
+    use_tint_iqe = runner.getStringArgumentValue('use_tint_iqe',user_arguments)
+    iqe = runner.getStringArgumentValue('iqe',user_arguments)
     pce_scenario = runner.getStringArgumentValue('pce_scenario',user_arguments)
     pv_eff_light = runner.getDoubleArgumentValue('pv_eff_light',user_arguments)
     pv_eff_dark = runner.getDoubleArgumentValue('pv_eff_dark',user_arguments)
     switch_t = runner.getDoubleArgumentValue('switch_t', user_arguments)
+    
+    ##########################################################################
+    # dictionary for IQE and PCE connection
+    ##########################################################################
+    
+    dictionary_iqe_pce = Hash.new
+    dictionary_iqe_pce = {
+      '25pct_N_IQE0' => 0.0,
+      '50pct_N_IQE0' => 0.0,
+      '50pct_S_IQE0' => 0.0,
+      '50pct_S_IQE0pt4' => 0.124,
+      '50pct_S_IQE0pt6' => 0.0928,
+      '50pct_S_IQE0pt8' => 0.0618,
+      '50pct_N_IQE0pt4' => 0.105,
+      '50pct_N_IQE0pt6' => 0.0788,
+      '50pct_N_IQE0pt8' => 0.0525,
+      '25pct_N_IQE0pt4' => 0.127,
+      '25pct_N_IQE0pt6' => 0.095,
+      '25pct_N_IQE0pt8' => 0.063,
+    }
+      
+    ##########################################################################
     
     if facade == "NONE"
       return false
@@ -249,7 +301,6 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
       
       ######################################################
       ######################################################            
-      runner.registerInfo("################################################")
       if pce_scenario == "SwitchGlaze"
       
         surfacename = surface.name.to_s
@@ -294,11 +345,13 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
         ems_prgm_calling_mngr.setCallingPoint("BeginTimestepBeforePredictor")
         ems_prgm_calling_mngr.addProgram(ems_pce_prg)
         runner.registerInfo("EMS Program Calling Manager object named '#{ems_prgm_calling_mngr.name}' added to call #{ems_pce_prg.name} EMS program.") 
-      elsif pce_scenario == "Static"
+      elsif (pce_scenario == "Static") && (use_tint_iqe == "false")
         simplepv.setFixedEfficiency(pv_eff)
         runner.registerInfo("Constant power conversion efficiency of #{pv_eff} applied to #{simplepv.name.to_s}")
+      elsif (pce_scenario == "Static") && (use_tint_iqe == "true")
+        simplepv.setFixedEfficiency(dictionary_iqe_pce[iqe])
+        runner.registerInfo("Constant power conversion efficiency of #{dictionary_iqe_pce[iqe]} applied to #{simplepv.name.to_s}")
       end
-      runner.registerInfo("################################################")
       ######################################################
       ######################################################
 
