@@ -3,8 +3,8 @@
   <schema_version>3.0</schema_version>
   <name>a_inject_window_specific_idf_objects</name>
   <uid>b5cd7571-8ee9-4657-845b-43513fd2b983</uid>
-  <version_id>b3e4c86b-2ba9-49f8-b173-70478ebeca11</version_id>
-  <version_modified>20200807T235612Z</version_modified>
+  <version_id>046ba19d-e540-4924-975d-3a8aba063a67</version_id>
+  <version_modified>20200818T002708Z</version_modified>
   <xml_checksum>79C5D5D1</xml_checksum>
   <class_name>AInjectWindowSpecificIDFObjects</class_name>
   <display_name> Inject Window Specific IDF Objects</display_name>
@@ -386,20 +386,36 @@ This measure works for when you just need to add new IDF objects. If you need to
           <display_name>======================</display_name>
         </choice>
         <choice>
-          <value>VeryHot_SwitchGlaze</value>
-          <display_name>VeryHot_SwitchGlaze</display_name>
+          <value>0pt5pct_N_IQE0</value>
+          <display_name>0pt5pct_N_IQE0</display_name>
         </choice>
         <choice>
-          <value>Hot_SwitchGlaze</value>
-          <display_name>Hot_SwitchGlaze</display_name>
+          <value>0pt5pct_N_IQE0pt4</value>
+          <display_name>0pt5pct_N_IQE0pt4</display_name>
         </choice>
         <choice>
-          <value>Cold_SwitchGlaze</value>
-          <display_name>Cold_SwitchGlaze</display_name>
+          <value>0pt5pct_N_IQE0pt6</value>
+          <display_name>0pt5pct_N_IQE0pt6</display_name>
         </choice>
         <choice>
-          <value>VeryCold_SwitchGlaze</value>
-          <display_name>VeryCold_SwitchGlaze</display_name>
+          <value>0pt5pct_N_IQE0pt8</value>
+          <display_name>0pt5pct_N_IQE0pt8</display_name>
+        </choice>
+        <choice>
+          <value>5pct_N_IQE0</value>
+          <display_name>5pct_N_IQE0</display_name>
+        </choice>
+        <choice>
+          <value>5pct_N_IQE0pt4</value>
+          <display_name>5pct_N_IQE0pt4</display_name>
+        </choice>
+        <choice>
+          <value>5pct_N_IQE0pt6</value>
+          <display_name>5pct_N_IQE0pt6</display_name>
+        </choice>
+        <choice>
+          <value>5pct_N_IQE0pt8</value>
+          <display_name>5pct_N_IQE0pt8</display_name>
         </choice>
         <choice>
           <value>======================</value>
@@ -620,7 +636,7 @@ This measure works for when you just need to add new IDF objects. If you need to
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>19FDDDD9</checksum>
+      <checksum>785F880C</checksum>
     </file>
   </files>
 </measure>

@@ -3,8 +3,8 @@
   <schema_version>3.0</schema_version>
   <name>add_thermochromic_bipv</name>
   <uid>11088181-e92b-42d3-a1d0-91d4d0261dbb</uid>
-  <version_id>c663bca0-6519-4ba7-aa48-4a8e568f3391</version_id>
-  <version_modified>20200808T000035Z</version_modified>
+  <version_id>3a90ee7f-924b-4d26-be69-f8ce1698ef2c</version_id>
+  <version_modified>20200818T002016Z</version_modified>
   <xml_checksum>894A4CEA</xml_checksum>
   <class_name>AddThermochromicBIPV</class_name>
   <display_name>Add Thermochromic BIPV</display_name>
@@ -57,14 +57,6 @@
       <default_value>25pct_N_IQE0</default_value>
       <choices>
         <choice>
-          <value>25pct_N_IQE0</value>
-          <display_name>25pct_N_IQE0</display_name>
-        </choice>
-        <choice>
-          <value>50pct_N_IQE0</value>
-          <display_name>50pct_N_IQE0</display_name>
-        </choice>
-        <choice>
           <value>50pct_S_IQE0</value>
           <display_name>50pct_S_IQE0</display_name>
         </choice>
@@ -81,6 +73,10 @@
           <display_name>50pct_S_IQE0pt8</display_name>
         </choice>
         <choice>
+          <value>50pct_N_IQE0</value>
+          <display_name>50pct_N_IQE0</display_name>
+        </choice>
+        <choice>
           <value>50pct_N_IQE0pt4</value>
           <display_name>50pct_N_IQE0pt4</display_name>
         </choice>
@@ -93,6 +89,10 @@
           <display_name>50pct_N_IQE0pt8</display_name>
         </choice>
         <choice>
+          <value>25pct_N_IQE0</value>
+          <display_name>25pct_N_IQE0</display_name>
+        </choice>
+        <choice>
           <value>25pct_N_IQE0pt4</value>
           <display_name>25pct_N_IQE0pt4</display_name>
         </choice>
@@ -103,6 +103,38 @@
         <choice>
           <value>25pct_N_IQE0pt8</value>
           <display_name>25pct_N_IQE0pt8</display_name>
+        </choice>
+        <choice>
+          <value>0pt5pct_N_IQE0</value>
+          <display_name>0pt5pct_N_IQE0</display_name>
+        </choice>
+        <choice>
+          <value>0pt5pct_N_IQE0pt4</value>
+          <display_name>0pt5pct_N_IQE0pt4</display_name>
+        </choice>
+        <choice>
+          <value>0pt5pct_N_IQE0pt6</value>
+          <display_name>0pt5pct_N_IQE0pt6</display_name>
+        </choice>
+        <choice>
+          <value>0pt5pct_N_IQE0pt8</value>
+          <display_name>0pt5pct_N_IQE0pt8</display_name>
+        </choice>
+        <choice>
+          <value>5pct_N_IQE0</value>
+          <display_name>5pct_N_IQE0</display_name>
+        </choice>
+        <choice>
+          <value>5pct_N_IQE0pt4</value>
+          <display_name>5pct_N_IQE0pt4</display_name>
+        </choice>
+        <choice>
+          <value>5pct_N_IQE0pt6</value>
+          <display_name>5pct_N_IQE0pt6</display_name>
+        </choice>
+        <choice>
+          <value>5pct_N_IQE0pt8</value>
+          <display_name>5pct_N_IQE0pt8</display_name>
         </choice>
       </choices>
     </argument>
@@ -405,7 +437,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>DF245CC9</checksum>
+      <checksum>C34703C4</checksum>
     </file>
   </files>
 </measure>
