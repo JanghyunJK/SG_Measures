@@ -189,13 +189,13 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
       '25pct_N_IQE0pt6' => 0.095,
       '25pct_N_IQE0pt8' => 0.063,
       "0pt5pct_N_IQE0_Light" => 0.0,
-      "0pt5pct_N_IQE0pt4_Light" => 0.101,
-      "0pt5pct_N_IQE0pt6_Light" => 0.152,
-      "0pt5pct_N_IQE0pt8_Light" => 0.203,
+      "0pt5pct_N_IQE0pt4_Light" => 0.0033,
+      "0pt5pct_N_IQE0pt6_Light" => 0.0049,
+      "0pt5pct_N_IQE0pt8_Light" => 0.0066,
       "5pct_N_IQE0_Light" => 0.0,
-      "5pct_N_IQE0pt4_Light" => 0.09,
-      "5pct_N_IQE0pt6_Light" => 0.135,
-      "5pct_N_IQE0pt8_Light" => 0.18,
+      "5pct_N_IQE0pt4_Light" => 0.0024,
+      "5pct_N_IQE0pt6_Light" => 0.0031,
+      "5pct_N_IQE0pt8_Light" => 0.0045,
       "0pt5pct_N_IQE0_Dark" => 0.0,
       "0pt5pct_N_IQE0pt4_Dark" => 0.101,
       "0pt5pct_N_IQE0pt6_Dark" => 0.152,
@@ -372,6 +372,7 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
         
         runner.registerInfo("Power conversion efficiency of #{pv_eff_light} applied to #{simplepv.name.to_s} for light state")
         runner.registerInfo("Power conversion efficiency of #{pv_eff_dark} applied to #{simplepv.name.to_s} for dark state")
+        
       elsif (pce_scenario == "SwitchGlaze") && (use_tint_iqe == "true")
       
         surfacename = surface.name.to_s
@@ -397,7 +398,7 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
         # Create EMS Actuator Objects
         pce_sch_actuator = OpenStudio::Model::EnergyManagementSystemActuator.new(pce_sch,"Schedule:Constant","Schedule Value")
         pce_sch_actuator.setName("pce_sch_#{surfacename_strip}")
-        runner.registerInfo("EMS Actuator object named '#{pce_sch_actuator.name}' representing the temporary schedule to #{surfacename} added to the model.") 
+        runner.registerInfo("EMS Actuator object named '#{pce_sch_actuator.name}' representing the temporary schedule to #{surfacename} added to the model.")       
       
         # Create new EnergyManagementSystem:Program object for computing cooling setpoint and modfying the clg schedule
         ems_pce_prg = OpenStudio::Model::EnergyManagementSystemProgram.new(model)
@@ -419,9 +420,11 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
    
         runner.registerInfo("Power conversion efficiency of #{dictionary_iqe_pce[iqe+"_Light"]} applied to #{simplepv.name.to_s} for light state")
         runner.registerInfo("Power conversion efficiency of #{dictionary_iqe_pce[iqe+"_Dark"]} applied to #{simplepv.name.to_s} for dark state")
+        
       elsif (pce_scenario == "Static") && (use_tint_iqe == "false")
         simplepv.setFixedEfficiency(pv_eff)
         runner.registerInfo("Constant power conversion efficiency of #{pv_eff} applied to #{simplepv.name.to_s}")
+        
       elsif (pce_scenario == "Static") && (use_tint_iqe == "true")
         simplepv.setFixedEfficiency(dictionary_iqe_pce[iqe])
         runner.registerInfo("Constant power conversion efficiency of #{dictionary_iqe_pce[iqe]} applied to #{simplepv.name.to_s}")
