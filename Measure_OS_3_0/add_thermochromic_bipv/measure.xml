@@ -3,8 +3,8 @@
   <schema_version>3.0</schema_version>
   <name>add_thermochromic_bipv</name>
   <uid>11088181-e92b-42d3-a1d0-91d4d0261dbb</uid>
-  <version_id>f59b5dcb-dcfa-470c-a03a-6947f026635f</version_id>
-  <version_modified>20200818T144410Z</version_modified>
+  <version_id>95693e61-6d09-4cb8-9fc2-f4954504e60b</version_id>
+  <version_modified>20200818T144925Z</version_modified>
   <xml_checksum>894A4CEA</xml_checksum>
   <class_name>AddThermochromicBIPV</class_name>
   <display_name>Add Thermochromic BIPV</display_name>
@@ -437,7 +437,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>E0DABC17</checksum>
+      <checksum>D50A3ECD</checksum>
     </file>
   </files>
 </measure>
