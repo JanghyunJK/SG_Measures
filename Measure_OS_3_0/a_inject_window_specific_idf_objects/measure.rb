@@ -822,23 +822,59 @@ class AInjectWindowSpecificIDFObjects < OpenStudio::Ruleset::WorkspaceUserScript
         v1x=fenestrationsurface.getString(9).get.to_f
         v1y=fenestrationsurface.getString(10).get.to_f
         v1z=fenestrationsurface.getString(11).get.to_f
-        if pv_orientation.to_s.eql?("S") && v1x<0 && v1y<0 && v1z>0
+        v2x=fenestrationsurface.getString(12).get.to_f
+        v2y=fenestrationsurface.getString(13).get.to_f
+        v2z=fenestrationsurface.getString(14).get.to_f
+        # v3x=fenestrationsurface.getString(15).get.to_f
+        # v3y=fenestrationsurface.getString(16).get.to_f
+        # v3z=fenestrationsurface.getString(17).get.to_f
+        v4x=fenestrationsurface.getString(18).get.to_f
+        v4y=fenestrationsurface.getString(19).get.to_f
+        v4z=fenestrationsurface.getString(20).get.to_f
+        ###############################################################
+        # surface normal calculation for determining surface orientation between East, North, South, and West
+        ###############################################################
+        u_x = v2x - v1x
+        u_y = v2y - v1y
+        u_z = v2z - v1z
+        w_x = v4x - v1x
+        w_y = v4y - v1y
+        w_z = v4z - v1z
+        surfacenormal_x = u_y*w_z - u_z*w_y
+        surfacenormal_y = u_z*w_x - u_x*w_z
+        runner.registerInfo("surfacenormal_x = #{surfacenormal_x}")
+        runner.registerInfo("surfacenormal_y = #{surfacenormal_y}")
+        surfacenormal_orientation=''
+        if (surfacenormal_x>0) && (surfacenormal_y==0)
+          surfacenormal_orientation = "E"
+        elsif (surfacenormal_x<0) && (surfacenormal_y==0)
+          surfacenormal_orientation = "W"
+        elsif (surfacenormal_x==0) && (surfacenormal_y>0)
+          surfacenormal_orientation = "N"
+        elsif (surfacenormal_x==0) && (surfacenormal_y<0)
+          surfacenormal_orientation = "S"
+        elsif
+          false
+        end
+        runner.registerInfo("surfacenormal_orientation = #{surfacenormal_orientation}")
+        ###############################################################
+        if pv_orientation.to_s.eql?("S") && (surfacenormal_orientation.to_s.eql?("S"))
           runner.registerInfo("Replacing window on #{fenestrationsurface.getString(0).to_s} which is on #{pv_orientation} orientation") 
           runner.registerInfo("Changing [#{fenestrationsurface.getString(2)}] to [#{glztype}]")
           fenestrationsurface.setString(2,glztype)
-        elsif pv_orientation.to_s.eql?("E") && v1x>0 && v1y<0 && v1z>0
+        elsif pv_orientation.to_s.eql?("E") && (surfacenormal_orientation.to_s.eql?("E"))
           runner.registerInfo("Replacing window on #{fenestrationsurface.getString(0).to_s} which is on #{pv_orientation} orientation") 
           runner.registerInfo("Changing [#{fenestrationsurface.getString(2)}] to [#{glztype}]")
           fenestrationsurface.setString(2,glztype)
-        elsif pv_orientation.to_s.eql?("N") && v1x>0 && v1y>0 && v1z>0
+        elsif pv_orientation.to_s.eql?("N") && (surfacenormal_orientation.to_s.eql?("N"))
           runner.registerInfo("Replacing window on #{fenestrationsurface.getString(0).to_s} which is on #{pv_orientation} orientation") 
           runner.registerInfo("Changing [#{fenestrationsurface.getString(2)}] to [#{glztype}]")
           fenestrationsurface.setString(2,glztype)
-        elsif pv_orientation.to_s.eql?("W") && v1x<0 && v1y>0 && v1z>0
+        elsif pv_orientation.to_s.eql?("W") && (surfacenormal_orientation.to_s.eql?("W"))
           runner.registerInfo("Replacing window on #{fenestrationsurface.getString(0).to_s} which is on #{pv_orientation} orientation") 
           runner.registerInfo("Changing [#{fenestrationsurface.getString(2)}] to [#{glztype}]")
           fenestrationsurface.setString(2,glztype)
-        elsif pv_orientation.to_s.eql?("ESW") && !(v1x>0 && v1y>0 && v1z>0)
+        elsif pv_orientation.to_s.eql?("ESW") && !(surfacenormal_orientation.to_s.eql?("N"))
           runner.registerInfo("Replacing window on #{fenestrationsurface.getString(0).to_s} which is on #{pv_orientation} orientation") 
           runner.registerInfo("Changing [#{fenestrationsurface.getString(2)}] to [#{glztype}]")
           fenestrationsurface.setString(2,glztype)
@@ -909,3 +945,4 @@ end
 
 #this allows the measure to be use by the application
 AInjectWindowSpecificIDFObjects.new.registerWithApplication
+
