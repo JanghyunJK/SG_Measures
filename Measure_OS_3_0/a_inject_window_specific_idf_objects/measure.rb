@@ -817,8 +817,8 @@ class AInjectWindowSpecificIDFObjects < OpenStudio::Ruleset::WorkspaceUserScript
       if choice == "inferred"
         no_found = false
         ###############################################################
-        #NOTE: this block only works if the building is not rotated
-        #TODO: consider case where building is rotated
+        # getting vertices for window surfaces
+        ###############################################################
         v1x=fenestrationsurface.getString(9).get.to_f
         v1y=fenestrationsurface.getString(10).get.to_f
         v1z=fenestrationsurface.getString(11).get.to_f
