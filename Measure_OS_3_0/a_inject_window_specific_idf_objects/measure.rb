@@ -267,7 +267,6 @@ class AInjectWindowSpecificIDFObjects < OpenStudio::Ruleset::WorkspaceUserScript
     # check if thermochromic was defined in upstream measure AddThermochromicBIPV
     pce_scenario = check_upstream_measure_for_arg(runner, 'pce_scenario')
     pce_scenario = pce_scenario[:value]
-    
     runner.registerInfo("PV PCE scenario type defined in AddThermochromicBIPV measure = #{pce_scenario}")
         
     if pce_scenario=='SwitchGlaze'
@@ -278,16 +277,16 @@ class AInjectWindowSpecificIDFObjects < OpenStudio::Ruleset::WorkspaceUserScript
     
     pv_eff_fixed = check_upstream_measure_for_arg(runner, 'pv_eff')
     pv_eff_fixed = pv_eff_fixed[:value]
-    
     runner.registerInfo("Fixed PCE (if PCE variation is not applied) = #{pv_eff_fixed}")
     
-    
     # check PV orientation from upstream measure AddThermochromicBIPV
-    # TODO: modify fenestration selection in this measure to apply only on the same orientation grabbed from AddThermochromicBIPV measure
     pv_orientation = check_upstream_measure_for_arg(runner, 'facade')
     pv_orientation = pv_orientation[:value]
-    
     runner.registerInfo("PV orientation defined in AddThermochromicBIPV measure = #{pv_orientation}")
+    
+    t_switching = check_upstream_measure_for_arg(runner, 'switch_t')
+    t_switching = t_switching[:value].to_f
+    runner.registerInfo("Thermochromic switching temperature defiend in AddThermochromicBIPV measure = #{t_switching}")
     
     ####################################################################################
     ####################################################################################

@@ -1,0 +1,147 @@
+
+OS:Version,
+  {d757ffd8-07dc-4748-97b5-4228b17f0cb3}, !- Handle
+  3.0.0;                                  !- Version Identifier
+
+OS:Site,
+  {febc7949-a2dc-4c74-ac7b-377659192172}, !- Handle
+  Site 1,                                 !- Name
+  ,                                       !- Latitude {deg}
+  ,                                       !- Longitude {deg}
+  ,                                       !- Time Zone {hr}
+  ,                                       !- Elevation {m}
+  ;                                       !- Terrain
+
+OS:YearDescription,
+  {3b56c551-f993-4005-9c7c-5480241ebb9e}; !- Handle
+
+OS:ClimateZones,
+  {921fb1b1-fa2d-497f-b578-bb079dacbc03}, !- Handle
+  ASHRAE,                                 !- Climate Zone Institution Name 1
+  ANSI/ASHRAE Standard 169,               !- Climate Zone Document Name 1
+  2006,                                   !- Climate Zone Document Year 1
+  ,                                       !- Climate Zone Value 1
+  CEC,                                    !- Climate Zone Institution Name 2
+  California Climate Zone Descriptions,   !- Climate Zone Document Name 2
+  1995,                                   !- Climate Zone Document Year 2
+  ;                                       !- Climate Zone Value 2
+
+OS:Building,
+  {676bd492-37f3-4a36-ab00-6d139779e1e0}, !- Handle
+  Building 1,                             !- Name
+  ,                                       !- Building Sector Type
+  ,                                       !- North Axis {deg}
+  ,                                       !- Nominal Floor to Floor Height {m}
+  ,                                       !- Space Type Name
+  ,                                       !- Default Construction Set Name
+  ;                                       !- Default Schedule Set Name
+
+OS:Facility,
+  {1fa7bddc-b35d-4b65-86f1-a8ef1a50f86b}; !- Handle
+
+OS:SimulationControl,
+  {e46fa614-7718-4915-96c5-4341dd536ece}; !- Handle
+
+OS:Sizing:Parameters,
+  {8486e31d-42a5-4b0e-9774-babd792b8522}, !- Handle
+  1.25,                                   !- Heating Sizing Factor
+  1.15;                                   !- Cooling Sizing Factor
+
+OS:Timestep,
+  {9904db88-62f1-4d1d-95be-20909715611b}, !- Handle
+  4;                                      !- Number of Timesteps per Hour
+
+OS:ShadowCalculation,
+  {d8b93ab4-099e-47e9-a821-0e6dbd852baf}, !- Handle
+  PolygonClipping,                        !- Shading Calculation Method
+  ,                                       !- Shading Calculation Update Frequency Method
+  20,                                     !- Shading Calculation Update Frequency
+  15000,                                  !- Maximum Figures in Shadow Overlap Calculations
+  ,                                       !- Polygon Clipping Algorithm
+  512,                                    !- Pixel Counting Resolution
+  ,                                       !- Sky Diffuse Modeling Algorithm
+  No,                                     !- Output External Shading Calculation Results
+  No,                                     !- Disable Self-Shading Within Shading Zone Groups
+  No;                                     !- Disable Self-Shading From Shading Zone Groups to Other Zones
+
+OS:HeatBalanceAlgorithm,
+  {68e81134-bc0c-4a42-b10f-db276fc74a3b}, !- Handle
+  ConductionTransferFunction,             !- Algorithm
+  200;                                    !- Surface Temperature Upper Limit {C}
+
+OS:RunPeriod,
+  {57324981-05db-45f6-9c9f-c840fd123510}, !- Handle
+  Run Period 1,                           !- Name
+  8,                                      !- Begin Month
+  3,                                      !- Begin Day of Month
+  8,                                      !- End Month
+  4,                                      !- End Day of Month
+  ,                                       !- Use Weather File Holidays and Special Days
+  ,                                       !- Use Weather File Daylight Saving Period
+  ,                                       !- Apply Weekend Holiday Rule
+  ,                                       !- Use Weather File Rain Indicators
+  ,                                       !- Use Weather File Snow Indicators
+  ;                                       !- Number of Times Runperiod to be Repeated
+
+OS:LifeCycleCost:Parameters,
+  {3aa2b49d-c1af-4905-8b3f-ce7c76e4679a}, !- Handle
+  ,                                       !- Analysis Type
+  ,                                       !- Discounting Convention
+  ,                                       !- Inflation Approach
+  ,                                       !- Real Discount Rate
+  ,                                       !- Nominal Discount Rate
+  ,                                       !- Inflation
+  ,                                       !- Base Date Month
+  ,                                       !- Base Date Year
+  ,                                       !- Service Date Month
+  ,                                       !- Service Date Year
+  ;                                       !- Length of Study Period in Years
+
+OS:RadianceParameters,
+  {ab1e94eb-c295-46cc-9164-1136e9bc629a}, !- Handle
+  1,                                      !- Accumulated Rays per Record
+  0,                                      !- Direct Threshold
+  1,                                      !- Direct Certainty
+  1,                                      !- Direct Jitter
+  1,                                      !- Direct Pretest
+  6,                                      !- Ambient Bounces VMX
+  2,                                      !- Ambient Bounces DMX
+  4050,                                   !- Ambient Divisions VMX
+  512,                                    !- Ambient Divisions DMX
+  256,                                    !- Ambient Supersamples
+  0.001,                                  !- Limit Weight VMX
+  0.001,                                  !- Limit Weight DMX
+  500,                                    !- Klems Sampling Density
+  146;                                    !- Sky Discretization Resolution
+
+OS:ProgramControl,
+  {1f808c32-ac42-4211-8104-a2e450ef570b}; !- Handle
+
+OS:OutputControl:ReportingTolerances,
+  {23d7ce3e-a02b-445a-a649-c6e420f3c84d}; !- Handle
+
+OS:ConvergenceLimits,
+  {d6aefb5e-7af6-4248-8f5d-abca83ff041a}, !- Handle
+  1;                                      !- Minimum System Timestep {minutes}
+
+OS:SurfaceConvectionAlgorithm:Inside,
+  {3f36e40c-b7d2-4a07-8b36-0674ae0c543d}, !- Handle
+  TARP;                                   !- Algorithm
+
+OS:SurfaceConvectionAlgorithm:Outside,
+  {085f4eef-8a0e-4907-b4fc-13bc3d15b909}, !- Handle
+  DOE-2;                                  !- Algorithm
+
+OS:ZoneAirHeatBalanceAlgorithm,
+  {a15d152d-b232-46cd-99e4-06d3ec73ad4f}, !- Handle
+  ThirdOrderBackwardDifference;           !- Algorithm
+
+OS:ZoneAirContaminantBalance,
+  {1632c275-8111-48b3-9f0e-7a5f67ae96f6}; !- Handle
+
+OS:ZoneCapacitanceMultiplier:ResearchSpecial,
+  {cc0f538d-6300-4fa9-8c23-88b0e105ad24}, !- Handle
+  ,                                       !- Temperature Capacity Multiplier
+  ,                                       !- Humidity Capacity Multiplier
+  ;                                       !- Carbon Dioxide Capacity Multiplier
+

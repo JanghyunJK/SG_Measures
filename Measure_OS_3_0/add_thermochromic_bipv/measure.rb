@@ -176,34 +176,34 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
     
     dictionary_iqe_pce = Hash.new
     dictionary_iqe_pce = {
-      '50pct_S_IQE0' => 0.0,
-      '50pct_S_IQE0pt4' => [0.12764,0.12665,0.12693,90.022],
-      '50pct_S_IQE0pt6' => [0.12764,0.12665,0.12693,90.022],
-      '50pct_S_IQE0pt8' => [0.12764,0.12665,0.12693,90.022],
-      '50pct_N_IQE0' => 0.0,
-      '50pct_N_IQE0pt4' => [0.12764,0.12665,0.12693,90.022],
-      '50pct_N_IQE0pt6' => [0.12764,0.12665,0.12693,90.022],
-      '50pct_N_IQE0pt8' => [0.12764,0.12665,0.12693,90.022],
-      '25pct_N_IQE0' => 0.0,
-      '25pct_N_IQE0pt4' => [0.12764,0.12665,0.12693,90.022],
-      '25pct_N_IQE0pt6' => [0.12764,0.12665,0.12693,90.022],
-      '25pct_N_IQE0pt8' => [0.12764,0.12665,0.12693,90.022],
-      "0pt5pct_N_IQE0_Light" => 0.0,
-      "0pt5pct_N_IQE0pt4_Light" => [0.12764,0.12665,0.12693,90.022],
-      "0pt5pct_N_IQE0pt6_Light" => [0.12764,0.12665,0.12693,90.022],
-      "0pt5pct_N_IQE0pt8_Light" => [0.12764,0.12665,0.12693,90.022],
-      "5pct_N_IQE0_Light" => 0.0,
-      "5pct_N_IQE0pt4_Light" => [0.12764,0.12665,0.12693,90.022],
-      "5pct_N_IQE0pt6_Light" => [0.12764,0.12665,0.12693,90.022],
-      "5pct_N_IQE0pt8_Light" => [0.12764,0.12665,0.12693,90.022],
-      "0pt5pct_N_IQE0_Dark" => 0.0,
-      "0pt5pct_N_IQE0pt4_Dark" => [0.12764,0.12665,0.12693,90.022],
-      "0pt5pct_N_IQE0pt6_Dark" => [0.12764,0.12665,0.12693,90.022],
-      "0pt5pct_N_IQE0pt8_Dark" => [0.12764,0.12665,0.12693,90.022],
-      "5pct_N_IQE0_Dark" => 0.0,
-      "5pct_N_IQE0pt4_Dark" => [0.12764,0.12665,0.12693,90.022],
-      "5pct_N_IQE0pt6_Dark" => [0.12764,0.12665,0.12693,90.022],
-      "5pct_N_IQE0pt8_Dark" => [0.12764,0.12665,0.12693,90.022]
+      '50pct_S_IQE0' => [1,0,0],
+      '50pct_S_IQE0pt4' => [0.063462,0.062819,0.13557],
+      '50pct_S_IQE0pt6' => [0.095248,0.094249,0.13539],
+      '50pct_S_IQE0pt8' => [0.127,0.12567,0.13539],
+      '50pct_N_IQE0' => [1,0,0],
+      '50pct_N_IQE0pt4' => [1,0,0],
+      '50pct_N_IQE0pt6' => [1,0,0],
+      '50pct_N_IQE0pt8' => [1,0,0],
+      '25pct_N_IQE0' => [1,0,0],
+      '25pct_N_IQE0pt4' => [1,0,0],
+      '25pct_N_IQE0pt6' => [1,0,0],
+      '25pct_N_IQE0pt8' => [1,0,0],
+      "0pt5pct_N_IQE0_Light" => [1,0,0],
+      "0pt5pct_N_IQE0pt4_Light" => [0.0023416,0.0022699,0.092563],
+      "0pt5pct_N_IQE0pt6_Light" => [0.0035124,0.0034048,0.092562],
+      "0pt5pct_N_IQE0pt8_Light" => [0.0046832,0.0045397,0.092561],
+      "5pct_N_IQE0_Light" => [1,0,0],
+      "5pct_N_IQE0pt4_Light" => [1,0,0],
+      "5pct_N_IQE0pt6_Light" => [1,0,0],
+      "5pct_N_IQE0pt8_Light" => [1,0,0],
+      "0pt5pct_N_IQE0_Dark" => [1,0,0],
+      "0pt5pct_N_IQE0pt4_Dark" => [0.1015,0.10032,0.10089],
+      "0pt5pct_N_IQE0pt6_Dark" => [0.15226,0.15048,0.10089],
+      "0pt5pct_N_IQE0pt8_Dark" => [0.20301,0.20064,0.10089],
+      "5pct_N_IQE0_Dark" => [1,0,0],
+      "5pct_N_IQE0pt4_Dark" => [1,0,0],
+      "5pct_N_IQE0pt6_Dark" => [1,0,0],
+      "5pct_N_IQE0pt8_Dark" => [1,0,0]
     }
       
     ##########################################################################
@@ -416,7 +416,7 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
         ems_pce_prg.addLine("ELSEIF (a_deg_#{surfacename_strip} > 90)")
         ems_pce_prg.addLine("SET #{pce_sch.name} = 0")
         ems_pce_prg.addLine("ELSE")
-        ems_pce_prg.addLine("SET expterm_l_#{surfacename_strip} = #{dictionary_iqe_pce[iqe+"_Light"][2]}*(a_deg_#{surfacename_strip}-#{dictionary_iqe_pce[iqe+"_Light"][3]})")
+        ems_pce_prg.addLine("SET expterm_l_#{surfacename_strip} = #{dictionary_iqe_pce[iqe+"_Light"][2]}*(a_deg_#{surfacename_strip}-90)")
         ems_pce_prg.addLine("SET #{pce_sch.name} = #{dictionary_iqe_pce[iqe+"_Light"][0]}-#{dictionary_iqe_pce[iqe+"_Light"][1]}*(@EXP expterm_l_#{surfacename_strip})")
         ems_pce_prg.addLine("ENDIF")
         ems_pce_prg.addLine("ELSEIF (T_ref_#{surfacename_strip} >= #{switch_t})") 
@@ -425,8 +425,8 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
         ems_pce_prg.addLine("ELSEIF (a_deg_#{surfacename_strip} > 90)")
         ems_pce_prg.addLine("SET #{pce_sch.name} = 0")
         ems_pce_prg.addLine("ELSE")
-        ems_pce_prg.addLine("SET expterm_l_#{surfacename_strip} = #{dictionary_iqe_pce[iqe+"_Dark"][2]}*(a_deg_#{surfacename_strip}-#{dictionary_iqe_pce[iqe+"_Dark"][3]})")
-        ems_pce_prg.addLine("SET #{pce_sch.name} = #{dictionary_iqe_pce[iqe+"_Dark"][0]}-#{dictionary_iqe_pce[iqe+"_Dark"][1]}*(@EXP expterm_l_#{surfacename_strip})")
+        ems_pce_prg.addLine("SET expterm_d_#{surfacename_strip} = #{dictionary_iqe_pce[iqe+"_Dark"][2]}*(a_deg_#{surfacename_strip}-90)")
+        ems_pce_prg.addLine("SET #{pce_sch.name} = #{dictionary_iqe_pce[iqe+"_Dark"][0]}-#{dictionary_iqe_pce[iqe+"_Dark"][1]}*(@EXP expterm_d_#{surfacename_strip})")
         ems_pce_prg.addLine("ENDIF")
         ems_pce_prg.addLine("ENDIF") 
         runner.registerInfo("EMS Program object named '#{ems_pce_prg.name}' added to modify the PCE schedule on #{surfacename}.")
@@ -439,7 +439,7 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
         runner.registerInfo("EMS Program Calling Manager object named '#{ems_prgm_calling_mngr.name}' added to call #{ems_pce_prg.name} EMS program.") 
         
         ####################################################################################################################
-        # Create new EnergyManagementSystem:GlobalVariable object and configure to hold the value for PumpFlowOverrideReport
+        # Create new EnergyManagementSystem:GlobalVariable object 
         dynamic_pce = OpenStudio::Model::EnergyManagementSystemGlobalVariable.new(model, "dynamic_pce_#{surfacename_strip}")
       
         # Create new EMS Output Variable Object
@@ -494,8 +494,14 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
         ems_pce_prg = OpenStudio::Model::EnergyManagementSystemProgram.new(model)
         ems_pce_prg.setName("program_pce_#{surfacename_strip}")
         ems_pce_prg.addLine("SET a_deg_#{surfacename_strip} = (@ArcCos a_#{surfacename_strip})*180/PI")
-        ems_pce_prg.addLine("SET expterm_#{surfacename_strip} = #{dictionary_iqe_pce[iqe][2]}*(a_deg_#{surfacename_strip}-#{dictionary_iqe_pce[iqe][3]})")
-        ems_pce_prg.addLine("SET #{pce_sch.name} = #{dictionary_iqe_pce[iqe][0]}-#{dictionary_iqe_pce[iqe][1]}*(@EXP expterm_#{surfacename_strip})")
+        ems_pce_prg.addLine("IF (a_deg_#{surfacename_strip} == 90)")
+        ems_pce_prg.addLine("SET #{pce_sch.name} = 0")
+        ems_pce_prg.addLine("ELSEIF (a_deg_#{surfacename_strip} > 90)")
+        ems_pce_prg.addLine("SET #{pce_sch.name} = 0")
+        ems_pce_prg.addLine("ELSE")
+        ems_pce_prg.addLine("SET expterm_l_#{surfacename_strip} = #{dictionary_iqe_pce[iqe][2]}*(a_deg_#{surfacename_strip}-90)")
+        ems_pce_prg.addLine("SET #{pce_sch.name} = #{dictionary_iqe_pce[iqe][0]}-#{dictionary_iqe_pce[iqe][1]}*(@EXP expterm_l_#{surfacename_strip})")
+        ems_pce_prg.addLine("ENDIF") 
         runner.registerInfo("EMS Program object named '#{ems_pce_prg.name}' added to modify the PCE schedule on #{surfacename}.")
       
         # create new EnergyManagementSystem:ProgramCallingManager object 
@@ -504,6 +510,18 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
         ems_prgm_calling_mngr.setCallingPoint("BeginTimestepBeforePredictor")
         ems_prgm_calling_mngr.addProgram(ems_pce_prg)
         runner.registerInfo("EMS Program Calling Manager object named '#{ems_prgm_calling_mngr.name}' added to call #{ems_pce_prg.name} EMS program.") 
+        
+        ####################################################################################################################
+        # Create new EnergyManagementSystem:GlobalVariable object 
+        dynamic_pce = OpenStudio::Model::EnergyManagementSystemGlobalVariable.new(model, "dynamic_pce_#{surfacename_strip}")
+      
+        # Create new EMS Output Variable Object
+        ems_output_var = OpenStudio::Model::EnergyManagementSystemOutputVariable.new(model,dynamic_pce)
+        ems_output_var.setName("dynamic_pce_#{surfacename_strip}")
+        ems_output_var.setEMSVariableName("#{pce_sch.name}")
+        ems_output_var.setTypeOfDataInVariable("Averaged")
+        ems_output_var.setUpdateFrequency("SystemTimeStep")
+        ####################################################################################################################
    
         runner.registerInfo("Power conversion efficiency coefficient set of #{dictionary_iqe_pce[iqe]} applied to #{simplepv.name.to_s} for light state")
         
