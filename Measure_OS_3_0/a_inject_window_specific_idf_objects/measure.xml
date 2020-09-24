@@ -3,8 +3,8 @@
   <schema_version>3.0</schema_version>
   <name>a_inject_window_specific_idf_objects</name>
   <uid>b5cd7571-8ee9-4657-845b-43513fd2b983</uid>
-  <version_id>24676213-20e1-4e3a-b201-8416a662aebe</version_id>
-  <version_modified>20200914T182637Z</version_modified>
+  <version_id>34793647-bc36-4854-9db4-87ce454fde35</version_id>
+  <version_modified>20200923T171702Z</version_modified>
   <xml_checksum>79C5D5D1</xml_checksum>
   <class_name>AInjectWindowSpecificIDFObjects</class_name>
   <display_name> Inject Window Specific IDF Objects</display_name>
@@ -418,6 +418,70 @@ This measure works for when you just need to add new IDF objects. If you need to
           <display_name>5pct_N_IQE0pt8</display_name>
         </choice>
         <choice>
+          <value>10pct_N_IQE0</value>
+          <display_name>10pct_N_IQE0</display_name>
+        </choice>
+        <choice>
+          <value>10pct_N_IQE0pt4</value>
+          <display_name>10pct_N_IQE0pt4</display_name>
+        </choice>
+        <choice>
+          <value>10pct_N_IQE0pt6</value>
+          <display_name>10pct_N_IQE0pt6</display_name>
+        </choice>
+        <choice>
+          <value>10pct_N_IQE0pt8</value>
+          <display_name>10pct_N_IQE0pt8</display_name>
+        </choice>
+        <choice>
+          <value>15pct_N_IQE0</value>
+          <display_name>15pct_N_IQE0</display_name>
+        </choice>
+        <choice>
+          <value>15pct_N_IQE0pt4</value>
+          <display_name>15pct_N_IQE0pt4</display_name>
+        </choice>
+        <choice>
+          <value>15pct_N_IQE0pt6</value>
+          <display_name>15pct_N_IQE0pt6</display_name>
+        </choice>
+        <choice>
+          <value>15pct_N_IQE0pt8</value>
+          <display_name>15pct_N_IQE0pt8</display_name>
+        </choice>
+        <choice>
+          <value>20pct_N_IQE0</value>
+          <display_name>20pct_N_IQE0</display_name>
+        </choice>
+        <choice>
+          <value>20pct_N_IQE0pt4</value>
+          <display_name>20pct_N_IQE0pt4</display_name>
+        </choice>
+        <choice>
+          <value>20pct_N_IQE0pt6</value>
+          <display_name>20pct_N_IQE0pt6</display_name>
+        </choice>
+        <choice>
+          <value>20pct_N_IQE0pt8</value>
+          <display_name>20pct_N_IQE0pt8</display_name>
+        </choice>
+        <choice>
+          <value>25pct_N_IQE0</value>
+          <display_name>25pct_N_IQE0</display_name>
+        </choice>
+        <choice>
+          <value>25pct_N_IQE0pt4</value>
+          <display_name>25pct_N_IQE0pt4</display_name>
+        </choice>
+        <choice>
+          <value>25pct_N_IQE0pt6</value>
+          <display_name>25pct_N_IQE0pt6</display_name>
+        </choice>
+        <choice>
+          <value>25pct_N_IQE0pt8</value>
+          <display_name>25pct_N_IQE0pt8</display_name>
+        </choice>
+        <choice>
           <value>======================</value>
           <display_name>======================</display_name>
         </choice>
@@ -636,7 +700,7 @@ This measure works for when you just need to add new IDF objects. If you need to
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>712F395D</checksum>
+      <checksum>06D97C8E</checksum>
     </file>
   </files>
 </measure>
