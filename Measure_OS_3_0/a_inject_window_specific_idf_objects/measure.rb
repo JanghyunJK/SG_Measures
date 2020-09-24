@@ -125,6 +125,22 @@ class AInjectWindowSpecificIDFObjects < OpenStudio::Ruleset::WorkspaceUserScript
     glzsys << "5pct_N_IQE0pt4"
     glzsys << "5pct_N_IQE0pt6"
     glzsys << "5pct_N_IQE0pt8"
+    glzsys << "10pct_N_IQE0"
+    glzsys << "10pct_N_IQE0pt4"
+    glzsys << "10pct_N_IQE0pt6"
+    glzsys << "10pct_N_IQE0pt8"
+    glzsys << "15pct_N_IQE0"
+    glzsys << "15pct_N_IQE0pt4"
+    glzsys << "15pct_N_IQE0pt6"
+    glzsys << "15pct_N_IQE0pt8"
+    glzsys << "20pct_N_IQE0"
+    glzsys << "20pct_N_IQE0pt4"
+    glzsys << "20pct_N_IQE0pt6"
+    glzsys << "20pct_N_IQE0pt8"
+    glzsys << "25pct_N_IQE0"
+    glzsys << "25pct_N_IQE0pt4"
+    glzsys << "25pct_N_IQE0pt6"
+    glzsys << "25pct_N_IQE0pt8"
     glzsys << "======================"
     glzsys << "Old Windows"
     glzsys << "======================"
@@ -267,7 +283,6 @@ class AInjectWindowSpecificIDFObjects < OpenStudio::Ruleset::WorkspaceUserScript
     # check if thermochromic was defined in upstream measure AddThermochromicBIPV
     pce_scenario = check_upstream_measure_for_arg(runner, 'pce_scenario')
     pce_scenario = pce_scenario[:value]
-    
     runner.registerInfo("PV PCE scenario type defined in AddThermochromicBIPV measure = #{pce_scenario}")
         
     if pce_scenario=='SwitchGlaze'
@@ -278,16 +293,16 @@ class AInjectWindowSpecificIDFObjects < OpenStudio::Ruleset::WorkspaceUserScript
     
     pv_eff_fixed = check_upstream_measure_for_arg(runner, 'pv_eff')
     pv_eff_fixed = pv_eff_fixed[:value]
-    
     runner.registerInfo("Fixed PCE (if PCE variation is not applied) = #{pv_eff_fixed}")
     
-    
     # check PV orientation from upstream measure AddThermochromicBIPV
-    # TODO: modify fenestration selection in this measure to apply only on the same orientation grabbed from AddThermochromicBIPV measure
     pv_orientation = check_upstream_measure_for_arg(runner, 'facade')
     pv_orientation = pv_orientation[:value]
-    
     runner.registerInfo("PV orientation defined in AddThermochromicBIPV measure = #{pv_orientation}")
+    
+    t_switching = check_upstream_measure_for_arg(runner, 'switch_t')
+    t_switching = t_switching[:value].to_f
+    runner.registerInfo("Thermochromic switching temperature defiend in AddThermochromicBIPV measure = #{t_switching}")
     
     ####################################################################################
     ####################################################################################
@@ -479,6 +494,10 @@ class AInjectWindowSpecificIDFObjects < OpenStudio::Ruleset::WorkspaceUserScript
         "Cold_SwitchGlaze_5pct_N_IQE0pt4" => "../../../lib/resources/Cold_SwitchGlaze_5pct_N_IQE0pt4.idf",
         "Cold_SwitchGlaze_5pct_N_IQE0pt6" => "../../../lib/resources/Cold_SwitchGlaze_5pct_N_IQE0pt6.idf",
         "Cold_SwitchGlaze_5pct_N_IQE0pt8" => "../../../lib/resources/Cold_SwitchGlaze_5pct_N_IQE0pt8.idf",
+        "Cold_SwitchGlaze_25pct_N_IQE0" => "../../../lib/resources/Cold_SwitchGlaze_25pct_N_IQE0.idf",
+        "Cold_SwitchGlaze_25pct_N_IQE0pt4" => "../../../lib/resources/Cold_SwitchGlaze_25pct_N_IQE0pt4.idf",
+        "Cold_SwitchGlaze_25pct_N_IQE0pt6" => "../../../lib/resources/Cold_SwitchGlaze_25pct_N_IQE0pt6.idf",
+        "Cold_SwitchGlaze_25pct_N_IQE0pt8" => "../../../lib/resources/Cold_SwitchGlaze_25pct_N_IQE0pt8.idf",
         "Cold_Tinted_0pt5pct_N_IQE0" => "../../../lib/resources/Cold_Tinted_0pt5pct_N_IQE0.idf",
         "Cold_Tinted_0pt5pct_N_IQE0pt4" => "../../../lib/resources/Cold_Tinted_0pt5pct_N_IQE0pt4.idf",
         "Cold_Tinted_0pt5pct_N_IQE0pt6" => "../../../lib/resources/Cold_Tinted_0pt5pct_N_IQE0pt6.idf",
@@ -517,6 +536,10 @@ class AInjectWindowSpecificIDFObjects < OpenStudio::Ruleset::WorkspaceUserScript
         "Hot_SwitchGlaze_5pct_N_IQE0pt4" => "../../../lib/resources/Hot_SwitchGlaze_5pct_N_IQE0pt4.idf",
         "Hot_SwitchGlaze_5pct_N_IQE0pt6" => "../../../lib/resources/Hot_SwitchGlaze_5pct_N_IQE0pt6.idf",
         "Hot_SwitchGlaze_5pct_N_IQE0pt8" => "../../../lib/resources/Hot_SwitchGlaze_5pct_N_IQE0pt8.idf",
+        "Hot_SwitchGlaze_25pct_N_IQE0" => "../../../lib/resources/Hot_SwitchGlaze_25pct_N_IQE0.idf",
+        "Hot_SwitchGlaze_25pct_N_IQE0pt4" => "../../../lib/resources/Hot_SwitchGlaze_25pct_N_IQE0pt4.idf",
+        "Hot_SwitchGlaze_25pct_N_IQE0pt6" => "../../../lib/resources/Hot_SwitchGlaze_25pct_N_IQE0pt6.idf",
+        "Hot_SwitchGlaze_25pct_N_IQE0pt8" => "../../../lib/resources/Hot_SwitchGlaze_25pct_N_IQE0pt8.idf",
         "Hot_Tinted_0pt5pct_N_IQE0" => "../../../lib/resources/Hot_Tinted_0pt5pct_N_IQE0.idf",
         "Hot_Tinted_0pt5pct_N_IQE0pt4" => "../../../lib/resources/Hot_Tinted_0pt5pct_N_IQE0pt4.idf",
         "Hot_Tinted_0pt5pct_N_IQE0pt6" => "../../../lib/resources/Hot_Tinted_0pt5pct_N_IQE0pt6.idf",
@@ -555,6 +578,10 @@ class AInjectWindowSpecificIDFObjects < OpenStudio::Ruleset::WorkspaceUserScript
         "VeryCold_SwitchGlaze_5pct_N_IQE0pt4" => "../../../lib/resources/VeryCold_SwitchGlaze_5pct_N_IQE0pt4.idf",
         "VeryCold_SwitchGlaze_5pct_N_IQE0pt6" => "../../../lib/resources/VeryCold_SwitchGlaze_5pct_N_IQE0pt6.idf",
         "VeryCold_SwitchGlaze_5pct_N_IQE0pt8" => "../../../lib/resources/VeryCold_SwitchGlaze_5pct_N_IQE0pt8.idf",
+        "VeryCold_SwitchGlaze_25pct_N_IQE0" => "../../../lib/resources/VeryCold_SwitchGlaze_25pct_N_IQE0.idf",
+        "VeryCold_SwitchGlaze_25pct_N_IQE0pt4" => "../../../lib/resources/VeryCold_SwitchGlaze_25pct_N_IQE0pt4.idf",
+        "VeryCold_SwitchGlaze_25pct_N_IQE0pt6" => "../../../lib/resources/VeryCold_SwitchGlaze_25pct_N_IQE0pt6.idf",
+        "VeryCold_SwitchGlaze_25pct_N_IQE0pt8" => "../../../lib/resources/VeryCold_SwitchGlaze_25pct_N_IQE0pt8.idf",
         "VeryCold_Tinted_0pt5pct_N_IQE0" => "../../../lib/resources/VeryCold_Tinted_0pt5pct_N_IQE0.idf",
         "VeryCold_Tinted_0pt5pct_N_IQE0pt4" => "../../../lib/resources/VeryCold_Tinted_0pt5pct_N_IQE0pt4.idf",
         "VeryCold_Tinted_0pt5pct_N_IQE0pt6" => "../../../lib/resources/VeryCold_Tinted_0pt5pct_N_IQE0pt6.idf",
@@ -592,6 +619,10 @@ class AInjectWindowSpecificIDFObjects < OpenStudio::Ruleset::WorkspaceUserScript
         "VeryHot_SwitchGlaze_5pct_N_IQE0pt4" => "../../../lib/resources/VeryHot_SwitchGlaze_5pct_N_IQE0pt4.idf",
         "VeryHot_SwitchGlaze_5pct_N_IQE0pt6" => "../../../lib/resources/VeryHot_SwitchGlaze_5pct_N_IQE0pt6.idf",
         "VeryHot_SwitchGlaze_5pct_N_IQE0pt8" => "../../../lib/resources/VeryHot_SwitchGlaze_5pct_N_IQE0pt8.idf",
+        "VeryHot_SwitchGlaze_25pct_N_IQE0" => "../../../lib/resources/VeryHot_SwitchGlaze_25pct_N_IQE0.idf",
+        "VeryHot_SwitchGlaze_25pct_N_IQE0pt4" => "../../../lib/resources/VeryHot_SwitchGlaze_25pct_N_IQE0pt4.idf",
+        "VeryHot_SwitchGlaze_25pct_N_IQE0pt6" => "../../../lib/resources/VeryHot_SwitchGlaze_25pct_N_IQE0pt6.idf",
+        "VeryHot_SwitchGlaze_25pct_N_IQE0pt8" => "../../../lib/resources/VeryHot_SwitchGlaze_25pct_N_IQE0pt8.idf",
         "VeryHot_Tinted_0pt5pct_N_IQE0" => "../../../lib/resources/VeryHot_Tinted_0pt5pct_N_IQE0.idf",
         "VeryHot_Tinted_0pt5pct_N_IQE0pt4" => "../../../lib/resources/VeryHot_Tinted_0pt5pct_N_IQE0pt4.idf",
         "VeryHot_Tinted_0pt5pct_N_IQE0pt6" => "../../../lib/resources/VeryHot_Tinted_0pt5pct_N_IQE0pt6.idf",
@@ -612,6 +643,42 @@ class AInjectWindowSpecificIDFObjects < OpenStudio::Ruleset::WorkspaceUserScript
         "VeryHot_Tinted_5pct_N_IQE0pt4" => "../../../lib/resources/VeryHot_Tinted_5pct_N_IQE0pt4.idf",
         "VeryHot_Tinted_5pct_N_IQE0pt6" => "../../../lib/resources/VeryHot_Tinted_5pct_N_IQE0pt6.idf",
         "VeryHot_Tinted_5pct_N_IQE0pt8" => "../../../lib/resources/VeryHot_Tinted_5pct_N_IQE0pt8.idf",
+        "Cold_SwitchGlaze_10pct_N_IQE0pt4" => "../../../lib/resources/Cold_SwitchGlaze_10pct_N_IQE0pt4.idf",
+        "Cold_SwitchGlaze_10pct_N_IQE0pt6" => "../../../lib/resources/Cold_SwitchGlaze_10pct_N_IQE0pt6.idf",
+        "Cold_SwitchGlaze_10pct_N_IQE0pt8" => "../../../lib/resources/Cold_SwitchGlaze_10pct_N_IQE0pt8.idf",
+        "Cold_SwitchGlaze_15pct_N_IQE0pt4" => "../../../lib/resources/Cold_SwitchGlaze_15pct_N_IQE0pt4.idf",
+        "Cold_SwitchGlaze_15pct_N_IQE0pt6" => "../../../lib/resources/Cold_SwitchGlaze_15pct_N_IQE0pt6.idf",
+        "Cold_SwitchGlaze_15pct_N_IQE0pt8" => "../../../lib/resources/Cold_SwitchGlaze_15pct_N_IQE0pt8.idf",
+        "Cold_SwitchGlaze_20pct_N_IQE0pt4" => "../../../lib/resources/Cold_SwitchGlaze_20pct_N_IQE0pt4.idf",
+        "Cold_SwitchGlaze_20pct_N_IQE0pt6" => "../../../lib/resources/Cold_SwitchGlaze_20pct_N_IQE0pt6.idf",
+        "Cold_SwitchGlaze_20pct_N_IQE0pt8" => "../../../lib/resources/Cold_SwitchGlaze_20pct_N_IQE0pt8.idf",
+        "Hot_SwitchGlaze_10pct_N_IQE0pt4" => "../../../lib/resources/Hot_SwitchGlaze_10pct_N_IQE0pt4.idf",
+        "Hot_SwitchGlaze_10pct_N_IQE0pt6" => "../../../lib/resources/Hot_SwitchGlaze_10pct_N_IQE0pt6.idf",
+        "Hot_SwitchGlaze_10pct_N_IQE0pt8" => "../../../lib/resources/Hot_SwitchGlaze_10pct_N_IQE0pt8.idf",
+        "Hot_SwitchGlaze_15pct_N_IQE0pt4" => "../../../lib/resources/Hot_SwitchGlaze_15pct_N_IQE0pt4.idf",
+        "Hot_SwitchGlaze_15pct_N_IQE0pt6" => "../../../lib/resources/Hot_SwitchGlaze_15pct_N_IQE0pt6.idf",
+        "Hot_SwitchGlaze_15pct_N_IQE0pt8" => "../../../lib/resources/Hot_SwitchGlaze_15pct_N_IQE0pt8.idf",
+        "Hot_SwitchGlaze_20pct_N_IQE0pt4" => "../../../lib/resources/Hot_SwitchGlaze_20pct_N_IQE0pt4.idf",
+        "Hot_SwitchGlaze_20pct_N_IQE0pt6" => "../../../lib/resources/Hot_SwitchGlaze_20pct_N_IQE0pt6.idf",
+        "Hot_SwitchGlaze_20pct_N_IQE0pt8" => "../../../lib/resources/Hot_SwitchGlaze_20pct_N_IQE0pt8.idf",
+        "VeryCold_SwitchGlaze_10pct_N_IQE0pt4" => "../../../lib/resources/VeryCold_SwitchGlaze_10pct_N_IQE0pt4.idf",
+        "VeryCold_SwitchGlaze_10pct_N_IQE0pt6" => "../../../lib/resources/VeryCold_SwitchGlaze_10pct_N_IQE0pt6.idf",
+        "VeryCold_SwitchGlaze_10pct_N_IQE0pt8" => "../../../lib/resources/VeryCold_SwitchGlaze_10pct_N_IQE0pt8.idf",
+        "VeryCold_SwitchGlaze_15pct_N_IQE0pt4" => "../../../lib/resources/VeryCold_SwitchGlaze_15pct_N_IQE0pt4.idf",
+        "VeryCold_SwitchGlaze_15pct_N_IQE0pt6" => "../../../lib/resources/VeryCold_SwitchGlaze_15pct_N_IQE0pt6.idf",
+        "VeryCold_SwitchGlaze_15pct_N_IQE0pt8" => "../../../lib/resources/VeryCold_SwitchGlaze_15pct_N_IQE0pt8.idf",
+        "VeryCold_SwitchGlaze_20pct_N_IQE0pt4" => "../../../lib/resources/VeryCold_SwitchGlaze_20pct_N_IQE0pt4.idf",
+        "VeryCold_SwitchGlaze_20pct_N_IQE0pt6" => "../../../lib/resources/VeryCold_SwitchGlaze_20pct_N_IQE0pt6.idf",
+        "VeryCold_SwitchGlaze_20pct_N_IQE0pt8" => "../../../lib/resources/VeryCold_SwitchGlaze_20pct_N_IQE0pt8.idf",
+        "VeryHot_SwitchGlaze_10pct_N_IQE0pt4" => "../../../lib/resources/VeryHot_SwitchGlaze_10pct_N_IQE0pt4.idf",
+        "VeryHot_SwitchGlaze_10pct_N_IQE0pt6" => "../../../lib/resources/VeryHot_SwitchGlaze_10pct_N_IQE0pt6.idf",
+        "VeryHot_SwitchGlaze_10pct_N_IQE0pt8" => "../../../lib/resources/VeryHot_SwitchGlaze_10pct_N_IQE0pt8.idf",
+        "VeryHot_SwitchGlaze_15pct_N_IQE0pt4" => "../../../lib/resources/VeryHot_SwitchGlaze_15pct_N_IQE0pt4.idf",
+        "VeryHot_SwitchGlaze_15pct_N_IQE0pt6" => "../../../lib/resources/VeryHot_SwitchGlaze_15pct_N_IQE0pt6.idf",
+        "VeryHot_SwitchGlaze_15pct_N_IQE0pt8" => "../../../lib/resources/VeryHot_SwitchGlaze_15pct_N_IQE0pt8.idf",
+        "VeryHot_SwitchGlaze_20pct_N_IQE0pt4" => "../../../lib/resources/VeryHot_SwitchGlaze_20pct_N_IQE0pt4.idf",
+        "VeryHot_SwitchGlaze_20pct_N_IQE0pt6" => "../../../lib/resources/VeryHot_SwitchGlaze_20pct_N_IQE0pt6.idf",
+        "VeryHot_SwitchGlaze_20pct_N_IQE0pt8" => "../../../lib/resources/VeryHot_SwitchGlaze_20pct_N_IQE0pt8.idf",
       } 
     elsif serverrun == false
       runner.registerInfo("Reading idf files from the local #{idf_path} directory")
@@ -654,6 +721,10 @@ class AInjectWindowSpecificIDFObjects < OpenStudio::Ruleset::WorkspaceUserScript
         "Cold_SwitchGlaze_5pct_N_IQE0pt4" => "#{idf_path}/Cold_SwitchGlaze_5pct_N_IQE0pt4.idf",
         "Cold_SwitchGlaze_5pct_N_IQE0pt6" => "#{idf_path}/Cold_SwitchGlaze_5pct_N_IQE0pt6.idf",
         "Cold_SwitchGlaze_5pct_N_IQE0pt8" => "#{idf_path}/Cold_SwitchGlaze_5pct_N_IQE0pt8.idf",
+        "Cold_SwitchGlaze_25pct_N_IQE0" => "#{idf_path}/Cold_SwitchGlaze_25pct_N_IQE0.idf",
+        "Cold_SwitchGlaze_25pct_N_IQE0pt4" => "#{idf_path}/Cold_SwitchGlaze_25pct_N_IQE0pt4.idf",
+        "Cold_SwitchGlaze_25pct_N_IQE0pt6" => "#{idf_path}/Cold_SwitchGlaze_25pct_N_IQE0pt6.idf",
+        "Cold_SwitchGlaze_25pct_N_IQE0pt8" => "#{idf_path}/Cold_SwitchGlaze_25pct_N_IQE0pt8.idf",
         "Cold_Tinted_0pt5pct_N_IQE0" => "#{idf_path}/Cold_Tinted_0pt5pct_N_IQE0.idf",
         "Cold_Tinted_0pt5pct_N_IQE0pt4" => "#{idf_path}/Cold_Tinted_0pt5pct_N_IQE0pt4.idf",
         "Cold_Tinted_0pt5pct_N_IQE0pt6" => "#{idf_path}/Cold_Tinted_0pt5pct_N_IQE0pt6.idf",
@@ -692,6 +763,10 @@ class AInjectWindowSpecificIDFObjects < OpenStudio::Ruleset::WorkspaceUserScript
         "Hot_SwitchGlaze_5pct_N_IQE0pt4" => "#{idf_path}/Hot_SwitchGlaze_5pct_N_IQE0pt4.idf",
         "Hot_SwitchGlaze_5pct_N_IQE0pt6" => "#{idf_path}/Hot_SwitchGlaze_5pct_N_IQE0pt6.idf",
         "Hot_SwitchGlaze_5pct_N_IQE0pt8" => "#{idf_path}/Hot_SwitchGlaze_5pct_N_IQE0pt8.idf",
+        "Hot_SwitchGlaze_25pct_N_IQE0" => "#{idf_path}/Hot_SwitchGlaze_25pct_N_IQE0.idf",
+        "Hot_SwitchGlaze_25pct_N_IQE0pt4" => "#{idf_path}/Hot_SwitchGlaze_25pct_N_IQE0pt4.idf",
+        "Hot_SwitchGlaze_25pct_N_IQE0pt6" => "#{idf_path}/Hot_SwitchGlaze_25pct_N_IQE0pt6.idf",
+        "Hot_SwitchGlaze_25pct_N_IQE0pt8" => "#{idf_path}/Hot_SwitchGlaze_25pct_N_IQE0pt8.idf",
         "Hot_Tinted_0pt5pct_N_IQE0" => "#{idf_path}/Hot_Tinted_0pt5pct_N_IQE0.idf",
         "Hot_Tinted_0pt5pct_N_IQE0pt4" => "#{idf_path}/Hot_Tinted_0pt5pct_N_IQE0pt4.idf",
         "Hot_Tinted_0pt5pct_N_IQE0pt6" => "#{idf_path}/Hot_Tinted_0pt5pct_N_IQE0pt6.idf",
@@ -730,6 +805,10 @@ class AInjectWindowSpecificIDFObjects < OpenStudio::Ruleset::WorkspaceUserScript
         "VeryCold_SwitchGlaze_5pct_N_IQE0pt4" => "#{idf_path}/VeryCold_SwitchGlaze_5pct_N_IQE0pt4.idf",
         "VeryCold_SwitchGlaze_5pct_N_IQE0pt6" => "#{idf_path}/VeryCold_SwitchGlaze_5pct_N_IQE0pt6.idf",
         "VeryCold_SwitchGlaze_5pct_N_IQE0pt8" => "#{idf_path}/VeryCold_SwitchGlaze_5pct_N_IQE0pt8.idf",
+        "VeryCold_SwitchGlaze_25pct_N_IQE0" => "#{idf_path}/VeryCold_SwitchGlaze_25pct_N_IQE0.idf",
+        "VeryCold_SwitchGlaze_25pct_N_IQE0pt4" => "#{idf_path}/VeryCold_SwitchGlaze_25pct_N_IQE0pt4.idf",
+        "VeryCold_SwitchGlaze_25pct_N_IQE0pt6" => "#{idf_path}/VeryCold_SwitchGlaze_25pct_N_IQE0pt6.idf",
+        "VeryCold_SwitchGlaze_25pct_N_IQE0pt8" => "#{idf_path}/VeryCold_SwitchGlaze_25pct_N_IQE0pt8.idf",
         "VeryCold_Tinted_0pt5pct_N_IQE0" => "#{idf_path}/VeryCold_Tinted_0pt5pct_N_IQE0.idf",
         "VeryCold_Tinted_0pt5pct_N_IQE0pt4" => "#{idf_path}/VeryCold_Tinted_0pt5pct_N_IQE0pt4.idf",
         "VeryCold_Tinted_0pt5pct_N_IQE0pt6" => "#{idf_path}/VeryCold_Tinted_0pt5pct_N_IQE0pt6.idf",
@@ -767,6 +846,10 @@ class AInjectWindowSpecificIDFObjects < OpenStudio::Ruleset::WorkspaceUserScript
         "VeryHot_SwitchGlaze_5pct_N_IQE0pt4" => "#{idf_path}/VeryHot_SwitchGlaze_5pct_N_IQE0pt4.idf",
         "VeryHot_SwitchGlaze_5pct_N_IQE0pt6" => "#{idf_path}/VeryHot_SwitchGlaze_5pct_N_IQE0pt6.idf",
         "VeryHot_SwitchGlaze_5pct_N_IQE0pt8" => "#{idf_path}/VeryHot_SwitchGlaze_5pct_N_IQE0pt8.idf",
+        "VeryHot_SwitchGlaze_25pct_N_IQE0" => "#{idf_path}/VeryHot_SwitchGlaze_25pct_N_IQE0.idf",
+        "VeryHot_SwitchGlaze_25pct_N_IQE0pt4" => "#{idf_path}/VeryHot_SwitchGlaze_25pct_N_IQE0pt4.idf",
+        "VeryHot_SwitchGlaze_25pct_N_IQE0pt6" => "#{idf_path}/VeryHot_SwitchGlaze_25pct_N_IQE0pt6.idf",
+        "VeryHot_SwitchGlaze_25pct_N_IQE0pt8" => "#{idf_path}/VeryHot_SwitchGlaze_25pct_N_IQE0pt8.idf",
         "VeryHot_Tinted_0pt5pct_N_IQE0" => "#{idf_path}/VeryHot_Tinted_0pt5pct_N_IQE0.idf",
         "VeryHot_Tinted_0pt5pct_N_IQE0pt4" => "#{idf_path}/VeryHot_Tinted_0pt5pct_N_IQE0pt4.idf",
         "VeryHot_Tinted_0pt5pct_N_IQE0pt6" => "#{idf_path}/VeryHot_Tinted_0pt5pct_N_IQE0pt6.idf",
@@ -787,6 +870,42 @@ class AInjectWindowSpecificIDFObjects < OpenStudio::Ruleset::WorkspaceUserScript
         "VeryHot_Tinted_5pct_N_IQE0pt4" => "#{idf_path}/VeryHot_Tinted_5pct_N_IQE0pt4.idf",
         "VeryHot_Tinted_5pct_N_IQE0pt6" => "#{idf_path}/VeryHot_Tinted_5pct_N_IQE0pt6.idf",
         "VeryHot_Tinted_5pct_N_IQE0pt8" => "#{idf_path}/VeryHot_Tinted_5pct_N_IQE0pt8.idf",
+        "Cold_SwitchGlaze_10pct_N_IQE0pt4" => "#{idf_path}/Cold_SwitchGlaze_10pct_N_IQE0pt4.idf",
+        "Cold_SwitchGlaze_10pct_N_IQE0pt6" => "#{idf_path}/Cold_SwitchGlaze_10pct_N_IQE0pt6.idf",
+        "Cold_SwitchGlaze_10pct_N_IQE0pt8" => "#{idf_path}/Cold_SwitchGlaze_10pct_N_IQE0pt8.idf",
+        "Cold_SwitchGlaze_15pct_N_IQE0pt4" => "#{idf_path}/Cold_SwitchGlaze_15pct_N_IQE0pt4.idf",
+        "Cold_SwitchGlaze_15pct_N_IQE0pt6" => "#{idf_path}/Cold_SwitchGlaze_15pct_N_IQE0pt6.idf",
+        "Cold_SwitchGlaze_15pct_N_IQE0pt8" => "#{idf_path}/Cold_SwitchGlaze_15pct_N_IQE0pt8.idf",
+        "Cold_SwitchGlaze_20pct_N_IQE0pt4" => "#{idf_path}/Cold_SwitchGlaze_20pct_N_IQE0pt4.idf",
+        "Cold_SwitchGlaze_20pct_N_IQE0pt6" => "#{idf_path}/Cold_SwitchGlaze_20pct_N_IQE0pt6.idf",
+        "Cold_SwitchGlaze_20pct_N_IQE0pt8" => "#{idf_path}/Cold_SwitchGlaze_20pct_N_IQE0pt8.idf",
+        "Hot_SwitchGlaze_10pct_N_IQE0pt4" => "#{idf_path}/Hot_SwitchGlaze_10pct_N_IQE0pt4.idf",
+        "Hot_SwitchGlaze_10pct_N_IQE0pt6" => "#{idf_path}/Hot_SwitchGlaze_10pct_N_IQE0pt6.idf",
+        "Hot_SwitchGlaze_10pct_N_IQE0pt8" => "#{idf_path}/Hot_SwitchGlaze_10pct_N_IQE0pt8.idf",
+        "Hot_SwitchGlaze_15pct_N_IQE0pt4" => "#{idf_path}/Hot_SwitchGlaze_15pct_N_IQE0pt4.idf",
+        "Hot_SwitchGlaze_15pct_N_IQE0pt6" => "#{idf_path}/Hot_SwitchGlaze_15pct_N_IQE0pt6.idf",
+        "Hot_SwitchGlaze_15pct_N_IQE0pt8" => "#{idf_path}/Hot_SwitchGlaze_15pct_N_IQE0pt8.idf",
+        "Hot_SwitchGlaze_20pct_N_IQE0pt4" => "#{idf_path}/Hot_SwitchGlaze_20pct_N_IQE0pt4.idf",
+        "Hot_SwitchGlaze_20pct_N_IQE0pt6" => "#{idf_path}/Hot_SwitchGlaze_20pct_N_IQE0pt6.idf",
+        "Hot_SwitchGlaze_20pct_N_IQE0pt8" => "#{idf_path}/Hot_SwitchGlaze_20pct_N_IQE0pt8.idf",
+        "VeryCold_SwitchGlaze_10pct_N_IQE0pt4" => "#{idf_path}/VeryCold_SwitchGlaze_10pct_N_IQE0pt4.idf",
+        "VeryCold_SwitchGlaze_10pct_N_IQE0pt6" => "#{idf_path}/VeryCold_SwitchGlaze_10pct_N_IQE0pt6.idf",
+        "VeryCold_SwitchGlaze_10pct_N_IQE0pt8" => "#{idf_path}/VeryCold_SwitchGlaze_10pct_N_IQE0pt8.idf",
+        "VeryCold_SwitchGlaze_15pct_N_IQE0pt4" => "#{idf_path}/VeryCold_SwitchGlaze_15pct_N_IQE0pt4.idf",
+        "VeryCold_SwitchGlaze_15pct_N_IQE0pt6" => "#{idf_path}/VeryCold_SwitchGlaze_15pct_N_IQE0pt6.idf",
+        "VeryCold_SwitchGlaze_15pct_N_IQE0pt8" => "#{idf_path}/VeryCold_SwitchGlaze_15pct_N_IQE0pt8.idf",
+        "VeryCold_SwitchGlaze_20pct_N_IQE0pt4" => "#{idf_path}/VeryCold_SwitchGlaze_20pct_N_IQE0pt4.idf",
+        "VeryCold_SwitchGlaze_20pct_N_IQE0pt6" => "#{idf_path}/VeryCold_SwitchGlaze_20pct_N_IQE0pt6.idf",
+        "VeryCold_SwitchGlaze_20pct_N_IQE0pt8" => "#{idf_path}/VeryCold_SwitchGlaze_20pct_N_IQE0pt8.idf",
+        "VeryHot_SwitchGlaze_10pct_N_IQE0pt4" => "#{idf_path}/VeryHot_SwitchGlaze_10pct_N_IQE0pt4.idf",
+        "VeryHot_SwitchGlaze_10pct_N_IQE0pt6" => "#{idf_path}/VeryHot_SwitchGlaze_10pct_N_IQE0pt6.idf",
+        "VeryHot_SwitchGlaze_10pct_N_IQE0pt8" => "#{idf_path}/VeryHot_SwitchGlaze_10pct_N_IQE0pt8.idf",
+        "VeryHot_SwitchGlaze_15pct_N_IQE0pt4" => "#{idf_path}/VeryHot_SwitchGlaze_15pct_N_IQE0pt4.idf",
+        "VeryHot_SwitchGlaze_15pct_N_IQE0pt6" => "#{idf_path}/VeryHot_SwitchGlaze_15pct_N_IQE0pt6.idf",
+        "VeryHot_SwitchGlaze_15pct_N_IQE0pt8" => "#{idf_path}/VeryHot_SwitchGlaze_15pct_N_IQE0pt8.idf",
+        "VeryHot_SwitchGlaze_20pct_N_IQE0pt4" => "#{idf_path}/VeryHot_SwitchGlaze_20pct_N_IQE0pt4.idf",
+        "VeryHot_SwitchGlaze_20pct_N_IQE0pt6" => "#{idf_path}/VeryHot_SwitchGlaze_20pct_N_IQE0pt6.idf",
+        "VeryHot_SwitchGlaze_20pct_N_IQE0pt8" => "#{idf_path}/VeryHot_SwitchGlaze_20pct_N_IQE0pt8.idf",
       } 
     end
     ####################################################################################

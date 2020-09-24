@@ -72,10 +72,10 @@ OS:HeatBalanceAlgorithm,
 OS:RunPeriod,
   {57324981-05db-45f6-9c9f-c840fd123510}, !- Handle
   Run Period 1,                           !- Name
-  8,                                      !- Begin Month
-  3,                                      !- Begin Day of Month
-  8,                                      !- End Month
-  4,                                      !- End Day of Month
+  1,                                      !- Begin Month
+  1,                                      !- Begin Day of Month
+  12,                                     !- End Month
+  31,                                     !- End Day of Month
   ,                                       !- Use Weather File Holidays and Special Days
   ,                                       !- Use Weather File Daylight Saving Period
   ,                                       !- Apply Weekend Holiday Rule
