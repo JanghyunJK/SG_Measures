@@ -141,11 +141,47 @@ class AInjectWindowSpecificIDFObjects < OpenStudio::Ruleset::WorkspaceUserScript
     glzsys << "25pct_N_IQE0pt4"
     glzsys << "25pct_N_IQE0pt6"
     glzsys << "25pct_N_IQE0pt8"
+    glzsys << "Triple_0pt5pct_N_IQE0"
+    glzsys << "Triple_0pt5pct_N_IQE0pt4"
+    glzsys << "Triple_0pt5pct_N_IQE0pt6"
+    glzsys << "Triple_0pt5pct_N_IQE0pt8"
+    glzsys << "Triple_5pct_N_IQE0"
+    glzsys << "Triple_5pct_N_IQE0pt4"
+    glzsys << "Triple_5pct_N_IQE0pt6"
+    glzsys << "Triple_5pct_N_IQE0pt8"
+    glzsys << "VIG_0pt5pct_N_IQE0"
+    glzsys << "VIG_0pt5pct_N_IQE0pt4"
+    glzsys << "VIG_0pt5pct_N_IQE0pt6"
+    glzsys << "VIG_0pt5pct_N_IQE0pt8"
+    glzsys << "VIG_5pct_N_IQE0"
+    glzsys << "VIG_5pct_N_IQE0pt4"
+    glzsys << "VIG_5pct_N_IQE0pt6"
+    glzsys << "VIG_5pct_N_IQE0pt8"
     glzsys << "======================"
     glzsys << "Old Windows"
     glzsys << "======================"
     glzsys << "Single_Pane"
     glzsys << "Double_Pane"
+    glzsys << "======================"
+    glzsys << "Triple Pane"
+    glzsys << "======================"
+    glzsys << "VeryHot_Triple_Pane"
+    glzsys << "Hot_Triple_Pane"
+    glzsys << "Cold_Triple_Pane"
+    glzsys << "VeryCold_Triple_Pane"
+    glzsys << "Triple_Tinted_25pct_N_IQE0"
+    glzsys << "Triple_Tinted_50pct_N_IQE0"
+    glzsys << "Triple_Tinted_50pct_S_IQE0"
+    glzsys << "======================"
+    glzsys << "VIG"
+    glzsys << "======================"
+    glzsys << "VeryHot_VIG"
+    glzsys << "Hot_VIG"
+    glzsys << "Cold_VIG"
+    glzsys << "VeryCold_VIG"
+    glzsys << "VIG_Tinted_25pct_N_IQE0"
+    glzsys << "VIG_Tinted_50pct_N_IQE0"
+    glzsys << "VIG_Tinted_50pct_S_IQE0"
     glzsys << "======================"
     glzsys << "Others"
     glzsys << "======================"
@@ -325,6 +361,34 @@ class AInjectWindowSpecificIDFObjects < OpenStudio::Ruleset::WorkspaceUserScript
   
       glztype = climateregion.concat("_#{glztype.to_s}")
       runner.registerInfo("Window name to be implemented = #{glztype}")
+      
+    elsif (glztype == "Triple Pane")
+    
+      glztype = "Triple_Pane"
+      
+      location = check_upstream_measure_for_arg(runner, 'weather_file_name')
+      location = location[:value].split("\\")[-1]
+      runner.registerInfo("Weather file defined in the upstream = #{location}")
+      
+      climateregion = dictionary_weather[location]
+      runner.registerInfo("Simple climate classification for this location = #{climateregion}")
+  
+      glztype = climateregion.concat("_#{glztype.to_s}")
+      runner.registerInfo("Window name to be implemented = #{glztype}")
+      
+    elsif (glztype == "VIG")
+    
+      glztype = "VIG"
+      
+      location = check_upstream_measure_for_arg(runner, 'weather_file_name')
+      location = location[:value].split("\\")[-1]
+      runner.registerInfo("Weather file defined in the upstream = #{location}")
+      
+      climateregion = dictionary_weather[location]
+      runner.registerInfo("Simple climate classification for this location = #{climateregion}")
+  
+      glztype = climateregion.concat("_#{glztype.to_s}")
+      runner.registerInfo("Window name to be implemented = #{glztype}")
                     
     elsif (glztype == "SwitchGlaze")
     
@@ -436,6 +500,20 @@ class AInjectWindowSpecificIDFObjects < OpenStudio::Ruleset::WorkspaceUserScript
       else
         glztype = glztype.concat("#{pce_string.to_s}")
       end
+      runner.registerInfo("glztype = #{glztype}")
+      
+      runner.registerInfo("Window name to be implemented = #{glztype}")
+      
+    elsif (glztype == "Triple_Tinted_25pct_N_IQE0")||(glztype == "Triple_Tinted_50pct_N_IQE0")||(glztype == "Triple_Tinted_50pct_S_IQE0")||(glztype == "VIG_Tinted_25pct_N_IQE0")||(glztype == "VIG_Tinted_50pct_N_IQE0")||(glztype == "VIG_Tinted_50pct_S_IQE0")
+          
+      location = check_upstream_measure_for_arg(runner, 'weather_file_name')
+      location = location[:value].split("\\")[-1]
+      runner.registerInfo("Weather file defined in the upstream = #{location}")
+      
+      climateregion = dictionary_weather[location]
+      runner.registerInfo("Simple climate classification for this location = #{climateregion}")
+  
+      glztype = climateregion.concat("_#{glztype.to_s}")
       runner.registerInfo("glztype = #{glztype}")
       
       runner.registerInfo("Window name to be implemented = #{glztype}")
@@ -679,6 +757,174 @@ class AInjectWindowSpecificIDFObjects < OpenStudio::Ruleset::WorkspaceUserScript
         "VeryHot_SwitchGlaze_20pct_N_IQE0pt4" => "../../../lib/resources/VeryHot_SwitchGlaze_20pct_N_IQE0pt4.idf",
         "VeryHot_SwitchGlaze_20pct_N_IQE0pt6" => "../../../lib/resources/VeryHot_SwitchGlaze_20pct_N_IQE0pt6.idf",
         "VeryHot_SwitchGlaze_20pct_N_IQE0pt8" => "../../../lib/resources/VeryHot_SwitchGlaze_20pct_N_IQE0pt8.idf",
+        "VeryHot_Triple_Pane" => "../../../lib/resources/VeryHot_Triple_Pane.idf",
+        "Hot_Triple_Pane" => "../../../lib/resources/Hot_Triple_Pane.idf",
+        "Cold_Triple_Pane" => "../../../lib/resources/Cold_Triple_Pane.idf",
+        "VeryCold_Triple_Pane" => "../../../lib/resources/VeryCold_Triple_Pane.idf",
+        "VeryHot_VIG" => "../../../lib/resources/VeryHot_VIG.idf",
+        "Hot_VIG" => "../../../lib/resources/Hot_VIG.idf",
+        "Cold_VIG" => "../../../lib/resources/Cold_VIG.idf",
+        "VeryCold_VIG" => "../../../lib/resources/VeryCold_VIG.idf",
+        "VeryHot_SwitchGlaze_Triple_0pt5pct_N_IQE0" => "../../../lib/resources/VeryHot_SwitchGlaze_Triple_0pt5pct_N_IQE0.idf",
+        "VeryHot_SwitchGlaze_Triple_0pt5pct_N_IQE0pt4" => "../../../lib/resources/VeryHot_SwitchGlaze_Triple_0pt5pct_N_IQE0pt4.idf",
+        "VeryHot_SwitchGlaze_Triple_0pt5pct_N_IQE0pt6" => "../../../lib/resources/VeryHot_SwitchGlaze_Triple_0pt5pct_N_IQE0pt6.idf",
+        "VeryHot_SwitchGlaze_Triple_0pt5pct_N_IQE0pt8" => "../../../lib/resources/VeryHot_SwitchGlaze_Triple_0pt5pct_N_IQE0pt8.idf",
+        "Hot_SwitchGlaze_Triple_0pt5pct_N_IQE0" => "../../../lib/resources/Hot_SwitchGlaze_Triple_0pt5pct_N_IQE0.idf",
+        "Hot_SwitchGlaze_Triple_0pt5pct_N_IQE0pt4" => "../../../lib/resources/Hot_SwitchGlaze_Triple_0pt5pct_N_IQE0pt4.idf",
+        "Hot_SwitchGlaze_Triple_0pt5pct_N_IQE0pt6" => "../../../lib/resources/Hot_SwitchGlaze_Triple_0pt5pct_N_IQE0pt6.idf",
+        "Hot_SwitchGlaze_Triple_0pt5pct_N_IQE0pt8" => "../../../lib/resources/Hot_SwitchGlaze_Triple_0pt5pct_N_IQE0pt8.idf",
+        "Cold_SwitchGlaze_Triple_0pt5pct_N_IQE0" => "../../../lib/resources/Cold_SwitchGlaze_Triple_0pt5pct_N_IQE0.idf",
+        "Cold_SwitchGlaze_Triple_0pt5pct_N_IQE0pt4" => "../../../lib/resources/Cold_SwitchGlaze_Triple_0pt5pct_N_IQE0pt4.idf",
+        "Cold_SwitchGlaze_Triple_0pt5pct_N_IQE0pt6" => "../../../lib/resources/Cold_SwitchGlaze_Triple_0pt5pct_N_IQE0pt6.idf",
+        "Cold_SwitchGlaze_Triple_0pt5pct_N_IQE0pt8" => "../../../lib/resources/Cold_SwitchGlaze_Triple_0pt5pct_N_IQE0pt8.idf",
+        "VeryCold_SwitchGlaze_Triple_0pt5pct_N_IQE0" => "../../../lib/resources/VeryCold_SwitchGlaze_Triple_0pt5pct_N_IQE0.idf",
+        "VeryCold_SwitchGlaze_Triple_0pt5pct_N_IQE0pt4" => "../../../lib/resources/VeryCold_SwitchGlaze_Triple_0pt5pct_N_IQE0pt4.idf",
+        "VeryCold_SwitchGlaze_Triple_0pt5pct_N_IQE0pt6" => "../../../lib/resources/VeryCold_SwitchGlaze_Triple_0pt5pct_N_IQE0pt6.idf",
+        "VeryCold_SwitchGlaze_Triple_0pt5pct_N_IQE0pt8" => "../../../lib/resources/VeryCold_SwitchGlaze_Triple_0pt5pct_N_IQE0pt8.idf",
+        "VeryHot_SwitchGlaze_Triple_5pct_N_IQE0" => "../../../lib/resources/VeryHot_SwitchGlaze_Triple_5pct_N_IQE0.idf",
+        "VeryHot_SwitchGlaze_Triple_5pct_N_IQE0pt4" => "../../../lib/resources/VeryHot_SwitchGlaze_Triple_5pct_N_IQE0pt4.idf",
+        "VeryHot_SwitchGlaze_Triple_5pct_N_IQE0pt6" => "../../../lib/resources/VeryHot_SwitchGlaze_Triple_5pct_N_IQE0pt6.idf",
+        "VeryHot_SwitchGlaze_Triple_5pct_N_IQE0pt8" => "../../../lib/resources/VeryHot_SwitchGlaze_Triple_5pct_N_IQE0pt8.idf",
+        "Hot_SwitchGlaze_Triple_5pct_N_IQE0" => "../../../lib/resources/Hot_SwitchGlaze_Triple_5pct_N_IQE0.idf",
+        "Hot_SwitchGlaze_Triple_5pct_N_IQE0pt4" => "../../../lib/resources/Hot_SwitchGlaze_Triple_5pct_N_IQE0pt4.idf",
+        "Hot_SwitchGlaze_Triple_5pct_N_IQE0pt6" => "../../../lib/resources/Hot_SwitchGlaze_Triple_5pct_N_IQE0pt6.idf",
+        "Hot_SwitchGlaze_Triple_5pct_N_IQE0pt8" => "../../../lib/resources/Hot_SwitchGlaze_Triple_5pct_N_IQE0pt8.idf",
+        "Cold_SwitchGlaze_Triple_5pct_N_IQE0" => "../../../lib/resources/Cold_SwitchGlaze_Triple_5pct_N_IQE0.idf",
+        "Cold_SwitchGlaze_Triple_5pct_N_IQE0pt4" => "../../../lib/resources/Cold_SwitchGlaze_Triple_5pct_N_IQE0pt4.idf",
+        "Cold_SwitchGlaze_Triple_5pct_N_IQE0pt6" => "../../../lib/resources/Cold_SwitchGlaze_Triple_5pct_N_IQE0pt6.idf",
+        "Cold_SwitchGlaze_Triple_5pct_N_IQE0pt8" => "../../../lib/resources/Cold_SwitchGlaze_Triple_5pct_N_IQE0pt8.idf",
+        "VeryCold_SwitchGlaze_Triple_5pct_N_IQE0" => "../../../lib/resources/VeryCold_SwitchGlaze_Triple_5pct_N_IQE0.idf",
+        "VeryCold_SwitchGlaze_Triple_5pct_N_IQE0pt4" => "../../../lib/resources/VeryCold_SwitchGlaze_Triple_5pct_N_IQE0pt4.idf",
+        "VeryCold_SwitchGlaze_Triple_5pct_N_IQE0pt6" => "../../../lib/resources/VeryCold_SwitchGlaze_Triple_5pct_N_IQE0pt6.idf",
+        "VeryCold_SwitchGlaze_Triple_5pct_N_IQE0pt8" => "../../../lib/resources/VeryCold_SwitchGlaze_Triple_5pct_N_IQE0pt8.idf",
+        "VeryHot_SwitchGlaze_VIG_0pt5pct_N_IQE0" => "../../../lib/resources/VeryHot_SwitchGlaze_VIG_0pt5pct_N_IQE0.idf",
+        "VeryHot_SwitchGlaze_VIG_0pt5pct_N_IQE0pt4" => "../../../lib/resources/VeryHot_SwitchGlaze_VIG_0pt5pct_N_IQE0pt4.idf",
+        "VeryHot_SwitchGlaze_VIG_0pt5pct_N_IQE0pt6" => "../../../lib/resources/VeryHot_SwitchGlaze_VIG_0pt5pct_N_IQE0pt6.idf",
+        "VeryHot_SwitchGlaze_VIG_0pt5pct_N_IQE0pt8" => "../../../lib/resources/VeryHot_SwitchGlaze_VIG_0pt5pct_N_IQE0pt8.idf",
+        "Hot_SwitchGlaze_VIG_0pt5pct_N_IQE0" => "../../../lib/resources/Hot_SwitchGlaze_VIG_0pt5pct_N_IQE0.idf",
+        "Hot_SwitchGlaze_VIG_0pt5pct_N_IQE0pt4" => "../../../lib/resources/Hot_SwitchGlaze_VIG_0pt5pct_N_IQE0pt4.idf",
+        "Hot_SwitchGlaze_VIG_0pt5pct_N_IQE0pt6" => "../../../lib/resources/Hot_SwitchGlaze_VIG_0pt5pct_N_IQE0pt6.idf",
+        "Hot_SwitchGlaze_VIG_0pt5pct_N_IQE0pt8" => "../../../lib/resources/Hot_SwitchGlaze_VIG_0pt5pct_N_IQE0pt8.idf",
+        "Cold_SwitchGlaze_VIG_0pt5pct_N_IQE0" => "../../../lib/resources/Cold_SwitchGlaze_VIG_0pt5pct_N_IQE0.idf",
+        "Cold_SwitchGlaze_VIG_0pt5pct_N_IQE0pt4" => "../../../lib/resources/Cold_SwitchGlaze_VIG_0pt5pct_N_IQE0pt4.idf",
+        "Cold_SwitchGlaze_VIG_0pt5pct_N_IQE0pt6" => "../../../lib/resources/Cold_SwitchGlaze_VIG_0pt5pct_N_IQE0pt6.idf",
+        "Cold_SwitchGlaze_VIG_0pt5pct_N_IQE0pt8" => "../../../lib/resources/Cold_SwitchGlaze_VIG_0pt5pct_N_IQE0pt8.idf",
+        "VeryCold_SwitchGlaze_VIG_0pt5pct_N_IQE0" => "../../../lib/resources/VeryCold_SwitchGlaze_VIG_0pt5pct_N_IQE0.idf",
+        "VeryCold_SwitchGlaze_VIG_0pt5pct_N_IQE0pt4" => "../../../lib/resources/VeryCold_SwitchGlaze_VIG_0pt5pct_N_IQE0pt4.idf",
+        "VeryCold_SwitchGlaze_VIG_0pt5pct_N_IQE0pt6" => "../../../lib/resources/VeryCold_SwitchGlaze_VIG_0pt5pct_N_IQE0pt6.idf",
+        "VeryCold_SwitchGlaze_VIG_0pt5pct_N_IQE0pt8" => "../../../lib/resources/VeryCold_SwitchGlaze_VIG_0pt5pct_N_IQE0pt8.idf",
+        "VeryHot_SwitchGlaze_VIG_5pct_N_IQE0" => "../../../lib/resources/VeryHot_SwitchGlaze_VIG_5pct_N_IQE0.idf",
+        "VeryHot_SwitchGlaze_VIG_5pct_N_IQE0pt4" => "../../../lib/resources/VeryHot_SwitchGlaze_VIG_5pct_N_IQE0pt4.idf",
+        "VeryHot_SwitchGlaze_VIG_5pct_N_IQE0pt6" => "../../../lib/resources/VeryHot_SwitchGlaze_VIG_5pct_N_IQE0pt6.idf",
+        "VeryHot_SwitchGlaze_VIG_5pct_N_IQE0pt8" => "../../../lib/resources/VeryHot_SwitchGlaze_VIG_5pct_N_IQE0pt8.idf",
+        "Hot_SwitchGlaze_VIG_5pct_N_IQE0" => "../../../lib/resources/Hot_SwitchGlaze_VIG_5pct_N_IQE0.idf",
+        "Hot_SwitchGlaze_VIG_5pct_N_IQE0pt4" => "../../../lib/resources/Hot_SwitchGlaze_VIG_5pct_N_IQE0pt4.idf",
+        "Hot_SwitchGlaze_VIG_5pct_N_IQE0pt6" => "../../../lib/resources/Hot_SwitchGlaze_VIG_5pct_N_IQE0pt6.idf",
+        "Hot_SwitchGlaze_VIG_5pct_N_IQE0pt8" => "../../../lib/resources/Hot_SwitchGlaze_VIG_5pct_N_IQE0pt8.idf",
+        "Cold_SwitchGlaze_VIG_5pct_N_IQE0" => "../../../lib/resources/Cold_SwitchGlaze_VIG_5pct_N_IQE0.idf",
+        "Cold_SwitchGlaze_VIG_5pct_N_IQE0pt4" => "../../../lib/resources/Cold_SwitchGlaze_VIG_5pct_N_IQE0pt4.idf",
+        "Cold_SwitchGlaze_VIG_5pct_N_IQE0pt6" => "../../../lib/resources/Cold_SwitchGlaze_VIG_5pct_N_IQE0pt6.idf",
+        "Cold_SwitchGlaze_VIG_5pct_N_IQE0pt8" => "../../../lib/resources/Cold_SwitchGlaze_VIG_5pct_N_IQE0pt8.idf",
+        "VeryCold_SwitchGlaze_VIG_5pct_N_IQE0" => "../../../lib/resources/VeryCold_SwitchGlaze_VIG_5pct_N_IQE0.idf",
+        "VeryCold_SwitchGlaze_VIG_5pct_N_IQE0pt4" => "../../../lib/resources/VeryCold_SwitchGlaze_VIG_5pct_N_IQE0pt4.idf",
+        "VeryCold_SwitchGlaze_VIG_5pct_N_IQE0pt6" => "../../../lib/resources/VeryCold_SwitchGlaze_VIG_5pct_N_IQE0pt6.idf",
+        "VeryCold_SwitchGlaze_VIG_5pct_N_IQE0pt8" => "../../../lib/resources/VeryCold_SwitchGlaze_VIG_5pct_N_IQE0pt8.idf",
+        "VeryCold_Triple_Tinted_25pct_N_IQE0" => "../../../lib/resources/VeryCold_Triple_Tinted_25pct_N_IQE0.idf",
+        "VeryHot_Triple_Tinted_25pct_N_IQE0" => "../../../lib/resources/VeryHot_Triple_Tinted_25pct_N_IQE0.idf",
+        "Cold_Triple_Tinted_25pct_N_IQE0" => "../../../lib/resources/Cold_Triple_Tinted_25pct_N_IQE0.idf",
+        "Hot_Triple_Tinted_25pct_N_IQE0" => "../../../lib/resources/Hot_Triple_Tinted_25pct_N_IQE0.idf",
+        "VeryCold_Triple_Tinted_50pct_N_IQE0" => "../../../lib/resources/VeryCold_Triple_Tinted_50pct_N_IQE0.idf",
+        "VeryHot_Triple_Tinted_50pct_N_IQE0" => "../../../lib/resources/VeryHot_Triple_Tinted_50pct_N_IQE0.idf",
+        "Cold_Triple_Tinted_50pct_N_IQE0" => "../../../lib/resources/Cold_Triple_Tinted_50pct_N_IQE0.idf",
+        "Hot_Triple_Tinted_50pct_N_IQE0" => "../../../lib/resources/Hot_Triple_Tinted_50pct_N_IQE0.idf",
+        "VeryCold_Triple_Tinted_50pct_S_IQE0" => "../../../lib/resources/VeryCold_Triple_Tinted_50pct_S_IQE0.idf",
+        "VeryHot_Triple_Tinted_50pct_S_IQE0" => "../../../lib/resources/VeryHot_Triple_Tinted_50pct_S_IQE0.idf",
+        "Cold_Triple_Tinted_50pct_S_IQE0" => "../../../lib/resources/Cold_Triple_Tinted_50pct_S_IQE0.idf",
+        "Hot_Triple_Tinted_50pct_S_IQE0" => "../../../lib/resources/Hot_Triple_Tinted_50pct_S_IQE0.idf",
+        "VeryCold_VIG_Tinted_25pct_N_IQE0" => "../../../lib/resources/VeryCold_VIG_Tinted_25pct_N_IQE0.idf",
+        "VeryHot_VIG_Tinted_25pct_N_IQE0" => "../../../lib/resources/VeryHot_VIG_Tinted_25pct_N_IQE0.idf",
+        "Cold_VIG_Tinted_25pct_N_IQE0" => "../../../lib/resources/Cold_VIG_Tinted_25pct_N_IQE0.idf",
+        "Hot_VIG_Tinted_25pct_N_IQE0" => "../../../lib/resources/Hot_VIG_Tinted_25pct_N_IQE0.idf",
+        "VeryCold_VIG_Tinted_50pct_N_IQE0" => "../../../lib/resources/VeryCold_VIG_Tinted_50pct_N_IQE0.idf",
+        "VeryHot_VIG_Tinted_50pct_N_IQE0" => "../../../lib/resources/VeryHot_VIG_Tinted_50pct_N_IQE0.idf",
+        "Cold_VIG_Tinted_50pct_N_IQE0" => "../../../lib/resources/Cold_VIG_Tinted_50pct_N_IQE0.idf",
+        "Hot_VIG_Tinted_50pct_N_IQE0" => "../../../lib/resources/Hot_VIG_Tinted_50pct_N_IQE0.idf",
+        "VeryCold_VIG_Tinted_50pct_S_IQE0" => "../../../lib/resources/VeryCold_VIG_Tinted_50pct_S_IQE0.idf",
+        "VeryHot_VIG_Tinted_50pct_S_IQE0" => "../../../lib/resources/VeryHot_VIG_Tinted_50pct_S_IQE0.idf",
+        "Cold_VIG_Tinted_50pct_S_IQE0" => "../../../lib/resources/Cold_VIG_Tinted_50pct_S_IQE0.idf",
+        "Hot_VIG_Tinted_50pct_S_IQE0" => "../../../lib/resources/Hot_VIG_Tinted_50pct_S_IQE0.idf", 
+        "VeryHot_Tinted_Triple_25pct_N_IQE0pt4" => "../../../lib/resources/VeryHot_Tinted_Triple_25pct_N_IQE0pt4.idf",
+        "VeryHot_Tinted_Triple_25pct_N_IQE0pt6" => "../../../lib/resources/VeryHot_Tinted_Triple_25pct_N_IQE0pt6.idf",
+        "VeryHot_Tinted_Triple_25pct_N_IQE0pt8" => "../../../lib/resources/VeryHot_Tinted_Triple_25pct_N_IQE0pt8.idf",
+        "VeryHot_Tinted_Triple_50pct_N_IQE0pt4" => "../../../lib/resources/VeryHot_Tinted_Triple_50pct_N_IQE0pt4.idf",
+        "VeryHot_Tinted_Triple_50pct_N_IQE0pt6" => "../../../lib/resources/VeryHot_Tinted_Triple_50pct_N_IQE0pt6.idf",
+        "VeryHot_Tinted_Triple_50pct_N_IQE0pt8" => "../../../lib/resources/VeryHot_Tinted_Triple_50pct_N_IQE0pt8.idf",
+        "VeryHot_Tinted_Triple_50pct_S_IQE0pt4" => "../../../lib/resources/VeryHot_Tinted_Triple_50pct_S_IQE0pt4.idf",
+        "VeryHot_Tinted_Triple_50pct_S_IQE0pt6" => "../../../lib/resources/VeryHot_Tinted_Triple_50pct_S_IQE0pt6.idf",
+        "VeryHot_Tinted_Triple_50pct_S_IQE0pt8" => "../../../lib/resources/VeryHot_Tinted_Triple_50pct_S_IQE0pt8.idf",
+        "Hot_Tinted_Triple_25pct_N_IQE0pt4" => "../../../lib/resources/Hot_Tinted_Triple_25pct_N_IQE0pt4.idf",
+        "Hot_Tinted_Triple_25pct_N_IQE0pt6" => "../../../lib/resources/Hot_Tinted_Triple_25pct_N_IQE0pt6.idf",
+        "Hot_Tinted_Triple_25pct_N_IQE0pt8" => "../../../lib/resources/Hot_Tinted_Triple_25pct_N_IQE0pt8.idf",
+        "Hot_Tinted_Triple_50pct_N_IQE0pt4" => "../../../lib/resources/Hot_Tinted_Triple_50pct_N_IQE0pt4.idf",
+        "Hot_Tinted_Triple_50pct_N_IQE0pt6" => "../../../lib/resources/Hot_Tinted_Triple_50pct_N_IQE0pt6.idf",
+        "Hot_Tinted_Triple_50pct_N_IQE0pt8" => "../../../lib/resources/Hot_Tinted_Triple_50pct_N_IQE0pt8.idf",
+        "Hot_Tinted_Triple_50pct_S_IQE0pt4" => "../../../lib/resources/Hot_Tinted_Triple_50pct_S_IQE0pt4.idf",
+        "Hot_Tinted_Triple_50pct_S_IQE0pt6" => "../../../lib/resources/Hot_Tinted_Triple_50pct_S_IQE0pt6.idf",
+        "Hot_Tinted_Triple_50pct_S_IQE0pt8" => "../../../lib/resources/Hot_Tinted_Triple_50pct_S_IQE0pt8.idf",
+        "Cold_Tinted_Triple_25pct_N_IQE0pt4" => "../../../lib/resources/Cold_Tinted_Triple_25pct_N_IQE0pt4.idf",
+        "Cold_Tinted_Triple_25pct_N_IQE0pt6" => "../../../lib/resources/Cold_Tinted_Triple_25pct_N_IQE0pt6.idf",
+        "Cold_Tinted_Triple_25pct_N_IQE0pt8" => "../../../lib/resources/Cold_Tinted_Triple_25pct_N_IQE0pt8.idf",
+        "Cold_Tinted_Triple_50pct_N_IQE0pt4" => "../../../lib/resources/Cold_Tinted_Triple_50pct_N_IQE0pt4.idf",
+        "Cold_Tinted_Triple_50pct_N_IQE0pt6" => "../../../lib/resources/Cold_Tinted_Triple_50pct_N_IQE0pt6.idf",
+        "Cold_Tinted_Triple_50pct_N_IQE0pt8" => "../../../lib/resources/Cold_Tinted_Triple_50pct_N_IQE0pt8.idf",
+        "Cold_Tinted_Triple_50pct_S_IQE0pt4" => "../../../lib/resources/Cold_Tinted_Triple_50pct_S_IQE0pt4.idf",
+        "Cold_Tinted_Triple_50pct_S_IQE0pt6" => "../../../lib/resources/Cold_Tinted_Triple_50pct_S_IQE0pt6.idf",
+        "Cold_Tinted_Triple_50pct_S_IQE0pt8" => "../../../lib/resources/Cold_Tinted_Triple_50pct_S_IQE0pt8.idf",
+        "VeryCold_Tinted_Triple_25pct_N_IQE0pt4" => "../../../lib/resources/VeryCold_Tinted_Triple_25pct_N_IQE0pt4.idf",
+        "VeryCold_Tinted_Triple_25pct_N_IQE0pt6" => "../../../lib/resources/VeryCold_Tinted_Triple_25pct_N_IQE0pt6.idf",
+        "VeryCold_Tinted_Triple_25pct_N_IQE0pt8" => "../../../lib/resources/VeryCold_Tinted_Triple_25pct_N_IQE0pt8.idf",
+        "VeryCold_Tinted_Triple_50pct_N_IQE0pt4" => "../../../lib/resources/VeryCold_Tinted_Triple_50pct_N_IQE0pt4.idf",
+        "VeryCold_Tinted_Triple_50pct_N_IQE0pt6" => "../../../lib/resources/VeryCold_Tinted_Triple_50pct_N_IQE0pt6.idf",
+        "VeryCold_Tinted_Triple_50pct_N_IQE0pt8" => "../../../lib/resources/VeryCold_Tinted_Triple_50pct_N_IQE0pt8.idf",
+        "VeryCold_Tinted_Triple_50pct_S_IQE0pt4" => "../../../lib/resources/VeryCold_Tinted_Triple_50pct_S_IQE0pt4.idf",
+        "VeryCold_Tinted_Triple_50pct_S_IQE0pt6" => "../../../lib/resources/VeryCold_Tinted_Triple_50pct_S_IQE0pt6.idf",
+        "VeryCold_Tinted_Triple_50pct_S_IQE0pt8" => "../../../lib/resources/VeryCold_Tinted_Triple_50pct_S_IQE0pt8.idf",
+        "VeryHot_Tinted_VIG_25pct_N_IQE0pt4" => "../../../lib/resources/VeryHot_Tinted_VIG_25pct_N_IQE0pt4.idf",
+        "VeryHot_Tinted_VIG_25pct_N_IQE0pt6" => "../../../lib/resources/VeryHot_Tinted_VIG_25pct_N_IQE0pt6.idf",
+        "VeryHot_Tinted_VIG_25pct_N_IQE0pt8" => "../../../lib/resources/VeryHot_Tinted_VIG_25pct_N_IQE0pt8.idf",
+        "VeryHot_Tinted_VIG_50pct_N_IQE0pt4" => "../../../lib/resources/VeryHot_Tinted_VIG_50pct_N_IQE0pt4.idf",
+        "VeryHot_Tinted_VIG_50pct_N_IQE0pt6" => "../../../lib/resources/VeryHot_Tinted_VIG_50pct_N_IQE0pt6.idf",
+        "VeryHot_Tinted_VIG_50pct_N_IQE0pt8" => "../../../lib/resources/VeryHot_Tinted_VIG_50pct_N_IQE0pt8.idf",
+        "VeryHot_Tinted_VIG_50pct_S_IQE0pt4" => "../../../lib/resources/VeryHot_Tinted_VIG_50pct_S_IQE0pt4.idf",
+        "VeryHot_Tinted_VIG_50pct_S_IQE0pt6" => "../../../lib/resources/VeryHot_Tinted_VIG_50pct_S_IQE0pt6.idf",
+        "VeryHot_Tinted_VIG_50pct_S_IQE0pt8" => "../../../lib/resources/VeryHot_Tinted_VIG_50pct_S_IQE0pt8.idf",
+        "Hot_Tinted_VIG_25pct_N_IQE0pt4" => "../../../lib/resources/Hot_Tinted_VIG_25pct_N_IQE0pt4.idf",
+        "Hot_Tinted_VIG_25pct_N_IQE0pt6" => "../../../lib/resources/Hot_Tinted_VIG_25pct_N_IQE0pt6.idf",
+        "Hot_Tinted_VIG_25pct_N_IQE0pt8" => "../../../lib/resources/Hot_Tinted_VIG_25pct_N_IQE0pt8.idf",
+        "Hot_Tinted_VIG_50pct_N_IQE0pt4" => "../../../lib/resources/Hot_Tinted_VIG_50pct_N_IQE0pt4.idf",
+        "Hot_Tinted_VIG_50pct_N_IQE0pt6" => "../../../lib/resources/Hot_Tinted_VIG_50pct_N_IQE0pt6.idf",
+        "Hot_Tinted_VIG_50pct_N_IQE0pt8" => "../../../lib/resources/Hot_Tinted_VIG_50pct_N_IQE0pt8.idf",
+        "Hot_Tinted_VIG_50pct_S_IQE0pt4" => "../../../lib/resources/Hot_Tinted_VIG_50pct_S_IQE0pt4.idf",
+        "Hot_Tinted_VIG_50pct_S_IQE0pt6" => "../../../lib/resources/Hot_Tinted_VIG_50pct_S_IQE0pt6.idf",
+        "Hot_Tinted_VIG_50pct_S_IQE0pt8" => "../../../lib/resources/Hot_Tinted_VIG_50pct_S_IQE0pt8.idf",
+        "Cold_Tinted_VIG_25pct_N_IQE0pt4" => "../../../lib/resources/Cold_Tinted_VIG_25pct_N_IQE0pt4.idf",
+        "Cold_Tinted_VIG_25pct_N_IQE0pt6" => "../../../lib/resources/Cold_Tinted_VIG_25pct_N_IQE0pt6.idf",
+        "Cold_Tinted_VIG_25pct_N_IQE0pt8" => "../../../lib/resources/Cold_Tinted_VIG_25pct_N_IQE0pt8.idf",
+        "Cold_Tinted_VIG_50pct_N_IQE0pt4" => "../../../lib/resources/Cold_Tinted_VIG_50pct_N_IQE0pt4.idf",
+        "Cold_Tinted_VIG_50pct_N_IQE0pt6" => "../../../lib/resources/Cold_Tinted_VIG_50pct_N_IQE0pt6.idf",
+        "Cold_Tinted_VIG_50pct_N_IQE0pt8" => "../../../lib/resources/Cold_Tinted_VIG_50pct_N_IQE0pt8.idf",
+        "Cold_Tinted_VIG_50pct_S_IQE0pt4" => "../../../lib/resources/Cold_Tinted_VIG_50pct_S_IQE0pt4.idf",
+        "Cold_Tinted_VIG_50pct_S_IQE0pt6" => "../../../lib/resources/Cold_Tinted_VIG_50pct_S_IQE0pt6.idf",
+        "Cold_Tinted_VIG_50pct_S_IQE0pt8" => "../../../lib/resources/Cold_Tinted_VIG_50pct_S_IQE0pt8.idf",
+        "VeryCold_Tinted_VIG_25pct_N_IQE0pt4" => "../../../lib/resources/VeryCold_Tinted_VIG_25pct_N_IQE0pt4.idf",
+        "VeryCold_Tinted_VIG_25pct_N_IQE0pt6" => "../../../lib/resources/VeryCold_Tinted_VIG_25pct_N_IQE0pt6.idf",
+        "VeryCold_Tinted_VIG_25pct_N_IQE0pt8" => "../../../lib/resources/VeryCold_Tinted_VIG_25pct_N_IQE0pt8.idf",
+        "VeryCold_Tinted_VIG_50pct_N_IQE0pt4" => "../../../lib/resources/VeryCold_Tinted_VIG_50pct_N_IQE0pt4.idf",
+        "VeryCold_Tinted_VIG_50pct_N_IQE0pt6" => "../../../lib/resources/VeryCold_Tinted_VIG_50pct_N_IQE0pt6.idf",
+        "VeryCold_Tinted_VIG_50pct_N_IQE0pt8" => "../../../lib/resources/VeryCold_Tinted_VIG_50pct_N_IQE0pt8.idf",
+        "VeryCold_Tinted_VIG_50pct_S_IQE0pt4" => "../../../lib/resources/VeryCold_Tinted_VIG_50pct_S_IQE0pt4.idf",
+        "VeryCold_Tinted_VIG_50pct_S_IQE0pt6" => "../../../lib/resources/VeryCold_Tinted_VIG_50pct_S_IQE0pt6.idf",
+        "VeryCold_Tinted_VIG_50pct_S_IQE0pt8" => "../../../lib/resources/VeryCold_Tinted_VIG_50pct_S_IQE0pt8.idf",
       } 
     elsif serverrun == false
       runner.registerInfo("Reading idf files from the local #{idf_path} directory")
@@ -906,6 +1152,174 @@ class AInjectWindowSpecificIDFObjects < OpenStudio::Ruleset::WorkspaceUserScript
         "VeryHot_SwitchGlaze_20pct_N_IQE0pt4" => "#{idf_path}/VeryHot_SwitchGlaze_20pct_N_IQE0pt4.idf",
         "VeryHot_SwitchGlaze_20pct_N_IQE0pt6" => "#{idf_path}/VeryHot_SwitchGlaze_20pct_N_IQE0pt6.idf",
         "VeryHot_SwitchGlaze_20pct_N_IQE0pt8" => "#{idf_path}/VeryHot_SwitchGlaze_20pct_N_IQE0pt8.idf",
+        "VeryHot_Triple_Pane" => "#{idf_path}/VeryHot_Triple_Pane.idf",
+        "Hot_Triple_Pane" => "#{idf_path}/Hot_Triple_Pane.idf",
+        "Cold_Triple_Pane" => "#{idf_path}/Cold_Triple_Pane.idf",
+        "VeryCold_Triple_Pane" => "#{idf_path}/VeryCold_Triple_Pane.idf",
+        "VeryHot_VIG" => "#{idf_path}/VeryHot_VIG.idf",
+        "Hot_VIG" => "#{idf_path}/Hot_VIG.idf",
+        "Cold_VIG" => "#{idf_path}/Cold_VIG.idf",
+        "VeryCold_VIG" => "#{idf_path}/VeryCold_VIG.idf",
+        "VeryHot_SwitchGlaze_Triple_0pt5pct_N_IQE0" => "#{idf_path}/VeryHot_SwitchGlaze_Triple_0pt5pct_N_IQE0.idf",
+        "VeryHot_SwitchGlaze_Triple_0pt5pct_N_IQE0pt4" => "#{idf_path}/VeryHot_SwitchGlaze_Triple_0pt5pct_N_IQE0pt4.idf",
+        "VeryHot_SwitchGlaze_Triple_0pt5pct_N_IQE0pt6" => "#{idf_path}/VeryHot_SwitchGlaze_Triple_0pt5pct_N_IQE0pt6.idf",
+        "VeryHot_SwitchGlaze_Triple_0pt5pct_N_IQE0pt8" => "#{idf_path}/VeryHot_SwitchGlaze_Triple_0pt5pct_N_IQE0pt8.idf",
+        "Hot_SwitchGlaze_Triple_0pt5pct_N_IQE0" => "#{idf_path}/Hot_SwitchGlaze_Triple_0pt5pct_N_IQE0.idf",
+        "Hot_SwitchGlaze_Triple_0pt5pct_N_IQE0pt4" => "#{idf_path}/Hot_SwitchGlaze_Triple_0pt5pct_N_IQE0pt4.idf",
+        "Hot_SwitchGlaze_Triple_0pt5pct_N_IQE0pt6" => "#{idf_path}/Hot_SwitchGlaze_Triple_0pt5pct_N_IQE0pt6.idf",
+        "Hot_SwitchGlaze_Triple_0pt5pct_N_IQE0pt8" => "#{idf_path}/Hot_SwitchGlaze_Triple_0pt5pct_N_IQE0pt8.idf",
+        "Cold_SwitchGlaze_Triple_0pt5pct_N_IQE0" => "#{idf_path}/Cold_SwitchGlaze_Triple_0pt5pct_N_IQE0.idf",
+        "Cold_SwitchGlaze_Triple_0pt5pct_N_IQE0pt4" => "#{idf_path}/Cold_SwitchGlaze_Triple_0pt5pct_N_IQE0pt4.idf",
+        "Cold_SwitchGlaze_Triple_0pt5pct_N_IQE0pt6" => "#{idf_path}/Cold_SwitchGlaze_Triple_0pt5pct_N_IQE0pt6.idf",
+        "Cold_SwitchGlaze_Triple_0pt5pct_N_IQE0pt8" => "#{idf_path}/Cold_SwitchGlaze_Triple_0pt5pct_N_IQE0pt8.idf",
+        "VeryCold_SwitchGlaze_Triple_0pt5pct_N_IQE0" => "#{idf_path}/VeryCold_SwitchGlaze_Triple_0pt5pct_N_IQE0.idf",
+        "VeryCold_SwitchGlaze_Triple_0pt5pct_N_IQE0pt4" => "#{idf_path}/VeryCold_SwitchGlaze_Triple_0pt5pct_N_IQE0pt4.idf",
+        "VeryCold_SwitchGlaze_Triple_0pt5pct_N_IQE0pt6" => "#{idf_path}/VeryCold_SwitchGlaze_Triple_0pt5pct_N_IQE0pt6.idf",
+        "VeryCold_SwitchGlaze_Triple_0pt5pct_N_IQE0pt8" => "#{idf_path}/VeryCold_SwitchGlaze_Triple_0pt5pct_N_IQE0pt8.idf",
+        "VeryHot_SwitchGlaze_Triple_5pct_N_IQE0" => "#{idf_path}/VeryHot_SwitchGlaze_Triple_5pct_N_IQE0.idf",
+        "VeryHot_SwitchGlaze_Triple_5pct_N_IQE0pt4" => "#{idf_path}/VeryHot_SwitchGlaze_Triple_5pct_N_IQE0pt4.idf",
+        "VeryHot_SwitchGlaze_Triple_5pct_N_IQE0pt6" => "#{idf_path}/VeryHot_SwitchGlaze_Triple_5pct_N_IQE0pt6.idf",
+        "VeryHot_SwitchGlaze_Triple_5pct_N_IQE0pt8" => "#{idf_path}/VeryHot_SwitchGlaze_Triple_5pct_N_IQE0pt8.idf",
+        "Hot_SwitchGlaze_Triple_5pct_N_IQE0" => "#{idf_path}/Hot_SwitchGlaze_Triple_5pct_N_IQE0.idf",
+        "Hot_SwitchGlaze_Triple_5pct_N_IQE0pt4" => "#{idf_path}/Hot_SwitchGlaze_Triple_5pct_N_IQE0pt4.idf",
+        "Hot_SwitchGlaze_Triple_5pct_N_IQE0pt6" => "#{idf_path}/Hot_SwitchGlaze_Triple_5pct_N_IQE0pt6.idf",
+        "Hot_SwitchGlaze_Triple_5pct_N_IQE0pt8" => "#{idf_path}/Hot_SwitchGlaze_Triple_5pct_N_IQE0pt8.idf",
+        "Cold_SwitchGlaze_Triple_5pct_N_IQE0" => "#{idf_path}/Cold_SwitchGlaze_Triple_5pct_N_IQE0.idf",
+        "Cold_SwitchGlaze_Triple_5pct_N_IQE0pt4" => "#{idf_path}/Cold_SwitchGlaze_Triple_5pct_N_IQE0pt4.idf",
+        "Cold_SwitchGlaze_Triple_5pct_N_IQE0pt6" => "#{idf_path}/Cold_SwitchGlaze_Triple_5pct_N_IQE0pt6.idf",
+        "Cold_SwitchGlaze_Triple_5pct_N_IQE0pt8" => "#{idf_path}/Cold_SwitchGlaze_Triple_5pct_N_IQE0pt8.idf",
+        "VeryCold_SwitchGlaze_Triple_5pct_N_IQE0" => "#{idf_path}/VeryCold_SwitchGlaze_Triple_5pct_N_IQE0.idf",
+        "VeryCold_SwitchGlaze_Triple_5pct_N_IQE0pt4" => "#{idf_path}/VeryCold_SwitchGlaze_Triple_5pct_N_IQE0pt4.idf",
+        "VeryCold_SwitchGlaze_Triple_5pct_N_IQE0pt6" => "#{idf_path}/VeryCold_SwitchGlaze_Triple_5pct_N_IQE0pt6.idf",
+        "VeryCold_SwitchGlaze_Triple_5pct_N_IQE0pt8" => "#{idf_path}/VeryCold_SwitchGlaze_Triple_5pct_N_IQE0pt8.idf",
+        "VeryHot_SwitchGlaze_VIG_0pt5pct_N_IQE0" => "#{idf_path}/VeryHot_SwitchGlaze_VIG_0pt5pct_N_IQE0.idf",
+        "VeryHot_SwitchGlaze_VIG_0pt5pct_N_IQE0pt4" => "#{idf_path}/VeryHot_SwitchGlaze_VIG_0pt5pct_N_IQE0pt4.idf",
+        "VeryHot_SwitchGlaze_VIG_0pt5pct_N_IQE0pt6" => "#{idf_path}/VeryHot_SwitchGlaze_VIG_0pt5pct_N_IQE0pt6.idf",
+        "VeryHot_SwitchGlaze_VIG_0pt5pct_N_IQE0pt8" => "#{idf_path}/VeryHot_SwitchGlaze_VIG_0pt5pct_N_IQE0pt8.idf",
+        "Hot_SwitchGlaze_VIG_0pt5pct_N_IQE0" => "#{idf_path}/Hot_SwitchGlaze_VIG_0pt5pct_N_IQE0.idf",
+        "Hot_SwitchGlaze_VIG_0pt5pct_N_IQE0pt4" => "#{idf_path}/Hot_SwitchGlaze_VIG_0pt5pct_N_IQE0pt4.idf",
+        "Hot_SwitchGlaze_VIG_0pt5pct_N_IQE0pt6" => "#{idf_path}/Hot_SwitchGlaze_VIG_0pt5pct_N_IQE0pt6.idf",
+        "Hot_SwitchGlaze_VIG_0pt5pct_N_IQE0pt8" => "#{idf_path}/Hot_SwitchGlaze_VIG_0pt5pct_N_IQE0pt8.idf",
+        "Cold_SwitchGlaze_VIG_0pt5pct_N_IQE0" => "#{idf_path}/Cold_SwitchGlaze_VIG_0pt5pct_N_IQE0.idf",
+        "Cold_SwitchGlaze_VIG_0pt5pct_N_IQE0pt4" => "#{idf_path}/Cold_SwitchGlaze_VIG_0pt5pct_N_IQE0pt4.idf",
+        "Cold_SwitchGlaze_VIG_0pt5pct_N_IQE0pt6" => "#{idf_path}/Cold_SwitchGlaze_VIG_0pt5pct_N_IQE0pt6.idf",
+        "Cold_SwitchGlaze_VIG_0pt5pct_N_IQE0pt8" => "#{idf_path}/Cold_SwitchGlaze_VIG_0pt5pct_N_IQE0pt8.idf",
+        "VeryCold_SwitchGlaze_VIG_0pt5pct_N_IQE0" => "#{idf_path}/VeryCold_SwitchGlaze_VIG_0pt5pct_N_IQE0.idf",
+        "VeryCold_SwitchGlaze_VIG_0pt5pct_N_IQE0pt4" => "#{idf_path}/VeryCold_SwitchGlaze_VIG_0pt5pct_N_IQE0pt4.idf",
+        "VeryCold_SwitchGlaze_VIG_0pt5pct_N_IQE0pt6" => "#{idf_path}/VeryCold_SwitchGlaze_VIG_0pt5pct_N_IQE0pt6.idf",
+        "VeryCold_SwitchGlaze_VIG_0pt5pct_N_IQE0pt8" => "#{idf_path}/VeryCold_SwitchGlaze_VIG_0pt5pct_N_IQE0pt8.idf",
+        "VeryHot_SwitchGlaze_VIG_5pct_N_IQE0" => "#{idf_path}/VeryHot_SwitchGlaze_VIG_5pct_N_IQE0.idf",
+        "VeryHot_SwitchGlaze_VIG_5pct_N_IQE0pt4" => "#{idf_path}/VeryHot_SwitchGlaze_VIG_5pct_N_IQE0pt4.idf",
+        "VeryHot_SwitchGlaze_VIG_5pct_N_IQE0pt6" => "#{idf_path}/VeryHot_SwitchGlaze_VIG_5pct_N_IQE0pt6.idf",
+        "VeryHot_SwitchGlaze_VIG_5pct_N_IQE0pt8" => "#{idf_path}/VeryHot_SwitchGlaze_VIG_5pct_N_IQE0pt8.idf",
+        "Hot_SwitchGlaze_VIG_5pct_N_IQE0" => "#{idf_path}/Hot_SwitchGlaze_VIG_5pct_N_IQE0.idf",
+        "Hot_SwitchGlaze_VIG_5pct_N_IQE0pt4" => "#{idf_path}/Hot_SwitchGlaze_VIG_5pct_N_IQE0pt4.idf",
+        "Hot_SwitchGlaze_VIG_5pct_N_IQE0pt6" => "#{idf_path}/Hot_SwitchGlaze_VIG_5pct_N_IQE0pt6.idf",
+        "Hot_SwitchGlaze_VIG_5pct_N_IQE0pt8" => "#{idf_path}/Hot_SwitchGlaze_VIG_5pct_N_IQE0pt8.idf",
+        "Cold_SwitchGlaze_VIG_5pct_N_IQE0" => "#{idf_path}/Cold_SwitchGlaze_VIG_5pct_N_IQE0.idf",
+        "Cold_SwitchGlaze_VIG_5pct_N_IQE0pt4" => "#{idf_path}/Cold_SwitchGlaze_VIG_5pct_N_IQE0pt4.idf",
+        "Cold_SwitchGlaze_VIG_5pct_N_IQE0pt6" => "#{idf_path}/Cold_SwitchGlaze_VIG_5pct_N_IQE0pt6.idf",
+        "Cold_SwitchGlaze_VIG_5pct_N_IQE0pt8" => "#{idf_path}/Cold_SwitchGlaze_VIG_5pct_N_IQE0pt8.idf",
+        "VeryCold_SwitchGlaze_VIG_5pct_N_IQE0" => "#{idf_path}/VeryCold_SwitchGlaze_VIG_5pct_N_IQE0.idf",
+        "VeryCold_SwitchGlaze_VIG_5pct_N_IQE0pt4" => "#{idf_path}/VeryCold_SwitchGlaze_VIG_5pct_N_IQE0pt4.idf",
+        "VeryCold_SwitchGlaze_VIG_5pct_N_IQE0pt6" => "#{idf_path}/VeryCold_SwitchGlaze_VIG_5pct_N_IQE0pt6.idf",
+        "VeryCold_SwitchGlaze_VIG_5pct_N_IQE0pt8" => "#{idf_path}/VeryCold_SwitchGlaze_VIG_5pct_N_IQE0pt8.idf",
+        "VeryCold_Triple_Tinted_25pct_N_IQE0" => "#{idf_path}/VeryCold_Triple_Tinted_25pct_N_IQE0.idf",
+        "VeryHot_Triple_Tinted_25pct_N_IQE0" => "#{idf_path}/VeryHot_Triple_Tinted_25pct_N_IQE0.idf",
+        "Cold_Triple_Tinted_25pct_N_IQE0" => "#{idf_path}/Cold_Triple_Tinted_25pct_N_IQE0.idf",
+        "Hot_Triple_Tinted_25pct_N_IQE0" => "#{idf_path}/Hot_Triple_Tinted_25pct_N_IQE0.idf",
+        "VeryCold_Triple_Tinted_50pct_N_IQE0" => "#{idf_path}/VeryCold_Triple_Tinted_50pct_N_IQE0.idf",
+        "VeryHot_Triple_Tinted_50pct_N_IQE0" => "#{idf_path}/VeryHot_Triple_Tinted_50pct_N_IQE0.idf",
+        "Cold_Triple_Tinted_50pct_N_IQE0" => "#{idf_path}/Cold_Triple_Tinted_50pct_N_IQE0.idf",
+        "Hot_Triple_Tinted_50pct_N_IQE0" => "#{idf_path}/Hot_Triple_Tinted_50pct_N_IQE0.idf",
+        "VeryCold_Triple_Tinted_50pct_S_IQE0" => "#{idf_path}/VeryCold_Triple_Tinted_50pct_S_IQE0.idf",
+        "VeryHot_Triple_Tinted_50pct_S_IQE0" => "#{idf_path}/VeryHot_Triple_Tinted_50pct_S_IQE0.idf",
+        "Cold_Triple_Tinted_50pct_S_IQE0" => "#{idf_path}/Cold_Triple_Tinted_50pct_S_IQE0.idf",
+        "Hot_Triple_Tinted_50pct_S_IQE0" => "#{idf_path}/Hot_Triple_Tinted_50pct_S_IQE0.idf",
+        "VeryCold_VIG_Tinted_25pct_N_IQE0" => "#{idf_path}/VeryCold_VIG_Tinted_25pct_N_IQE0.idf",
+        "VeryHot_VIG_Tinted_25pct_N_IQE0" => "#{idf_path}/VeryHot_VIG_Tinted_25pct_N_IQE0.idf",
+        "Cold_VIG_Tinted_25pct_N_IQE0" => "#{idf_path}/Cold_VIG_Tinted_25pct_N_IQE0.idf",
+        "Hot_VIG_Tinted_25pct_N_IQE0" => "#{idf_path}/Hot_VIG_Tinted_25pct_N_IQE0.idf",
+        "VeryCold_VIG_Tinted_50pct_N_IQE0" => "#{idf_path}/VeryCold_VIG_Tinted_50pct_N_IQE0.idf",
+        "VeryHot_VIG_Tinted_50pct_N_IQE0" => "#{idf_path}/VeryHot_VIG_Tinted_50pct_N_IQE0.idf",
+        "Cold_VIG_Tinted_50pct_N_IQE0" => "#{idf_path}/Cold_VIG_Tinted_50pct_N_IQE0.idf",
+        "Hot_VIG_Tinted_50pct_N_IQE0" => "#{idf_path}/Hot_VIG_Tinted_50pct_N_IQE0.idf",
+        "VeryCold_VIG_Tinted_50pct_S_IQE0" => "#{idf_path}/VeryCold_VIG_Tinted_50pct_S_IQE0.idf",
+        "VeryHot_VIG_Tinted_50pct_S_IQE0" => "#{idf_path}/VeryHot_VIG_Tinted_50pct_S_IQE0.idf",
+        "Cold_VIG_Tinted_50pct_S_IQE0" => "#{idf_path}/Cold_VIG_Tinted_50pct_S_IQE0.idf",
+        "Hot_VIG_Tinted_50pct_S_IQE0" => "#{idf_path}/Hot_VIG_Tinted_50pct_S_IQE0.idf",
+        "VeryHot_Tinted_Triple_25pct_N_IQE0pt4" => "#{idf_path}/VeryHot_Tinted_Triple_25pct_N_IQE0pt4.idf",
+        "VeryHot_Tinted_Triple_25pct_N_IQE0pt6" => "#{idf_path}/VeryHot_Tinted_Triple_25pct_N_IQE0pt6.idf",
+        "VeryHot_Tinted_Triple_25pct_N_IQE0pt8" => "#{idf_path}/VeryHot_Tinted_Triple_25pct_N_IQE0pt8.idf",
+        "VeryHot_Tinted_Triple_50pct_N_IQE0pt4" => "#{idf_path}/VeryHot_Tinted_Triple_50pct_N_IQE0pt4.idf",
+        "VeryHot_Tinted_Triple_50pct_N_IQE0pt6" => "#{idf_path}/VeryHot_Tinted_Triple_50pct_N_IQE0pt6.idf",
+        "VeryHot_Tinted_Triple_50pct_N_IQE0pt8" => "#{idf_path}/VeryHot_Tinted_Triple_50pct_N_IQE0pt8.idf",
+        "VeryHot_Tinted_Triple_50pct_S_IQE0pt4" => "#{idf_path}/VeryHot_Tinted_Triple_50pct_S_IQE0pt4.idf",
+        "VeryHot_Tinted_Triple_50pct_S_IQE0pt6" => "#{idf_path}/VeryHot_Tinted_Triple_50pct_S_IQE0pt6.idf",
+        "VeryHot_Tinted_Triple_50pct_S_IQE0pt8" => "#{idf_path}/VeryHot_Tinted_Triple_50pct_S_IQE0pt8.idf",
+        "Hot_Tinted_Triple_25pct_N_IQE0pt4" => "#{idf_path}/Hot_Tinted_Triple_25pct_N_IQE0pt4.idf",
+        "Hot_Tinted_Triple_25pct_N_IQE0pt6" => "#{idf_path}/Hot_Tinted_Triple_25pct_N_IQE0pt6.idf",
+        "Hot_Tinted_Triple_25pct_N_IQE0pt8" => "#{idf_path}/Hot_Tinted_Triple_25pct_N_IQE0pt8.idf",
+        "Hot_Tinted_Triple_50pct_N_IQE0pt4" => "#{idf_path}/Hot_Tinted_Triple_50pct_N_IQE0pt4.idf",
+        "Hot_Tinted_Triple_50pct_N_IQE0pt6" => "#{idf_path}/Hot_Tinted_Triple_50pct_N_IQE0pt6.idf",
+        "Hot_Tinted_Triple_50pct_N_IQE0pt8" => "#{idf_path}/Hot_Tinted_Triple_50pct_N_IQE0pt8.idf",
+        "Hot_Tinted_Triple_50pct_S_IQE0pt4" => "#{idf_path}/Hot_Tinted_Triple_50pct_S_IQE0pt4.idf",
+        "Hot_Tinted_Triple_50pct_S_IQE0pt6" => "#{idf_path}/Hot_Tinted_Triple_50pct_S_IQE0pt6.idf",
+        "Hot_Tinted_Triple_50pct_S_IQE0pt8" => "#{idf_path}/Hot_Tinted_Triple_50pct_S_IQE0pt8.idf",
+        "Cold_Tinted_Triple_25pct_N_IQE0pt4" => "#{idf_path}/Cold_Tinted_Triple_25pct_N_IQE0pt4.idf",
+        "Cold_Tinted_Triple_25pct_N_IQE0pt6" => "#{idf_path}/Cold_Tinted_Triple_25pct_N_IQE0pt6.idf",
+        "Cold_Tinted_Triple_25pct_N_IQE0pt8" => "#{idf_path}/Cold_Tinted_Triple_25pct_N_IQE0pt8.idf",
+        "Cold_Tinted_Triple_50pct_N_IQE0pt4" => "#{idf_path}/Cold_Tinted_Triple_50pct_N_IQE0pt4.idf",
+        "Cold_Tinted_Triple_50pct_N_IQE0pt6" => "#{idf_path}/Cold_Tinted_Triple_50pct_N_IQE0pt6.idf",
+        "Cold_Tinted_Triple_50pct_N_IQE0pt8" => "#{idf_path}/Cold_Tinted_Triple_50pct_N_IQE0pt8.idf",
+        "Cold_Tinted_Triple_50pct_S_IQE0pt4" => "#{idf_path}/Cold_Tinted_Triple_50pct_S_IQE0pt4.idf",
+        "Cold_Tinted_Triple_50pct_S_IQE0pt6" => "#{idf_path}/Cold_Tinted_Triple_50pct_S_IQE0pt6.idf",
+        "Cold_Tinted_Triple_50pct_S_IQE0pt8" => "#{idf_path}/Cold_Tinted_Triple_50pct_S_IQE0pt8.idf",
+        "VeryCold_Tinted_Triple_25pct_N_IQE0pt4" => "#{idf_path}/VeryCold_Tinted_Triple_25pct_N_IQE0pt4.idf",
+        "VeryCold_Tinted_Triple_25pct_N_IQE0pt6" => "#{idf_path}/VeryCold_Tinted_Triple_25pct_N_IQE0pt6.idf",
+        "VeryCold_Tinted_Triple_25pct_N_IQE0pt8" => "#{idf_path}/VeryCold_Tinted_Triple_25pct_N_IQE0pt8.idf",
+        "VeryCold_Tinted_Triple_50pct_N_IQE0pt4" => "#{idf_path}/VeryCold_Tinted_Triple_50pct_N_IQE0pt4.idf",
+        "VeryCold_Tinted_Triple_50pct_N_IQE0pt6" => "#{idf_path}/VeryCold_Tinted_Triple_50pct_N_IQE0pt6.idf",
+        "VeryCold_Tinted_Triple_50pct_N_IQE0pt8" => "#{idf_path}/VeryCold_Tinted_Triple_50pct_N_IQE0pt8.idf",
+        "VeryCold_Tinted_Triple_50pct_S_IQE0pt4" => "#{idf_path}/VeryCold_Tinted_Triple_50pct_S_IQE0pt4.idf",
+        "VeryCold_Tinted_Triple_50pct_S_IQE0pt6" => "#{idf_path}/VeryCold_Tinted_Triple_50pct_S_IQE0pt6.idf",
+        "VeryCold_Tinted_Triple_50pct_S_IQE0pt8" => "#{idf_path}/VeryCold_Tinted_Triple_50pct_S_IQE0pt8.idf",
+        "VeryHot_Tinted_VIG_25pct_N_IQE0pt4" => "#{idf_path}/VeryHot_Tinted_VIG_25pct_N_IQE0pt4.idf",
+        "VeryHot_Tinted_VIG_25pct_N_IQE0pt6" => "#{idf_path}/VeryHot_Tinted_VIG_25pct_N_IQE0pt6.idf",
+        "VeryHot_Tinted_VIG_25pct_N_IQE0pt8" => "#{idf_path}/VeryHot_Tinted_VIG_25pct_N_IQE0pt8.idf",
+        "VeryHot_Tinted_VIG_50pct_N_IQE0pt4" => "#{idf_path}/VeryHot_Tinted_VIG_50pct_N_IQE0pt4.idf",
+        "VeryHot_Tinted_VIG_50pct_N_IQE0pt6" => "#{idf_path}/VeryHot_Tinted_VIG_50pct_N_IQE0pt6.idf",
+        "VeryHot_Tinted_VIG_50pct_N_IQE0pt8" => "#{idf_path}/VeryHot_Tinted_VIG_50pct_N_IQE0pt8.idf",
+        "VeryHot_Tinted_VIG_50pct_S_IQE0pt4" => "#{idf_path}/VeryHot_Tinted_VIG_50pct_S_IQE0pt4.idf",
+        "VeryHot_Tinted_VIG_50pct_S_IQE0pt6" => "#{idf_path}/VeryHot_Tinted_VIG_50pct_S_IQE0pt6.idf",
+        "VeryHot_Tinted_VIG_50pct_S_IQE0pt8" => "#{idf_path}/VeryHot_Tinted_VIG_50pct_S_IQE0pt8.idf",
+        "Hot_Tinted_VIG_25pct_N_IQE0pt4" => "#{idf_path}/Hot_Tinted_VIG_25pct_N_IQE0pt4.idf",
+        "Hot_Tinted_VIG_25pct_N_IQE0pt6" => "#{idf_path}/Hot_Tinted_VIG_25pct_N_IQE0pt6.idf",
+        "Hot_Tinted_VIG_25pct_N_IQE0pt8" => "#{idf_path}/Hot_Tinted_VIG_25pct_N_IQE0pt8.idf",
+        "Hot_Tinted_VIG_50pct_N_IQE0pt4" => "#{idf_path}/Hot_Tinted_VIG_50pct_N_IQE0pt4.idf",
+        "Hot_Tinted_VIG_50pct_N_IQE0pt6" => "#{idf_path}/Hot_Tinted_VIG_50pct_N_IQE0pt6.idf",
+        "Hot_Tinted_VIG_50pct_N_IQE0pt8" => "#{idf_path}/Hot_Tinted_VIG_50pct_N_IQE0pt8.idf",
+        "Hot_Tinted_VIG_50pct_S_IQE0pt4" => "#{idf_path}/Hot_Tinted_VIG_50pct_S_IQE0pt4.idf",
+        "Hot_Tinted_VIG_50pct_S_IQE0pt6" => "#{idf_path}/Hot_Tinted_VIG_50pct_S_IQE0pt6.idf",
+        "Hot_Tinted_VIG_50pct_S_IQE0pt8" => "#{idf_path}/Hot_Tinted_VIG_50pct_S_IQE0pt8.idf",
+        "Cold_Tinted_VIG_25pct_N_IQE0pt4" => "#{idf_path}/Cold_Tinted_VIG_25pct_N_IQE0pt4.idf",
+        "Cold_Tinted_VIG_25pct_N_IQE0pt6" => "#{idf_path}/Cold_Tinted_VIG_25pct_N_IQE0pt6.idf",
+        "Cold_Tinted_VIG_25pct_N_IQE0pt8" => "#{idf_path}/Cold_Tinted_VIG_25pct_N_IQE0pt8.idf",
+        "Cold_Tinted_VIG_50pct_N_IQE0pt4" => "#{idf_path}/Cold_Tinted_VIG_50pct_N_IQE0pt4.idf",
+        "Cold_Tinted_VIG_50pct_N_IQE0pt6" => "#{idf_path}/Cold_Tinted_VIG_50pct_N_IQE0pt6.idf",
+        "Cold_Tinted_VIG_50pct_N_IQE0pt8" => "#{idf_path}/Cold_Tinted_VIG_50pct_N_IQE0pt8.idf",
+        "Cold_Tinted_VIG_50pct_S_IQE0pt4" => "#{idf_path}/Cold_Tinted_VIG_50pct_S_IQE0pt4.idf",
+        "Cold_Tinted_VIG_50pct_S_IQE0pt6" => "#{idf_path}/Cold_Tinted_VIG_50pct_S_IQE0pt6.idf",
+        "Cold_Tinted_VIG_50pct_S_IQE0pt8" => "#{idf_path}/Cold_Tinted_VIG_50pct_S_IQE0pt8.idf",
+        "VeryCold_Tinted_VIG_25pct_N_IQE0pt4" => "#{idf_path}/VeryCold_Tinted_VIG_25pct_N_IQE0pt4.idf",
+        "VeryCold_Tinted_VIG_25pct_N_IQE0pt6" => "#{idf_path}/VeryCold_Tinted_VIG_25pct_N_IQE0pt6.idf",
+        "VeryCold_Tinted_VIG_25pct_N_IQE0pt8" => "#{idf_path}/VeryCold_Tinted_VIG_25pct_N_IQE0pt8.idf",
+        "VeryCold_Tinted_VIG_50pct_N_IQE0pt4" => "#{idf_path}/VeryCold_Tinted_VIG_50pct_N_IQE0pt4.idf",
+        "VeryCold_Tinted_VIG_50pct_N_IQE0pt6" => "#{idf_path}/VeryCold_Tinted_VIG_50pct_N_IQE0pt6.idf",
+        "VeryCold_Tinted_VIG_50pct_N_IQE0pt8" => "#{idf_path}/VeryCold_Tinted_VIG_50pct_N_IQE0pt8.idf",
+        "VeryCold_Tinted_VIG_50pct_S_IQE0pt4" => "#{idf_path}/VeryCold_Tinted_VIG_50pct_S_IQE0pt4.idf",
+        "VeryCold_Tinted_VIG_50pct_S_IQE0pt6" => "#{idf_path}/VeryCold_Tinted_VIG_50pct_S_IQE0pt6.idf",
+        "VeryCold_Tinted_VIG_50pct_S_IQE0pt8" => "#{idf_path}/VeryCold_Tinted_VIG_50pct_S_IQE0pt8.idf",
       } 
     end
     ####################################################################################

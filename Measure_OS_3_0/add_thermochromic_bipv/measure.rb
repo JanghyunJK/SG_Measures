@@ -79,6 +79,40 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
     choices << "0pt5pct_N_IQE0pt4"
     choices << "0pt5pct_N_IQE0pt6"
     choices << "0pt5pct_N_IQE0pt8"
+    choices << "Triple_0pt5pct_N_IQE0"
+    choices << "Triple_0pt5pct_N_IQE0pt4"
+    choices << "Triple_0pt5pct_N_IQE0pt6"
+    choices << "Triple_0pt5pct_N_IQE0pt8"
+    choices << "Triple_5pct_N_IQE0"
+    choices << "Triple_5pct_N_IQE0pt4"
+    choices << "Triple_5pct_N_IQE0pt6"
+    choices << "Triple_5pct_N_IQE0pt8"
+    choices << "VIG_0pt5pct_N_IQE0"
+    choices << "VIG_0pt5pct_N_IQE0pt4"
+    choices << "VIG_0pt5pct_N_IQE0pt6"
+    choices << "VIG_0pt5pct_N_IQE0pt8"
+    choices << "VIG_5pct_N_IQE0"
+    choices << "VIG_5pct_N_IQE0pt4"
+    choices << "VIG_5pct_N_IQE0pt6"
+    choices << "VIG_5pct_N_IQE0pt8"
+    choices << "Triple_25pct_N_IQE0pt4"
+    choices << "Triple_25pct_N_IQE0pt6"
+    choices << "Triple_25pct_N_IQE0pt8"
+    choices << "Triple_50pct_N_IQE0pt4"
+    choices << "Triple_50pct_N_IQE0pt6"
+    choices << "Triple_50pct_N_IQE0pt8"
+    choices << "Triple_50pct_S_IQE0pt4"
+    choices << "Triple_50pct_S_IQE0pt6"
+    choices << "Triple_50pct_S_IQE0pt8"
+    choices << "VIG_25pct_N_IQE0pt4"
+    choices << "VIG_25pct_N_IQE0pt6"
+    choices << "VIG_25pct_N_IQE0pt8"
+    choices << "VIG_50pct_N_IQE0pt4"
+    choices << "VIG_50pct_N_IQE0pt6"
+    choices << "VIG_50pct_N_IQE0pt8"
+    choices << "VIG_50pct_S_IQE0pt4"
+    choices << "VIG_50pct_S_IQE0pt6"
+    choices << "VIG_50pct_S_IQE0pt8"
     
     iqe = OpenStudio::Ruleset::OSArgument::makeChoiceArgument("iqe", choices)
     iqe.setDisplayName("iqe")
@@ -190,27 +224,27 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
     dictionary_iqe_pce = Hash.new
     dictionary_iqe_pce = {
       # 50% VLT
-      '50pct_S_IQE0' => [0,0,0],
-      '50pct_S_IQE0pt4' => [0.063462,0.062819,0.13557],
-      '50pct_S_IQE0pt6' => [0.095248,0.094249,0.13539],
-      '50pct_S_IQE0pt8' => [0.127,0.12567,0.13539],
-      '50pct_N_IQE0' => [0,0,0],
-      '50pct_N_IQE0pt4' => [0.052395,0.051907,0.10806],
-      '50pct_N_IQE0pt6' => [0.078593,0.07786,0.10806],
-      '50pct_N_IQE0pt8' => [0.10479,0.10382,0.10805],
+      "50pct_S_IQE0" => [0,0,0],
+      "50pct_S_IQE0pt4" => [0.063462,0.062819,0.13557],
+      "50pct_S_IQE0pt6" => [0.095248,0.094249,0.13539],
+      "50pct_S_IQE0pt8" => [0.127,0.12567,0.13539],
+      "50pct_N_IQE0" => [0,0,0],
+      "50pct_N_IQE0pt4" => [0.052395,0.051907,0.10806],
+      "50pct_N_IQE0pt6" => [0.078593,0.07786,0.10806],
+      "50pct_N_IQE0pt8" => [0.10479,0.10382,0.10805],
       # 25% VLT
-      '25pct_N_IQE0' => [0,0,0],
-      '25pct_N_IQE0pt4' => [0.06382,0.063153,0.12693],
-      '25pct_N_IQE0pt6' => [0.09572,0.094725,0.12696],
-      '25pct_N_IQE0pt8' => [0.12764,0.12631,0.12693],
-      '25pct_N_IQE0_Dark' => [0,0,0],
-      '25pct_N_IQE0pt4_Dark' => [0.06382,0.063153,0.12693],
-      '25pct_N_IQE0pt6_Dark' => [0.09572,0.094725,0.12696],
-      '25pct_N_IQE0pt8_Dark' => [0.12764,0.12631,0.12693],
-      '25pct_N_IQE0_Light' => [0,0,0],
-      '25pct_N_IQE0pt4_Light' => [0.0016858,0.001608,0.084473],
-      '25pct_N_IQE0pt6_Light' => [0.0025286,0.0024119,0.084463],
-      '25pct_N_IQE0pt8_Light' => [0.0033715,0.0032158,0.084456],
+      "25pct_N_IQE0" => [0,0,0],
+      "25pct_N_IQE0pt4" => [0.06382,0.063153,0.12693],
+      "25pct_N_IQE0pt6" => [0.09572,0.094725,0.12696],
+      "25pct_N_IQE0pt8" => [0.12764,0.12631,0.12693],
+      "25pct_N_IQE0_Dark" => [0,0,0],
+      "25pct_N_IQE0pt4_Dark" => [0.06382,0.063153,0.12693],
+      "25pct_N_IQE0pt6_Dark" => [0.09572,0.094725,0.12696],
+      "25pct_N_IQE0pt8_Dark" => [0.12764,0.12631,0.12693],
+      "25pct_N_IQE0_Light" => [0,0,0],
+      "25pct_N_IQE0pt4_Light" => [0.0016858,0.001608,0.084473],
+      "25pct_N_IQE0pt6_Light" => [0.0025286,0.0024119,0.084463],
+      "25pct_N_IQE0pt8_Light" => [0.0033715,0.0032158,0.084456],
       # 20% VLT
       "20pct_N_IQE0_Dark" => [0,0,0],
       "20pct_N_IQE0pt4_Dark" => [0.0698,0.069,0.121],
@@ -256,6 +290,70 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
       "0pt5pct_N_IQE0pt4_Light" => [0.0023416,0.0022699,0.092563],
       "0pt5pct_N_IQE0pt6_Light" => [0.0035124,0.0034048,0.092562],
       "0pt5pct_N_IQE0pt8_Light" => [0.0046832,0.0045397,0.092561],
+      # Triple 5% VLT
+      "Triple_5pct_N_IQE0_Dark" => [0,0,0],
+      "Triple_5pct_N_IQE0pt4_Dark" => [0.090521,0.089666,0.10816],
+      "Triple_5pct_N_IQE0pt6_Dark" => [0.13578,0.1345,0.10816],
+      "Triple_5pct_N_IQE0pt8_Dark" => [0.18094,0.17925,0.10828],
+      "Triple_5pct_N_IQE0_Light" => [0,0,0],
+      "Triple_5pct_N_IQE0pt4_Light" => [0.0016858,0.001608,0.084473],
+      "Triple_5pct_N_IQE0pt6_Light" => [0.0025286,0.0024119,0.084463],
+      "Triple_5pct_N_IQE0pt8_Light" => [0.0033715,0.0032158,0.084456],
+      # Triple 0.5% VLT
+      "Triple_0pt5pct_N_IQE0_Dark" => [0,0,0],
+      "Triple_0pt5pct_N_IQE0pt4_Dark" => [0.1015,0.10032,0.10089],
+      "Triple_0pt5pct_N_IQE0pt6_Dark" => [0.15226,0.15048,0.10089],
+      "Triple_0pt5pct_N_IQE0pt8_Dark" => [0.20301,0.20064,0.10089],
+      "Triple_0pt5pct_N_IQE0_Light" => [0,0,0],
+      "Triple_0pt5pct_N_IQE0pt4_Light" => [0.0023416,0.0022699,0.092563],
+      "Triple_0pt5pct_N_IQE0pt6_Light" => [0.0035124,0.0034048,0.092562],
+      "Triple_0pt5pct_N_IQE0pt8_Light" => [0.0046832,0.0045397,0.092561],
+      # VIG 5% VLT
+      "VIG_5pct_N_IQE0_Dark" => [0,0,0],
+      "VIG_5pct_N_IQE0pt4_Dark" => [0.090521,0.089666,0.10816],
+      "VIG_5pct_N_IQE0pt6_Dark" => [0.13578,0.1345,0.10816],
+      "VIG_5pct_N_IQE0pt8_Dark" => [0.18094,0.17925,0.10828],
+      "VIG_5pct_N_IQE0_Light" => [0,0,0],
+      "VIG_5pct_N_IQE0pt4_Light" => [0.0016858,0.001608,0.084473],
+      "VIG_5pct_N_IQE0pt6_Light" => [0.0025286,0.0024119,0.084463],
+      "VIG_5pct_N_IQE0pt8_Light" => [0.0033715,0.0032158,0.084456],
+      # VIG 0.5% VLT
+      "VIG_0pt5pct_N_IQE0_Dark" => [0,0,0],
+      "VIG_0pt5pct_N_IQE0pt4_Dark" => [0.1015,0.10032,0.10089],
+      "VIG_0pt5pct_N_IQE0pt6_Dark" => [0.15226,0.15048,0.10089],
+      "VIG_0pt5pct_N_IQE0pt8_Dark" => [0.20301,0.20064,0.10089],
+      "VIG_0pt5pct_N_IQE0_Light" => [0,0,0],
+      "VIG_0pt5pct_N_IQE0pt4_Light" => [0.0023416,0.0022699,0.092563],
+      "VIG_0pt5pct_N_IQE0pt6_Light" => [0.0035124,0.0034048,0.092562],
+      "VIG_0pt5pct_N_IQE0pt8_Light" => [0.0046832,0.0045397,0.092561],
+      # Triple 50% VLT
+      "Triple_50pct_S_IQE0" => [0,0,0],
+      "Triple_50pct_S_IQE0pt4" => [0.063462,0.062819,0.13557],
+      "Triple_50pct_S_IQE0pt6" => [0.095248,0.094249,0.13539],
+      "Triple_50pct_S_IQE0pt8" => [0.127,0.12567,0.13539],
+      "Triple_50pct_N_IQE0" => [0,0,0],
+      "Triple_50pct_N_IQE0pt4" => [0.052395,0.051907,0.10806],
+      "Triple_50pct_N_IQE0pt6" => [0.078593,0.07786,0.10806],
+      "Triple_50pct_N_IQE0pt8" => [0.10479,0.10382,0.10805],
+      # Triple 25% VLT
+      "Triple_25pct_N_IQE0" => [0,0,0],
+      "Triple_25pct_N_IQE0pt4" => [0.06382,0.063153,0.12693],
+      "Triple_25pct_N_IQE0pt6" => [0.09572,0.094725,0.12696],
+      "Triple_25pct_N_IQE0pt8" => [0.12764,0.12631,0.12693],
+      # VIG 50% VLT
+      "VIG_50pct_S_IQE0" => [0,0,0],
+      "VIG_50pct_S_IQE0pt4" => [0.063462,0.062819,0.13557],
+      "VIG_50pct_S_IQE0pt6" => [0.095248,0.094249,0.13539],
+      "VIG_50pct_S_IQE0pt8" => [0.127,0.12567,0.13539],
+      "VIG_50pct_N_IQE0" => [0,0,0],
+      "VIG_50pct_N_IQE0pt4" => [0.052395,0.051907,0.10806],
+      "VIG_50pct_N_IQE0pt6" => [0.078593,0.07786,0.10806],
+      "VIG_50pct_N_IQE0pt8" => [0.10479,0.10382,0.10805],
+      # VIG 25% VLT
+      "VIG_25pct_N_IQE0" => [0,0,0],
+      "VIG_25pct_N_IQE0pt4" => [0.06382,0.063153,0.12693],
+      "VIG_25pct_N_IQE0pt6" => [0.09572,0.094725,0.12696],
+      "VIG_25pct_N_IQE0pt8" => [0.12764,0.12631,0.12693],
     }
       
     ##########################################################################

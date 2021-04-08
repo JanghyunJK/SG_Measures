@@ -3,8 +3,8 @@
   <schema_version>3.0</schema_version>
   <name>a_inject_window_specific_idf_objects</name>
   <uid>b5cd7571-8ee9-4657-845b-43513fd2b983</uid>
-  <version_id>34793647-bc36-4854-9db4-87ce454fde35</version_id>
-  <version_modified>20200923T171702Z</version_modified>
+  <version_id>bb9217fc-7fb8-47e4-8e1a-956c56113e86</version_id>
+  <version_modified>20210408T182725Z</version_modified>
   <xml_checksum>79C5D5D1</xml_checksum>
   <class_name>AInjectWindowSpecificIDFObjects</class_name>
   <display_name> Inject Window Specific IDF Objects</display_name>
@@ -482,6 +482,70 @@ This measure works for when you just need to add new IDF objects. If you need to
           <display_name>25pct_N_IQE0pt8</display_name>
         </choice>
         <choice>
+          <value>Triple_0pt5pct_N_IQE0</value>
+          <display_name>Triple_0pt5pct_N_IQE0</display_name>
+        </choice>
+        <choice>
+          <value>Triple_0pt5pct_N_IQE0pt4</value>
+          <display_name>Triple_0pt5pct_N_IQE0pt4</display_name>
+        </choice>
+        <choice>
+          <value>Triple_0pt5pct_N_IQE0pt6</value>
+          <display_name>Triple_0pt5pct_N_IQE0pt6</display_name>
+        </choice>
+        <choice>
+          <value>Triple_0pt5pct_N_IQE0pt8</value>
+          <display_name>Triple_0pt5pct_N_IQE0pt8</display_name>
+        </choice>
+        <choice>
+          <value>Triple_5pct_N_IQE0</value>
+          <display_name>Triple_5pct_N_IQE0</display_name>
+        </choice>
+        <choice>
+          <value>Triple_5pct_N_IQE0pt4</value>
+          <display_name>Triple_5pct_N_IQE0pt4</display_name>
+        </choice>
+        <choice>
+          <value>Triple_5pct_N_IQE0pt6</value>
+          <display_name>Triple_5pct_N_IQE0pt6</display_name>
+        </choice>
+        <choice>
+          <value>Triple_5pct_N_IQE0pt8</value>
+          <display_name>Triple_5pct_N_IQE0pt8</display_name>
+        </choice>
+        <choice>
+          <value>VIG_0pt5pct_N_IQE0</value>
+          <display_name>VIG_0pt5pct_N_IQE0</display_name>
+        </choice>
+        <choice>
+          <value>VIG_0pt5pct_N_IQE0pt4</value>
+          <display_name>VIG_0pt5pct_N_IQE0pt4</display_name>
+        </choice>
+        <choice>
+          <value>VIG_0pt5pct_N_IQE0pt6</value>
+          <display_name>VIG_0pt5pct_N_IQE0pt6</display_name>
+        </choice>
+        <choice>
+          <value>VIG_0pt5pct_N_IQE0pt8</value>
+          <display_name>VIG_0pt5pct_N_IQE0pt8</display_name>
+        </choice>
+        <choice>
+          <value>VIG_5pct_N_IQE0</value>
+          <display_name>VIG_5pct_N_IQE0</display_name>
+        </choice>
+        <choice>
+          <value>VIG_5pct_N_IQE0pt4</value>
+          <display_name>VIG_5pct_N_IQE0pt4</display_name>
+        </choice>
+        <choice>
+          <value>VIG_5pct_N_IQE0pt6</value>
+          <display_name>VIG_5pct_N_IQE0pt6</display_name>
+        </choice>
+        <choice>
+          <value>VIG_5pct_N_IQE0pt8</value>
+          <display_name>VIG_5pct_N_IQE0pt8</display_name>
+        </choice>
+        <choice>
           <value>======================</value>
           <display_name>======================</display_name>
         </choice>
@@ -500,6 +564,86 @@ This measure works for when you just need to add new IDF objects. If you need to
         <choice>
           <value>Double_Pane</value>
           <display_name>Double_Pane</display_name>
+        </choice>
+        <choice>
+          <value>======================</value>
+          <display_name>======================</display_name>
+        </choice>
+        <choice>
+          <value>Triple Pane</value>
+          <display_name>Triple Pane</display_name>
+        </choice>
+        <choice>
+          <value>======================</value>
+          <display_name>======================</display_name>
+        </choice>
+        <choice>
+          <value>VeryHot_Triple_Pane</value>
+          <display_name>VeryHot_Triple_Pane</display_name>
+        </choice>
+        <choice>
+          <value>Hot_Triple_Pane</value>
+          <display_name>Hot_Triple_Pane</display_name>
+        </choice>
+        <choice>
+          <value>Cold_Triple_Pane</value>
+          <display_name>Cold_Triple_Pane</display_name>
+        </choice>
+        <choice>
+          <value>VeryCold_Triple_Pane</value>
+          <display_name>VeryCold_Triple_Pane</display_name>
+        </choice>
+        <choice>
+          <value>Triple_Tinted_25pct_N_IQE0</value>
+          <display_name>Triple_Tinted_25pct_N_IQE0</display_name>
+        </choice>
+        <choice>
+          <value>Triple_Tinted_50pct_N_IQE0</value>
+          <display_name>Triple_Tinted_50pct_N_IQE0</display_name>
+        </choice>
+        <choice>
+          <value>Triple_Tinted_50pct_S_IQE0</value>
+          <display_name>Triple_Tinted_50pct_S_IQE0</display_name>
+        </choice>
+        <choice>
+          <value>======================</value>
+          <display_name>======================</display_name>
+        </choice>
+        <choice>
+          <value>VIG</value>
+          <display_name>VIG</display_name>
+        </choice>
+        <choice>
+          <value>======================</value>
+          <display_name>======================</display_name>
+        </choice>
+        <choice>
+          <value>VeryHot_VIG</value>
+          <display_name>VeryHot_VIG</display_name>
+        </choice>
+        <choice>
+          <value>Hot_VIG</value>
+          <display_name>Hot_VIG</display_name>
+        </choice>
+        <choice>
+          <value>Cold_VIG</value>
+          <display_name>Cold_VIG</display_name>
+        </choice>
+        <choice>
+          <value>VeryCold_VIG</value>
+          <display_name>VeryCold_VIG</display_name>
+        </choice>
+        <choice>
+          <value>VIG_Tinted_25pct_N_IQE0</value>
+          <display_name>VIG_Tinted_25pct_N_IQE0</display_name>
+        </choice>
+        <choice>
+          <value>VIG_Tinted_50pct_N_IQE0</value>
+          <display_name>VIG_Tinted_50pct_N_IQE0</display_name>
+        </choice>
+        <choice>
+          <value>VIG_Tinted_50pct_S_IQE0</value>
+          <display_name>VIG_Tinted_50pct_S_IQE0</display_name>
         </choice>
         <choice>
           <value>======================</value>
@@ -700,7 +844,7 @@ This measure works for when you just need to add new IDF objects. If you need to
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>06D97C8E</checksum>
+      <checksum>45BC2B25</checksum>
     </file>
   </files>
 </measure>
