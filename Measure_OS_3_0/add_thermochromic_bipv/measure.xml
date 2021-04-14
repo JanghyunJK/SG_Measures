@@ -3,8 +3,8 @@
   <schema_version>3.0</schema_version>
   <name>add_thermochromic_bipv</name>
   <uid>11088181-e92b-42d3-a1d0-91d4d0261dbb</uid>
-  <version_id>afe03c3c-f925-4011-abb1-54d558ea60a7</version_id>
-  <version_modified>20210408T173502Z</version_modified>
+  <version_id>8a98f57f-4595-475a-958c-09f43b0152f5</version_id>
+  <version_modified>20210414T161003Z</version_modified>
   <xml_checksum>894A4CEA</xml_checksum>
   <class_name>AddThermochromicBIPV</class_name>
   <display_name>Add Thermochromic BIPV</display_name>
@@ -54,271 +54,271 @@
       <type>Choice</type>
       <required>true</required>
       <model_dependent>false</model_dependent>
-      <default_value>25pct_N_IQE0</default_value>
+      <default_value>25%_N_I0</default_value>
       <choices>
         <choice>
-          <value>50pct_S_IQE0</value>
-          <display_name>50pct_S_IQE0</display_name>
+          <value>50%_S_I0</value>
+          <display_name>50%_S_I0</display_name>
         </choice>
         <choice>
-          <value>50pct_S_IQE0pt4</value>
-          <display_name>50pct_S_IQE0pt4</display_name>
+          <value>50%_S_I0pt4</value>
+          <display_name>50%_S_I0pt4</display_name>
         </choice>
         <choice>
-          <value>50pct_S_IQE0pt6</value>
-          <display_name>50pct_S_IQE0pt6</display_name>
+          <value>50%_S_I0pt6</value>
+          <display_name>50%_S_I0pt6</display_name>
         </choice>
         <choice>
-          <value>50pct_S_IQE0pt8</value>
-          <display_name>50pct_S_IQE0pt8</display_name>
+          <value>50%_S_I0pt8</value>
+          <display_name>50%_S_I0pt8</display_name>
         </choice>
         <choice>
-          <value>50pct_N_IQE0</value>
-          <display_name>50pct_N_IQE0</display_name>
+          <value>50%_N_I0</value>
+          <display_name>50%_N_I0</display_name>
         </choice>
         <choice>
-          <value>50pct_N_IQE0pt4</value>
-          <display_name>50pct_N_IQE0pt4</display_name>
+          <value>50%_N_I0pt4</value>
+          <display_name>50%_N_I0pt4</display_name>
         </choice>
         <choice>
-          <value>50pct_N_IQE0pt6</value>
-          <display_name>50pct_N_IQE0pt6</display_name>
+          <value>50%_N_I0pt6</value>
+          <display_name>50%_N_I0pt6</display_name>
         </choice>
         <choice>
-          <value>50pct_N_IQE0pt8</value>
-          <display_name>50pct_N_IQE0pt8</display_name>
+          <value>50%_N_I0pt8</value>
+          <display_name>50%_N_I0pt8</display_name>
         </choice>
         <choice>
-          <value>25pct_N_IQE0</value>
-          <display_name>25pct_N_IQE0</display_name>
+          <value>25%_N_I0</value>
+          <display_name>25%_N_I0</display_name>
         </choice>
         <choice>
-          <value>25pct_N_IQE0pt4</value>
-          <display_name>25pct_N_IQE0pt4</display_name>
+          <value>25%_N_I0pt4</value>
+          <display_name>25%_N_I0pt4</display_name>
         </choice>
         <choice>
-          <value>25pct_N_IQE0pt6</value>
-          <display_name>25pct_N_IQE0pt6</display_name>
+          <value>25%_N_I0pt6</value>
+          <display_name>25%_N_I0pt6</display_name>
         </choice>
         <choice>
-          <value>25pct_N_IQE0pt8</value>
-          <display_name>25pct_N_IQE0pt8</display_name>
+          <value>25%_N_I0pt8</value>
+          <display_name>25%_N_I0pt8</display_name>
         </choice>
         <choice>
-          <value>20pct_N_IQE0</value>
-          <display_name>20pct_N_IQE0</display_name>
+          <value>20%_N_I0</value>
+          <display_name>20%_N_I0</display_name>
         </choice>
         <choice>
-          <value>20pct_N_IQE0pt4</value>
-          <display_name>20pct_N_IQE0pt4</display_name>
+          <value>20%_N_I0pt4</value>
+          <display_name>20%_N_I0pt4</display_name>
         </choice>
         <choice>
-          <value>20pct_N_IQE0pt6</value>
-          <display_name>20pct_N_IQE0pt6</display_name>
+          <value>20%_N_I0pt6</value>
+          <display_name>20%_N_I0pt6</display_name>
         </choice>
         <choice>
-          <value>20pct_N_IQE0pt8</value>
-          <display_name>20pct_N_IQE0pt8</display_name>
+          <value>20%_N_I0pt8</value>
+          <display_name>20%_N_I0pt8</display_name>
         </choice>
         <choice>
-          <value>15pct_N_IQE0</value>
-          <display_name>15pct_N_IQE0</display_name>
+          <value>15%_N_I0</value>
+          <display_name>15%_N_I0</display_name>
         </choice>
         <choice>
-          <value>15pct_N_IQE0pt4</value>
-          <display_name>15pct_N_IQE0pt4</display_name>
+          <value>15%_N_I0pt4</value>
+          <display_name>15%_N_I0pt4</display_name>
         </choice>
         <choice>
-          <value>15pct_N_IQE0pt6</value>
-          <display_name>15pct_N_IQE0pt6</display_name>
+          <value>15%_N_I0pt6</value>
+          <display_name>15%_N_I0pt6</display_name>
         </choice>
         <choice>
-          <value>15pct_N_IQE0pt8</value>
-          <display_name>15pct_N_IQE0pt8</display_name>
+          <value>15%_N_I0pt8</value>
+          <display_name>15%_N_I0pt8</display_name>
         </choice>
         <choice>
-          <value>10pct_N_IQE0</value>
-          <display_name>10pct_N_IQE0</display_name>
+          <value>10%_N_I0</value>
+          <display_name>10%_N_I0</display_name>
         </choice>
         <choice>
-          <value>10pct_N_IQE0pt4</value>
-          <display_name>10pct_N_IQE0pt4</display_name>
+          <value>10%_N_I0pt4</value>
+          <display_name>10%_N_I0pt4</display_name>
         </choice>
         <choice>
-          <value>10pct_N_IQE0pt6</value>
-          <display_name>10pct_N_IQE0pt6</display_name>
+          <value>10%_N_I0pt6</value>
+          <display_name>10%_N_I0pt6</display_name>
         </choice>
         <choice>
-          <value>10pct_N_IQE0pt8</value>
-          <display_name>10pct_N_IQE0pt8</display_name>
+          <value>10%_N_I0pt8</value>
+          <display_name>10%_N_I0pt8</display_name>
         </choice>
         <choice>
-          <value>5pct_N_IQE0</value>
-          <display_name>5pct_N_IQE0</display_name>
+          <value>5%_N_I0</value>
+          <display_name>5%_N_I0</display_name>
         </choice>
         <choice>
-          <value>5pct_N_IQE0pt4</value>
-          <display_name>5pct_N_IQE0pt4</display_name>
+          <value>5%_N_I0pt4</value>
+          <display_name>5%_N_I0pt4</display_name>
         </choice>
         <choice>
-          <value>5pct_N_IQE0pt6</value>
-          <display_name>5pct_N_IQE0pt6</display_name>
+          <value>5%_N_I0pt6</value>
+          <display_name>5%_N_I0pt6</display_name>
         </choice>
         <choice>
-          <value>5pct_N_IQE0pt8</value>
-          <display_name>5pct_N_IQE0pt8</display_name>
+          <value>5%_N_I0pt8</value>
+          <display_name>5%_N_I0pt8</display_name>
         </choice>
         <choice>
-          <value>0pt5pct_N_IQE0</value>
-          <display_name>0pt5pct_N_IQE0</display_name>
+          <value>0pt5%_N_I0</value>
+          <display_name>0pt5%_N_I0</display_name>
         </choice>
         <choice>
-          <value>0pt5pct_N_IQE0pt4</value>
-          <display_name>0pt5pct_N_IQE0pt4</display_name>
+          <value>0pt5%_N_I0pt4</value>
+          <display_name>0pt5%_N_I0pt4</display_name>
         </choice>
         <choice>
-          <value>0pt5pct_N_IQE0pt6</value>
-          <display_name>0pt5pct_N_IQE0pt6</display_name>
+          <value>0pt5%_N_I0pt6</value>
+          <display_name>0pt5%_N_I0pt6</display_name>
         </choice>
         <choice>
-          <value>0pt5pct_N_IQE0pt8</value>
-          <display_name>0pt5pct_N_IQE0pt8</display_name>
+          <value>0pt5%_N_I0pt8</value>
+          <display_name>0pt5%_N_I0pt8</display_name>
         </choice>
         <choice>
-          <value>Triple_0pt5pct_N_IQE0</value>
-          <display_name>Triple_0pt5pct_N_IQE0</display_name>
+          <value>Tr_0pt5%_N_I0</value>
+          <display_name>Tr_0pt5%_N_I0</display_name>
         </choice>
         <choice>
-          <value>Triple_0pt5pct_N_IQE0pt4</value>
-          <display_name>Triple_0pt5pct_N_IQE0pt4</display_name>
+          <value>Tr_0pt5%_N_I0pt4</value>
+          <display_name>Tr_0pt5%_N_I0pt4</display_name>
         </choice>
         <choice>
-          <value>Triple_0pt5pct_N_IQE0pt6</value>
-          <display_name>Triple_0pt5pct_N_IQE0pt6</display_name>
+          <value>Tr_0pt5%_N_I0pt6</value>
+          <display_name>Tr_0pt5%_N_I0pt6</display_name>
         </choice>
         <choice>
-          <value>Triple_0pt5pct_N_IQE0pt8</value>
-          <display_name>Triple_0pt5pct_N_IQE0pt8</display_name>
+          <value>Tr_0pt5%_N_I0pt8</value>
+          <display_name>Tr_0pt5%_N_I0pt8</display_name>
         </choice>
         <choice>
-          <value>Triple_5pct_N_IQE0</value>
-          <display_name>Triple_5pct_N_IQE0</display_name>
+          <value>Tr_5%_N_I0</value>
+          <display_name>Tr_5%_N_I0</display_name>
         </choice>
         <choice>
-          <value>Triple_5pct_N_IQE0pt4</value>
-          <display_name>Triple_5pct_N_IQE0pt4</display_name>
+          <value>Tr_5%_N_I0pt4</value>
+          <display_name>Tr_5%_N_I0pt4</display_name>
         </choice>
         <choice>
-          <value>Triple_5pct_N_IQE0pt6</value>
-          <display_name>Triple_5pct_N_IQE0pt6</display_name>
+          <value>Tr_5%_N_I0pt6</value>
+          <display_name>Tr_5%_N_I0pt6</display_name>
         </choice>
         <choice>
-          <value>Triple_5pct_N_IQE0pt8</value>
-          <display_name>Triple_5pct_N_IQE0pt8</display_name>
+          <value>Tr_5%_N_I0pt8</value>
+          <display_name>Tr_5%_N_I0pt8</display_name>
         </choice>
         <choice>
-          <value>VIG_0pt5pct_N_IQE0</value>
-          <display_name>VIG_0pt5pct_N_IQE0</display_name>
+          <value>V_0pt5%_N_I0</value>
+          <display_name>V_0pt5%_N_I0</display_name>
         </choice>
         <choice>
-          <value>VIG_0pt5pct_N_IQE0pt4</value>
-          <display_name>VIG_0pt5pct_N_IQE0pt4</display_name>
+          <value>V_0pt5%_N_I0pt4</value>
+          <display_name>V_0pt5%_N_I0pt4</display_name>
         </choice>
         <choice>
-          <value>VIG_0pt5pct_N_IQE0pt6</value>
-          <display_name>VIG_0pt5pct_N_IQE0pt6</display_name>
+          <value>V_0pt5%_N_I0pt6</value>
+          <display_name>V_0pt5%_N_I0pt6</display_name>
         </choice>
         <choice>
-          <value>VIG_0pt5pct_N_IQE0pt8</value>
-          <display_name>VIG_0pt5pct_N_IQE0pt8</display_name>
+          <value>V_0pt5%_N_I0pt8</value>
+          <display_name>V_0pt5%_N_I0pt8</display_name>
         </choice>
         <choice>
-          <value>VIG_5pct_N_IQE0</value>
-          <display_name>VIG_5pct_N_IQE0</display_name>
+          <value>V_5%_N_I0</value>
+          <display_name>V_5%_N_I0</display_name>
         </choice>
         <choice>
-          <value>VIG_5pct_N_IQE0pt4</value>
-          <display_name>VIG_5pct_N_IQE0pt4</display_name>
+          <value>V_5%_N_I0pt4</value>
+          <display_name>V_5%_N_I0pt4</display_name>
         </choice>
         <choice>
-          <value>VIG_5pct_N_IQE0pt6</value>
-          <display_name>VIG_5pct_N_IQE0pt6</display_name>
+          <value>V_5%_N_I0pt6</value>
+          <display_name>V_5%_N_I0pt6</display_name>
         </choice>
         <choice>
-          <value>VIG_5pct_N_IQE0pt8</value>
-          <display_name>VIG_5pct_N_IQE0pt8</display_name>
+          <value>V_5%_N_I0pt8</value>
+          <display_name>V_5%_N_I0pt8</display_name>
         </choice>
         <choice>
-          <value>Triple_25pct_N_IQE0pt4</value>
-          <display_name>Triple_25pct_N_IQE0pt4</display_name>
+          <value>Tr_25%_N_I0pt4</value>
+          <display_name>Tr_25%_N_I0pt4</display_name>
         </choice>
         <choice>
-          <value>Triple_25pct_N_IQE0pt6</value>
-          <display_name>Triple_25pct_N_IQE0pt6</display_name>
+          <value>Tr_25%_N_I0pt6</value>
+          <display_name>Tr_25%_N_I0pt6</display_name>
         </choice>
         <choice>
-          <value>Triple_25pct_N_IQE0pt8</value>
-          <display_name>Triple_25pct_N_IQE0pt8</display_name>
+          <value>Tr_25%_N_I0pt8</value>
+          <display_name>Tr_25%_N_I0pt8</display_name>
         </choice>
         <choice>
-          <value>Triple_50pct_N_IQE0pt4</value>
-          <display_name>Triple_50pct_N_IQE0pt4</display_name>
+          <value>Tr_50%_N_I0pt4</value>
+          <display_name>Tr_50%_N_I0pt4</display_name>
         </choice>
         <choice>
-          <value>Triple_50pct_N_IQE0pt6</value>
-          <display_name>Triple_50pct_N_IQE0pt6</display_name>
+          <value>Tr_50%_N_I0pt6</value>
+          <display_name>Tr_50%_N_I0pt6</display_name>
         </choice>
         <choice>
-          <value>Triple_50pct_N_IQE0pt8</value>
-          <display_name>Triple_50pct_N_IQE0pt8</display_name>
+          <value>Tr_50%_N_I0pt8</value>
+          <display_name>Tr_50%_N_I0pt8</display_name>
         </choice>
         <choice>
-          <value>Triple_50pct_S_IQE0pt4</value>
-          <display_name>Triple_50pct_S_IQE0pt4</display_name>
+          <value>Tr_50%_S_I0pt4</value>
+          <display_name>Tr_50%_S_I0pt4</display_name>
         </choice>
         <choice>
-          <value>Triple_50pct_S_IQE0pt6</value>
-          <display_name>Triple_50pct_S_IQE0pt6</display_name>
+          <value>Tr_50%_S_I0pt6</value>
+          <display_name>Tr_50%_S_I0pt6</display_name>
         </choice>
         <choice>
-          <value>Triple_50pct_S_IQE0pt8</value>
-          <display_name>Triple_50pct_S_IQE0pt8</display_name>
+          <value>Tr_50%_S_I0pt8</value>
+          <display_name>Tr_50%_S_I0pt8</display_name>
         </choice>
         <choice>
-          <value>VIG_25pct_N_IQE0pt4</value>
-          <display_name>VIG_25pct_N_IQE0pt4</display_name>
+          <value>V_25%_N_I0pt4</value>
+          <display_name>V_25%_N_I0pt4</display_name>
         </choice>
         <choice>
-          <value>VIG_25pct_N_IQE0pt6</value>
-          <display_name>VIG_25pct_N_IQE0pt6</display_name>
+          <value>V_25%_N_I0pt6</value>
+          <display_name>V_25%_N_I0pt6</display_name>
         </choice>
         <choice>
-          <value>VIG_25pct_N_IQE0pt8</value>
-          <display_name>VIG_25pct_N_IQE0pt8</display_name>
+          <value>V_25%_N_I0pt8</value>
+          <display_name>V_25%_N_I0pt8</display_name>
         </choice>
         <choice>
-          <value>VIG_50pct_N_IQE0pt4</value>
-          <display_name>VIG_50pct_N_IQE0pt4</display_name>
+          <value>V_50%_N_I0pt4</value>
+          <display_name>V_50%_N_I0pt4</display_name>
         </choice>
         <choice>
-          <value>VIG_50pct_N_IQE0pt6</value>
-          <display_name>VIG_50pct_N_IQE0pt6</display_name>
+          <value>V_50%_N_I0pt6</value>
+          <display_name>V_50%_N_I0pt6</display_name>
         </choice>
         <choice>
-          <value>VIG_50pct_N_IQE0pt8</value>
-          <display_name>VIG_50pct_N_IQE0pt8</display_name>
+          <value>V_50%_N_I0pt8</value>
+          <display_name>V_50%_N_I0pt8</display_name>
         </choice>
         <choice>
-          <value>VIG_50pct_S_IQE0pt4</value>
-          <display_name>VIG_50pct_S_IQE0pt4</display_name>
+          <value>V_50%_S_I0pt4</value>
+          <display_name>V_50%_S_I0pt4</display_name>
         </choice>
         <choice>
-          <value>VIG_50pct_S_IQE0pt6</value>
-          <display_name>VIG_50pct_S_IQE0pt6</display_name>
+          <value>V_50%_S_I0pt6</value>
+          <display_name>V_50%_S_I0pt6</display_name>
         </choice>
         <choice>
-          <value>VIG_50pct_S_IQE0pt8</value>
-          <display_name>VIG_50pct_S_IQE0pt8</display_name>
+          <value>V_50%_S_I0pt8</value>
+          <display_name>V_50%_S_I0pt8</display_name>
         </choice>
       </choices>
     </argument>
@@ -589,30 +589,6 @@
   </attributes>
   <files>
     <file>
-      <filename>os_lib_helper_methods.rb</filename>
-      <filetype>rb</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>A6430141</checksum>
-    </file>
-    <file>
-      <filename>os_lib_schedules.rb</filename>
-      <filetype>rb</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>C4185CAA</checksum>
-    </file>
-    <file>
-      <filename>HVACSizing.Model.rb</filename>
-      <filetype>rb</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>8FDE9459</checksum>
-    </file>
-    <file>
-      <filename>Standards.Construction.rb</filename>
-      <filetype>rb</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>F408C706</checksum>
-    </file>
-    <file>
       <version>
         <software_program>OpenStudio</software_program>
         <identifier>1.9.0</identifier>
@@ -621,7 +597,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>E5B23193</checksum>
+      <checksum>AADFCB79</checksum>
     </file>
   </files>
 </measure>
