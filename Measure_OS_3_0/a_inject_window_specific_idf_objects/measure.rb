@@ -28,14 +28,11 @@ class AInjectWindowSpecificIDFObjects < OpenStudio::Ruleset::WorkspaceUserScript
     glzsys = OpenStudio::StringVector.new
     glzsys << "Single_Pane"
     glzsys << "Double_Pane"
-    glzsys << "ASHRAE_Detailed"
-    glzsys << "Tinted"
-    glzsys << "Triple Pane"
+    glzsys << "Triple_Pane"
     glzsys << "VIG"
+    glzsys << "ASHRAE_Detailed"
+    glzsys << "Static"
     glzsys << "SwitchGlaze"
-    glzsys << "Tnt_25%_N"
-    glzsys << "Tnt_50%_N"
-    glzsys << "Tnt_50%_S"
     
     glztype = OpenStudio::Ruleset::OSArgument::makeChoiceArgument('glztype', glzsys, true)
     glztype.setDisplayName("Choice of IGU")
@@ -213,34 +210,6 @@ class AInjectWindowSpecificIDFObjects < OpenStudio::Ruleset::WorkspaceUserScript
   
       glztype = climateregion.concat("_#{glztype.to_s}")
       runner.registerInfo("Window name to be implemented = #{glztype}")
-      
-    elsif (glztype == "Triple Pane")
-    
-      glztype = "Tr_Pane"
-      
-      location = check_upstream_measure_for_arg(runner, 'weather_file_name')
-      location = location[:value].split("\\")[-1]
-      runner.registerInfo("Weather file defined in the upstream = #{location}")
-      
-      climateregion = dictionary_weather[location]
-      runner.registerInfo("Simple climate classification for this location = #{climateregion}")
-  
-      glztype = climateregion.concat("_#{glztype.to_s}")
-      runner.registerInfo("Window name to be implemented = #{glztype}")
-      
-    elsif (glztype == "VIG")
-    
-      glztype = "V"
-      
-      location = check_upstream_measure_for_arg(runner, 'weather_file_name')
-      location = location[:value].split("\\")[-1]
-      runner.registerInfo("Weather file defined in the upstream = #{location}")
-      
-      climateregion = dictionary_weather[location]
-      runner.registerInfo("Simple climate classification for this location = #{climateregion}")
-  
-      glztype = climateregion.concat("_#{glztype.to_s}")
-      runner.registerInfo("Window name to be implemented = #{glztype}")
                     
     elsif (glztype == "SwitchGlaze")
     
@@ -263,10 +232,10 @@ class AInjectWindowSpecificIDFObjects < OpenStudio::Ruleset::WorkspaceUserScript
       runner.registerInfo("glztype = #{glztype}")
       runner.registerInfo("Window name to be implemented = #{glztype}")
     
-    elsif (glztype == "Tinted")
-    
-      glztype = "Tnt"
-      
+    elsif (glztype == "Static")
+
+      glztype=""
+          
       location = check_upstream_measure_for_arg(runner, 'weather_file_name')
       location = location[:value].split("\\")[-1]
       runner.registerInfo("Weather file defined in the upstream = #{location}")
@@ -278,106 +247,13 @@ class AInjectWindowSpecificIDFObjects < OpenStudio::Ruleset::WorkspaceUserScript
       iqe = iqe[:value]
       runner.registerInfo("Tint and IQE setting = #{iqe}")
   
-      glztype = climateregion.concat("_#{glztype.to_s}")
+      glztype = climateregion.concat("#{glztype.to_s}")
       glztype = glztype.concat("_"+iqe) #specific string for tinted 1 window files
 
       runner.registerInfo("glztype = #{glztype}")
       runner.registerInfo("Window name to be implemented = #{glztype}")
-    
-    elsif (glztype == "Tnt_25%_N")
-    
-      glztype = "Tnt"
-      
-      location = check_upstream_measure_for_arg(runner, 'weather_file_name')
-      location = location[:value].split("\\")[-1]
-      runner.registerInfo("Weather file defined in the upstream = #{location}")
-      
-      climateregion = dictionary_weather[location]
-      runner.registerInfo("Simple climate classification for this location = #{climateregion}")
-  
-      glztype = climateregion.concat("_#{glztype.to_s}")
-      glztype = glztype.concat("_25%_N_I0pt") #specific string for tinted 1 window files
-      pce_string = (pv_eff_fixed.to_f*100).to_i
-      runner.registerInfo("PCE conversion to string = #{pce_string}")
-      if pce_string == 0
-        glztype = glztype.gsub("pt","")
-      else
-        glztype = glztype.concat("#{pce_string.to_s}")
-      end
-      runner.registerInfo("glztype = #{glztype}")
-      
-      runner.registerInfo("Window name to be implemented = #{glztype}")
-      
-    elsif (glztype == "Tnt_50%_N")
-    
-      glztype = "Tnt"
-      
-      location = check_upstream_measure_for_arg(runner, 'weather_file_name')
-      location = location[:value].split("\\")[-1]
-      runner.registerInfo("Weather file defined in the upstream = #{location}")
-      
-      climateregion = dictionary_weather[location]
-      runner.registerInfo("Simple climate classification for this location = #{climateregion}")
-  
-      glztype = climateregion.concat("_#{glztype.to_s}")
-      glztype = glztype.concat("_50%_N_I0pt") #specific string for tinted 1 window files
-      pce_string = (pv_eff_fixed.to_f*100).to_i
-      runner.registerInfo("PCE conversion to string = #{pce_string}")
-      if pce_string == 0
-        glztype = glztype.gsub("pt","")
-      else
-        glztype = glztype.concat("#{pce_string.to_s}")
-      end
-      runner.registerInfo("glztype = #{glztype}")
-      
-      runner.registerInfo("Window name to be implemented = #{glztype}")
-          
-    elsif (glztype == "Tnt_50%_S")
-    
-      glztype = "Tnt"
-      
-      location = check_upstream_measure_for_arg(runner, 'weather_file_name')
-      location = location[:value].split("\\")[-1]
-      runner.registerInfo("Weather file defined in the upstream = #{location}")
-      
-      climateregion = dictionary_weather[location]
-      runner.registerInfo("Simple climate classification for this location = #{climateregion}")
-  
-      glztype = climateregion.concat("_#{glztype.to_s}")
-      glztype = glztype.concat("_50%_S_IQE0pt") #specific string for tinted 1 window files
-      pce_string = (pv_eff_fixed.to_f*100).to_i
-      runner.registerInfo("PCE conversion to string = #{pce_string}")
-      if pce_string == 0
-        glztype = glztype.gsub("pt","")
-      else
-        glztype = glztype.concat("#{pce_string.to_s}")
-      end
-      runner.registerInfo("glztype = #{glztype}")
-      
-      runner.registerInfo("Window name to be implemented = #{glztype}")
-      
-    elsif (glztype == "Tr_Tnt_25%_N_I0")||(glztype == "Tr_Tnt_50%_N_I0")||(glztype == "Tr_Tnt_50%_S_I0")||(glztype == "V_Tnt_25%_N_I0")||(glztype == "V_Tnt_50%_N_I0")||(glztype == "V_Tnt_50%_S_I0")
-          
-      location = check_upstream_measure_for_arg(runner, 'weather_file_name')
-      location = location[:value].split("\\")[-1]
-      runner.registerInfo("Weather file defined in the upstream = #{location}")
-      
-      climateregion = dictionary_weather[location]
-      runner.registerInfo("Simple climate classification for this location = #{climateregion}")
-  
-      glztype = climateregion.concat("_#{glztype.to_s}")
-      runner.registerInfo("glztype = #{glztype}")
-      
-      runner.registerInfo("Window name to be implemented = #{glztype}")
                          
     end
-
-    # #############################################################
-    # # TEMP
-    # #############################################################
-    # glztype = "Hot_SG_Tr_0pt5%_N_I0pt4"
-    # runner.registerInfo("OVERRIDING TO = #{glztype}")
-    # #############################################################
     
 
     # report initial condition

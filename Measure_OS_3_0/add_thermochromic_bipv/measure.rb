@@ -24,61 +24,40 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
   def arguments(model)
     args = OpenStudio::Ruleset::OSArgumentVector.new
 
-    # PV surface QD coverage (%)
-    dot_coverage = OpenStudio::Ruleset::OSArgument.makeDoubleArgument("dot_coverage", true)
-    dot_coverage.setDisplayName("Active portion of PV from window surface area")
-    dot_coverage.setUnits("fraction")
-    dot_coverage.setDefaultValue(1.0)
-    args << dot_coverage
-    
-    # pv module efficiency (%)
-    pv_eff = OpenStudio::Ruleset::OSArgument.makeDoubleArgument("pv_eff", true)
-    pv_eff.setDisplayName("Fixed PV power conversion efficiency")
-    pv_eff.setUnits("fraction")
-    pv_eff.setDefaultValue(0.05)
-    args << pv_eff
-    
-    # using IQE
-    use_tint_iqe = OpenStudio::Ruleset::OSArgument::makeBoolArgument('use_tint_iqe', false)
-    use_tint_iqe.setDisplayName('Using tinted level and IQE (Ideal Quantum Efficiency) for PCE lookup?')
-    use_tint_iqe.setDefaultValue('false')
-    use_tint_iqe.setDescription('Select if selection of window will be based on tinted level and IQE setting (associated PCE value will be automatically applied)')
-    args << use_tint_iqe
-    
     # facades to receive BIPV
     choices = OpenStudio::StringVector.new
-    choices << "50%_S_I0"
-    choices << "50%_S_I0pt4"
-    choices << "50%_S_I0pt6"
-    choices << "50%_S_I0pt8"
-    choices << "50%_N_I0"
-    choices << "50%_N_I0pt4"
-    choices << "50%_N_I0pt6"
-    choices << "50%_N_I0pt8"
-    choices << "25%_N_I0"
-    choices << "25%_N_I0pt4"
-    choices << "25%_N_I0pt6"
-    choices << "25%_N_I0pt8"
-    choices << "20%_N_I0"
-    choices << "20%_N_I0pt4"
-    choices << "20%_N_I0pt6"
-    choices << "20%_N_I0pt8"
-    choices << "15%_N_I0"
-    choices << "15%_N_I0pt4"
-    choices << "15%_N_I0pt6"
-    choices << "15%_N_I0pt8"
-    choices << "10%_N_I0"
-    choices << "10%_N_I0pt4"
-    choices << "10%_N_I0pt6"
-    choices << "10%_N_I0pt8"
-    choices << "5%_N_I0"
-    choices << "5%_N_I0pt4"
-    choices << "5%_N_I0pt6"
-    choices << "5%_N_I0pt8"
-    choices << "0pt5%_N_I0"
-    choices << "0pt5%_N_I0pt4"
-    choices << "0pt5%_N_I0pt6"
-    choices << "0pt5%_N_I0pt8"
+    choices << "Tnt_50%_S_I0"
+    choices << "Tnt_50%_S_I0pt4"
+    choices << "Tnt_50%_S_I0pt6"
+    choices << "Tnt_50%_S_I0pt8"
+    choices << "Tnt_50%_N_I0"
+    choices << "Tnt_50%_N_I0pt4"
+    choices << "Tnt_50%_N_I0pt6"
+    choices << "Tnt_50%_N_I0pt8"
+    choices << "Tnt_25%_N_I0"
+    choices << "Tnt_25%_N_I0pt4"
+    choices << "Tnt_25%_N_I0pt6"
+    choices << "Tnt_25%_N_I0pt8"
+    choices << "Tnt_20%_N_I0"
+    choices << "Tnt_20%_N_I0pt4"
+    choices << "Tnt_20%_N_I0pt6"
+    choices << "Tnt_20%_N_I0pt8"
+    choices << "Tnt_15%_N_I0"
+    choices << "Tnt_15%_N_I0pt4"
+    choices << "Tnt_15%_N_I0pt6"
+    choices << "Tnt_15%_N_I0pt8"
+    choices << "Tnt_10%_N_I0"
+    choices << "Tnt_10%_N_I0pt4"
+    choices << "Tnt_10%_N_I0pt6"
+    choices << "Tnt_10%_N_I0pt8"
+    choices << "Tnt_5%_N_I0"
+    choices << "Tnt_5%_N_I0pt4"
+    choices << "Tnt_5%_N_I0pt6"
+    choices << "Tnt_5%_N_I0pt8"
+    choices << "Tnt_0pt5%_N_I0"
+    choices << "Tnt_0pt5%_N_I0pt4"
+    choices << "Tnt_0pt5%_N_I0pt6"
+    choices << "Tnt_0pt5%_N_I0pt8"
     choices << "Tr_0pt5%_N_I0"
     choices << "Tr_0pt5%_N_I0pt4"
     choices << "Tr_0pt5%_N_I0pt6"
@@ -118,12 +97,6 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
     iqe.setDisplayName("iqe")
     iqe.setDefaultValue("25%_N_I0")
     args << iqe
-    
-    inverter_eff = OpenStudio::Ruleset::OSArgument.makeDoubleArgument("inverter_eff", true)
-    inverter_eff.setDisplayName("Fixed Inverter Efficiency")
-    inverter_eff.setUnits("fraction")
-    inverter_eff.setDefaultValue(1.0)
-    args << inverter_eff
 
     # facades to receive BIPV
     choices = OpenStudio::StringVector.new
@@ -138,7 +111,7 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
     facade.setDisplayName("facade")
     facade.setDefaultValue("S")
     args << facade
-    
+
     # thermochromic window implementation 
     pce_scenarios = OpenStudio::StringVector.new
     pce_scenarios << "Static"
@@ -147,10 +120,39 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
     pce_scenario.setDisplayName("Choice of power conversion efficiency modeling scenario")
     pce_scenario.setDefaultValue("Static")
     args << pce_scenario
+
+    # PV surface QD coverage (%)
+    dot_coverage = OpenStudio::Ruleset::OSArgument.makeDoubleArgument("dot_coverage", true)
+    dot_coverage.setDisplayName("Active portion of PV from window surface area")
+    dot_coverage.setUnits("fraction")
+    dot_coverage.setDefaultValue(1.0)
+    args << dot_coverage
+
+    # using IQE
+    use_tint_iqe = OpenStudio::Ruleset::OSArgument::makeBoolArgument('use_tint_iqe', false)
+    use_tint_iqe.setDisplayName('Dynamic power conversion efficiency?')
+    use_tint_iqe.setDefaultValue('false')
+    use_tint_iqe.setDescription('select true if selection of window will be based on tinted level and IQE setting (associated PCE value will be automatically applied)')
+    args << use_tint_iqe
+    
+    # pv module efficiency (%)
+    pv_eff = OpenStudio::Ruleset::OSArgument.makeDoubleArgument("pv_eff", true)
+    pv_eff.setDisplayName("Fixed PV power conversion efficiency")
+    pv_eff.setDescription('this value is applied if dynamic power conversion efficiency is false.')
+    pv_eff.setUnits("fraction")
+    pv_eff.setDefaultValue(0.0)
+    args << pv_eff
+
+    inverter_eff = OpenStudio::Ruleset::OSArgument.makeDoubleArgument("inverter_eff", true)
+    inverter_eff.setDisplayName("Fixed Inverter Efficiency")
+    inverter_eff.setUnits("fraction")
+    inverter_eff.setDefaultValue(1.0)
+    args << inverter_eff    
     
     # pv module efficiency (%)
     pv_eff_light = OpenStudio::Ruleset::OSArgument.makeDoubleArgument("pv_eff_light", true)
     pv_eff_light.setDisplayName("PV power conversion efficiency in light state")
+    pv_eff_light.setDescription('this value is applied if dynamic power conversion efficiency is false.')
     pv_eff_light.setUnits("fraction")
     pv_eff_light.setDefaultValue(0.0053)
     args << pv_eff_light
@@ -158,6 +160,7 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
     # pv module efficiency (%)
     pv_eff_dark = OpenStudio::Ruleset::OSArgument.makeDoubleArgument("pv_eff_dark", true)
     pv_eff_dark.setDisplayName("PV power conversion efficiency in dark state")
+    pv_eff_dark.setDescription('this value is applied if dynamic power conversion efficiency is false.')
     pv_eff_dark.setUnits("fraction")
     pv_eff_dark.setDefaultValue(0.18)
     args << pv_eff_dark
@@ -165,6 +168,7 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
     # thermochromic switching temperature
     switch_t = OpenStudio::Ruleset::OSArgument.makeDoubleArgument('switch_t', true)
     switch_t.setDisplayName('State switching temperature for thermochromic window')
+    switch_t.setDescription('this value is applied if switchglaze is selected.')
     switch_t.setUnits("C")
     switch_t.setDefaultValue(30.0)
     args << switch_t
@@ -224,72 +228,72 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
     dictionary_iqe_pce = Hash.new
     dictionary_iqe_pce = {
       # 50% VLT
-      "50%_S_I0" => [0,0,0],
-      "50%_S_I0pt4" => [0.063462,0.062819,0.13557],
-      "50%_S_I0pt6" => [0.095248,0.094249,0.13539],
-      "50%_S_I0pt8" => [0.127,0.12567,0.13539],
-      "50%_N_I0" => [0,0,0],
-      "50%_N_I0pt4" => [0.052395,0.051907,0.10806],
-      "50%_N_I0pt6" => [0.078593,0.07786,0.10806],
-      "50%_N_I0pt8" => [0.10479,0.10382,0.10805],
+      "Tnt_50%_S_I0" => [0,0,0],
+      "Tnt_50%_S_I0pt4" => [0.063462,0.062819,0.13557],
+      "Tnt_50%_S_I0pt6" => [0.095248,0.094249,0.13539],
+      "Tnt_50%_S_I0pt8" => [0.127,0.12567,0.13539],
+      "Tnt_50%_N_I0" => [0,0,0],
+      "Tnt_50%_N_I0pt4" => [0.052395,0.051907,0.10806],
+      "Tnt_50%_N_I0pt6" => [0.078593,0.07786,0.10806],
+      "Tnt_50%_N_I0pt8" => [0.10479,0.10382,0.10805],
       # 25% VLT
-      "25%_N_I0" => [0,0,0],
-      "25%_N_I0pt4" => [0.06382,0.063153,0.12693],
-      "25%_N_I0pt6" => [0.09572,0.094725,0.12696],
-      "25%_N_I0pt8" => [0.12764,0.12631,0.12693],
-      "25%_N_I0_Dark" => [0,0,0],
-      "25%_N_I0pt4_Dark" => [0.06382,0.063153,0.12693],
-      "25%_N_I0pt6_Dark" => [0.09572,0.094725,0.12696],
-      "25%_N_I0pt8_Dark" => [0.12764,0.12631,0.12693],
-      "25%_N_I0_Light" => [0,0,0],
-      "25%_N_I0pt4_Light" => [0.0016858,0.001608,0.084473],
-      "25%_N_I0pt6_Light" => [0.0025286,0.0024119,0.084463],
-      "25%_N_I0pt8_Light" => [0.0033715,0.0032158,0.084456],
+      "Tnt_25%_N_I0" => [0,0,0],
+      "Tnt_25%_N_I0pt4" => [0.06382,0.063153,0.12693],
+      "Tnt_25%_N_I0pt6" => [0.09572,0.094725,0.12696],
+      "Tnt_25%_N_I0pt8" => [0.12764,0.12631,0.12693],
+      "Tnt_25%_N_I0_Dark" => [0,0,0],
+      "Tnt_25%_N_I0pt4_Dark" => [0.06382,0.063153,0.12693],
+      "Tnt_25%_N_I0pt6_Dark" => [0.09572,0.094725,0.12696],
+      "Tnt_25%_N_I0pt8_Dark" => [0.12764,0.12631,0.12693],
+      "Tnt_25%_N_I0_Light" => [0,0,0],
+      "Tnt_25%_N_I0pt4_Light" => [0.0016858,0.001608,0.084473],
+      "Tnt_25%_N_I0pt6_Light" => [0.0025286,0.0024119,0.084463],
+      "Tnt_25%_N_I0pt8_Light" => [0.0033715,0.0032158,0.084456],
       # 20% VLT
-      "20%_N_I0_Dark" => [0,0,0],
-      "20%_N_I0pt4_Dark" => [0.0698,0.069,0.121],
-      "20%_N_I0pt6_Dark" => [0.105,0.103,0.121],
-      "20%_N_I0pt8_Dark" => [0.139,0.138,0.121],
-      "20%_N_I0_Light" => [0,0,0],
-      "20%_N_I0pt4_Light" => [0.0016858,0.001608,0.084473],
-      "20%_N_I0pt6_Light" => [0.0025286,0.0024119,0.084463],
-      "20%_N_I0pt8_Light" => [0.0033715,0.0032158,0.084456],
+      "Tnt_20%_N_I0_Dark" => [0,0,0],
+      "Tnt_20%_N_I0pt4_Dark" => [0.0698,0.069,0.121],
+      "Tnt_20%_N_I0pt6_Dark" => [0.105,0.103,0.121],
+      "Tnt_20%_N_I0pt8_Dark" => [0.139,0.138,0.121],
+      "Tnt_20%_N_I0_Light" => [0,0,0],
+      "Tnt_20%_N_I0pt4_Light" => [0.0016858,0.001608,0.084473],
+      "Tnt_20%_N_I0pt6_Light" => [0.0025286,0.0024119,0.084463],
+      "Tnt_20%_N_I0pt8_Light" => [0.0033715,0.0032158,0.084456],
       # 15% VLT
-      "15%_N_I0_Dark" => [0,0,0],
-      "15%_N_I0pt4_Dark" => [0.076,0.075,0.118],
-      "15%_N_I0pt6_Dark" => [0.113,0.113,0.118],
-      "15%_N_I0pt8_Dark" => [0.151,0.15,0.118],
-      "15%_N_I0_Light" => [0,0,0],
-      "15%_N_I0pt4_Light" => [0.0016858,0.001608,0.084473],
-      "15%_N_I0pt6_Light" => [0.0025286,0.0024119,0.084463],
-      "15%_N_I0pt8_Light" => [0.0033715,0.0032158,0.084456],
+      "Tnt_15%_N_I0_Dark" => [0,0,0],
+      "Tnt_15%_N_I0pt4_Dark" => [0.076,0.075,0.118],
+      "Tnt_15%_N_I0pt6_Dark" => [0.113,0.113,0.118],
+      "Tnt_15%_N_I0pt8_Dark" => [0.151,0.15,0.118],
+      "Tnt_15%_N_I0_Light" => [0,0,0],
+      "Tnt_15%_N_I0pt4_Light" => [0.0016858,0.001608,0.084473],
+      "Tnt_15%_N_I0pt6_Light" => [0.0025286,0.0024119,0.084463],
+      "Tnt_15%_N_I0pt8_Light" => [0.0033715,0.0032158,0.084456],
       # 10% VLT
-      "10%_N_I0_Dark" => [0,0,0],
-      "10%_N_I0pt4_Dark" => [0.082,0.082,0.115],
-      "10%_N_I0pt6_Dark" => [0.123,0.123,0.115],
-      "10%_N_I0pt8_Dark" => [0.165,0.163,0.115],
-      "10%_N_I0_Light" => [0,0,0],
-      "10%_N_I0pt4_Light" => [0.0016858,0.001608,0.084473],
-      "10%_N_I0pt6_Light" => [0.0025286,0.0024119,0.084463],
-      "10%_N_I0pt8_Light" => [0.0033715,0.0032158,0.084456],
+      "Tnt_10%_N_I0_Dark" => [0,0,0],
+      "Tnt_10%_N_I0pt4_Dark" => [0.082,0.082,0.115],
+      "Tnt_10%_N_I0pt6_Dark" => [0.123,0.123,0.115],
+      "Tnt_10%_N_I0pt8_Dark" => [0.165,0.163,0.115],
+      "Tnt_10%_N_I0_Light" => [0,0,0],
+      "Tnt_10%_N_I0pt4_Light" => [0.0016858,0.001608,0.084473],
+      "Tnt_10%_N_I0pt6_Light" => [0.0025286,0.0024119,0.084463],
+      "Tnt_10%_N_I0pt8_Light" => [0.0033715,0.0032158,0.084456],
       # 5% VLT
-      "5%_N_I0_Dark" => [0,0,0],
-      "5%_N_I0pt4_Dark" => [0.090521,0.089666,0.10816],
-      "5%_N_I0pt6_Dark" => [0.13578,0.1345,0.10816],
-      "5%_N_I0pt8_Dark" => [0.18094,0.17925,0.10828],
-      "5%_N_I0_Light" => [0,0,0],
-      "5%_N_I0pt4_Light" => [0.0016858,0.001608,0.084473],
-      "5%_N_I0pt6_Light" => [0.0025286,0.0024119,0.084463],
-      "5%_N_I0pt8_Light" => [0.0033715,0.0032158,0.084456],
+      "Tnt_5%_N_I0_Dark" => [0,0,0],
+      "Tnt_5%_N_I0pt4_Dark" => [0.090521,0.089666,0.10816],
+      "Tnt_5%_N_I0pt6_Dark" => [0.13578,0.1345,0.10816],
+      "Tnt_5%_N_I0pt8_Dark" => [0.18094,0.17925,0.10828],
+      "Tnt_5%_N_I0_Light" => [0,0,0],
+      "Tnt_5%_N_I0pt4_Light" => [0.0016858,0.001608,0.084473],
+      "Tnt_5%_N_I0pt6_Light" => [0.0025286,0.0024119,0.084463],
+      "Tnt_5%_N_I0pt8_Light" => [0.0033715,0.0032158,0.084456],
       # 0.5% VLT
-      "0pt5%_N_I0_Dark" => [0,0,0],
-      "0pt5%_N_I0pt4_Dark" => [0.1015,0.10032,0.10089],
-      "0pt5%_N_I0pt6_Dark" => [0.15226,0.15048,0.10089],
-      "0pt5%_N_I0pt8_Dark" => [0.20301,0.20064,0.10089],
-      "0pt5%_N_I0_Light" => [0,0,0],
-      "0pt5%_N_I0pt4_Light" => [0.0023416,0.0022699,0.092563],
-      "0pt5%_N_I0pt6_Light" => [0.0035124,0.0034048,0.092562],
-      "0pt5%_N_I0pt8_Light" => [0.0046832,0.0045397,0.092561],
+      "Tnt_0pt5%_N_I0_Dark" => [0,0,0],
+      "Tnt_0pt5%_N_I0pt4_Dark" => [0.1015,0.10032,0.10089],
+      "Tnt_0pt5%_N_I0pt6_Dark" => [0.15226,0.15048,0.10089],
+      "Tnt_0pt5%_N_I0pt8_Dark" => [0.20301,0.20064,0.10089],
+      "Tnt_0pt5%_N_I0_Light" => [0,0,0],
+      "Tnt_0pt5%_N_I0pt4_Light" => [0.0023416,0.0022699,0.092563],
+      "Tnt_0pt5%_N_I0pt6_Light" => [0.0035124,0.0034048,0.092562],
+      "Tnt_0pt5%_N_I0pt8_Light" => [0.0046832,0.0045397,0.092561],
       # Triple 5% VLT
       "Tr_5%_N_I0_Dark" => [0,0,0],
       "Tr_5%_N_I0pt4_Dark" => [0.090521,0.089666,0.10816],
@@ -555,7 +559,7 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
         pce_sch_actuator.setName("pce_sch_#{surfacename_strip}")
         runner.registerInfo("EMS Actuator object named '#{pce_sch_actuator.name}' representing the temporary schedule to #{surfacename} added to the model.")       
       
-        # Create new EnergyManagementSystem:Program object for computing cooling setpoint and modfying the clg schedule
+        # Create new EnergyManagementSystem:Program object 
         runner.registerInfo("EMS Program being created to simulate PCE variation for #{iqe}") 
         ems_pce_prg = OpenStudio::Model::EnergyManagementSystemProgram.new(model)
         ems_pce_prg.setName("program_pce_#{surfacename_strip}")
@@ -641,7 +645,8 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
         pce_sch_actuator.setName("pce_sch_#{surfacename_strip}")
         runner.registerInfo("EMS Actuator object named '#{pce_sch_actuator.name}' representing the temporary schedule to #{surfacename} added to the model.")       
       
-        # Create new EnergyManagementSystem:Program object for computing cooling setpoint and modfying the clg schedule
+        # Create new EnergyManagementSystem:Program object
+        runner.registerInfo("EMS Program being created to simulate PCE variation for #{iqe}")
         ems_pce_prg = OpenStudio::Model::EnergyManagementSystemProgram.new(model)
         ems_pce_prg.setName("program_pce_#{surfacename_strip}")
         ems_pce_prg.addLine("SET a_deg_#{surfacename_strip} = (@ArcCos a_#{surfacename_strip})*180/PI")

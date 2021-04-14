@@ -3,8 +3,8 @@
   <schema_version>3.0</schema_version>
   <name>add_thermochromic_bipv</name>
   <uid>11088181-e92b-42d3-a1d0-91d4d0261dbb</uid>
-  <version_id>8a98f57f-4595-475a-958c-09f43b0152f5</version_id>
-  <version_modified>20210414T161003Z</version_modified>
+  <version_id>7408dc06-241c-4d4d-b76e-39d4203b61a4</version_id>
+  <version_modified>20210414T173232Z</version_modified>
   <xml_checksum>894A4CEA</xml_checksum>
   <class_name>AddThermochromicBIPV</class_name>
   <display_name>Add Thermochromic BIPV</display_name>
@@ -12,177 +12,139 @@
   <modeler_description>Adds simple PV object for BIPV implementation. Implement thermochromic window with switching temperature definition. Implement power conversion efficiency difference betwee light and dark state windows.</modeler_description>
   <arguments>
     <argument>
-      <name>dot_coverage</name>
-      <display_name>Active portion of PV from window surface area</display_name>
-      <type>Double</type>
-      <units>fraction</units>
-      <required>true</required>
-      <model_dependent>false</model_dependent>
-      <default_value>1</default_value>
-    </argument>
-    <argument>
-      <name>pv_eff</name>
-      <display_name>Fixed PV power conversion efficiency</display_name>
-      <type>Double</type>
-      <units>fraction</units>
-      <required>true</required>
-      <model_dependent>false</model_dependent>
-      <default_value>0.05</default_value>
-    </argument>
-    <argument>
-      <name>use_tint_iqe</name>
-      <display_name>Using tinted level and IQE (Ideal Quantum Efficiency) for PCE lookup?</display_name>
-      <description>Select if selection of window will be based on tinted level and IQE setting (associated PCE value will be automatically applied)</description>
-      <type>Boolean</type>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
-      <default_value>false</default_value>
-      <choices>
-        <choice>
-          <value>true</value>
-          <display_name>true</display_name>
-        </choice>
-        <choice>
-          <value>false</value>
-          <display_name>false</display_name>
-        </choice>
-      </choices>
-    </argument>
-    <argument>
       <name>iqe</name>
       <display_name>iqe</display_name>
       <type>Choice</type>
       <required>true</required>
       <model_dependent>false</model_dependent>
-      <default_value>25%_N_I0</default_value>
       <choices>
         <choice>
-          <value>50%_S_I0</value>
-          <display_name>50%_S_I0</display_name>
+          <value>Tnt_50%_S_I0</value>
+          <display_name>Tnt_50%_S_I0</display_name>
         </choice>
         <choice>
-          <value>50%_S_I0pt4</value>
-          <display_name>50%_S_I0pt4</display_name>
+          <value>Tnt_50%_S_I0pt4</value>
+          <display_name>Tnt_50%_S_I0pt4</display_name>
         </choice>
         <choice>
-          <value>50%_S_I0pt6</value>
-          <display_name>50%_S_I0pt6</display_name>
+          <value>Tnt_50%_S_I0pt6</value>
+          <display_name>Tnt_50%_S_I0pt6</display_name>
         </choice>
         <choice>
-          <value>50%_S_I0pt8</value>
-          <display_name>50%_S_I0pt8</display_name>
+          <value>Tnt_50%_S_I0pt8</value>
+          <display_name>Tnt_50%_S_I0pt8</display_name>
         </choice>
         <choice>
-          <value>50%_N_I0</value>
-          <display_name>50%_N_I0</display_name>
+          <value>Tnt_50%_N_I0</value>
+          <display_name>Tnt_50%_N_I0</display_name>
         </choice>
         <choice>
-          <value>50%_N_I0pt4</value>
-          <display_name>50%_N_I0pt4</display_name>
+          <value>Tnt_50%_N_I0pt4</value>
+          <display_name>Tnt_50%_N_I0pt4</display_name>
         </choice>
         <choice>
-          <value>50%_N_I0pt6</value>
-          <display_name>50%_N_I0pt6</display_name>
+          <value>Tnt_50%_N_I0pt6</value>
+          <display_name>Tnt_50%_N_I0pt6</display_name>
         </choice>
         <choice>
-          <value>50%_N_I0pt8</value>
-          <display_name>50%_N_I0pt8</display_name>
+          <value>Tnt_50%_N_I0pt8</value>
+          <display_name>Tnt_50%_N_I0pt8</display_name>
         </choice>
         <choice>
-          <value>25%_N_I0</value>
-          <display_name>25%_N_I0</display_name>
+          <value>Tnt_25%_N_I0</value>
+          <display_name>Tnt_25%_N_I0</display_name>
         </choice>
         <choice>
-          <value>25%_N_I0pt4</value>
-          <display_name>25%_N_I0pt4</display_name>
+          <value>Tnt_25%_N_I0pt4</value>
+          <display_name>Tnt_25%_N_I0pt4</display_name>
         </choice>
         <choice>
-          <value>25%_N_I0pt6</value>
-          <display_name>25%_N_I0pt6</display_name>
+          <value>Tnt_25%_N_I0pt6</value>
+          <display_name>Tnt_25%_N_I0pt6</display_name>
         </choice>
         <choice>
-          <value>25%_N_I0pt8</value>
-          <display_name>25%_N_I0pt8</display_name>
+          <value>Tnt_25%_N_I0pt8</value>
+          <display_name>Tnt_25%_N_I0pt8</display_name>
         </choice>
         <choice>
-          <value>20%_N_I0</value>
-          <display_name>20%_N_I0</display_name>
+          <value>Tnt_20%_N_I0</value>
+          <display_name>Tnt_20%_N_I0</display_name>
         </choice>
         <choice>
-          <value>20%_N_I0pt4</value>
-          <display_name>20%_N_I0pt4</display_name>
+          <value>Tnt_20%_N_I0pt4</value>
+          <display_name>Tnt_20%_N_I0pt4</display_name>
         </choice>
         <choice>
-          <value>20%_N_I0pt6</value>
-          <display_name>20%_N_I0pt6</display_name>
+          <value>Tnt_20%_N_I0pt6</value>
+          <display_name>Tnt_20%_N_I0pt6</display_name>
         </choice>
         <choice>
-          <value>20%_N_I0pt8</value>
-          <display_name>20%_N_I0pt8</display_name>
+          <value>Tnt_20%_N_I0pt8</value>
+          <display_name>Tnt_20%_N_I0pt8</display_name>
         </choice>
         <choice>
-          <value>15%_N_I0</value>
-          <display_name>15%_N_I0</display_name>
+          <value>Tnt_15%_N_I0</value>
+          <display_name>Tnt_15%_N_I0</display_name>
         </choice>
         <choice>
-          <value>15%_N_I0pt4</value>
-          <display_name>15%_N_I0pt4</display_name>
+          <value>Tnt_15%_N_I0pt4</value>
+          <display_name>Tnt_15%_N_I0pt4</display_name>
         </choice>
         <choice>
-          <value>15%_N_I0pt6</value>
-          <display_name>15%_N_I0pt6</display_name>
+          <value>Tnt_15%_N_I0pt6</value>
+          <display_name>Tnt_15%_N_I0pt6</display_name>
         </choice>
         <choice>
-          <value>15%_N_I0pt8</value>
-          <display_name>15%_N_I0pt8</display_name>
+          <value>Tnt_15%_N_I0pt8</value>
+          <display_name>Tnt_15%_N_I0pt8</display_name>
         </choice>
         <choice>
-          <value>10%_N_I0</value>
-          <display_name>10%_N_I0</display_name>
+          <value>Tnt_10%_N_I0</value>
+          <display_name>Tnt_10%_N_I0</display_name>
         </choice>
         <choice>
-          <value>10%_N_I0pt4</value>
-          <display_name>10%_N_I0pt4</display_name>
+          <value>Tnt_10%_N_I0pt4</value>
+          <display_name>Tnt_10%_N_I0pt4</display_name>
         </choice>
         <choice>
-          <value>10%_N_I0pt6</value>
-          <display_name>10%_N_I0pt6</display_name>
+          <value>Tnt_10%_N_I0pt6</value>
+          <display_name>Tnt_10%_N_I0pt6</display_name>
         </choice>
         <choice>
-          <value>10%_N_I0pt8</value>
-          <display_name>10%_N_I0pt8</display_name>
+          <value>Tnt_10%_N_I0pt8</value>
+          <display_name>Tnt_10%_N_I0pt8</display_name>
         </choice>
         <choice>
-          <value>5%_N_I0</value>
-          <display_name>5%_N_I0</display_name>
+          <value>Tnt_5%_N_I0</value>
+          <display_name>Tnt_5%_N_I0</display_name>
         </choice>
         <choice>
-          <value>5%_N_I0pt4</value>
-          <display_name>5%_N_I0pt4</display_name>
+          <value>Tnt_5%_N_I0pt4</value>
+          <display_name>Tnt_5%_N_I0pt4</display_name>
         </choice>
         <choice>
-          <value>5%_N_I0pt6</value>
-          <display_name>5%_N_I0pt6</display_name>
+          <value>Tnt_5%_N_I0pt6</value>
+          <display_name>Tnt_5%_N_I0pt6</display_name>
         </choice>
         <choice>
-          <value>5%_N_I0pt8</value>
-          <display_name>5%_N_I0pt8</display_name>
+          <value>Tnt_5%_N_I0pt8</value>
+          <display_name>Tnt_5%_N_I0pt8</display_name>
         </choice>
         <choice>
-          <value>0pt5%_N_I0</value>
-          <display_name>0pt5%_N_I0</display_name>
+          <value>Tnt_0pt5%_N_I0</value>
+          <display_name>Tnt_0pt5%_N_I0</display_name>
         </choice>
         <choice>
-          <value>0pt5%_N_I0pt4</value>
-          <display_name>0pt5%_N_I0pt4</display_name>
+          <value>Tnt_0pt5%_N_I0pt4</value>
+          <display_name>Tnt_0pt5%_N_I0pt4</display_name>
         </choice>
         <choice>
-          <value>0pt5%_N_I0pt6</value>
-          <display_name>0pt5%_N_I0pt6</display_name>
+          <value>Tnt_0pt5%_N_I0pt6</value>
+          <display_name>Tnt_0pt5%_N_I0pt6</display_name>
         </choice>
         <choice>
-          <value>0pt5%_N_I0pt8</value>
-          <display_name>0pt5%_N_I0pt8</display_name>
+          <value>Tnt_0pt5%_N_I0pt8</value>
+          <display_name>Tnt_0pt5%_N_I0pt8</display_name>
         </choice>
         <choice>
           <value>Tr_0pt5%_N_I0</value>
@@ -323,15 +285,6 @@
       </choices>
     </argument>
     <argument>
-      <name>inverter_eff</name>
-      <display_name>Fixed Inverter Efficiency</display_name>
-      <type>Double</type>
-      <units>fraction</units>
-      <required>true</required>
-      <model_dependent>false</model_dependent>
-      <default_value>1</default_value>
-    </argument>
-    <argument>
       <name>facade</name>
       <display_name>facade</display_name>
       <type>Choice</type>
@@ -388,8 +341,56 @@
       </choices>
     </argument>
     <argument>
+      <name>dot_coverage</name>
+      <display_name>Active portion of PV from window surface area</display_name>
+      <type>Double</type>
+      <units>fraction</units>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>1</default_value>
+    </argument>
+    <argument>
+      <name>use_tint_iqe</name>
+      <display_name>Dynamic power conversion efficiency?</display_name>
+      <description>select true if selection of window will be based on tinted level and IQE setting (associated PCE value will be automatically applied)</description>
+      <type>Boolean</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>false</default_value>
+      <choices>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>pv_eff</name>
+      <display_name>Fixed PV power conversion efficiency</display_name>
+      <description>this value is applied if dynamic power conversion efficiency is false.</description>
+      <type>Double</type>
+      <units>fraction</units>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>0</default_value>
+    </argument>
+    <argument>
+      <name>inverter_eff</name>
+      <display_name>Fixed Inverter Efficiency</display_name>
+      <type>Double</type>
+      <units>fraction</units>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>1</default_value>
+    </argument>
+    <argument>
       <name>pv_eff_light</name>
       <display_name>PV power conversion efficiency in light state</display_name>
+      <description>this value is applied if dynamic power conversion efficiency is false.</description>
       <type>Double</type>
       <units>fraction</units>
       <required>true</required>
@@ -399,6 +400,7 @@
     <argument>
       <name>pv_eff_dark</name>
       <display_name>PV power conversion efficiency in dark state</display_name>
+      <description>this value is applied if dynamic power conversion efficiency is false.</description>
       <type>Double</type>
       <units>fraction</units>
       <required>true</required>
@@ -408,6 +410,7 @@
     <argument>
       <name>switch_t</name>
       <display_name>State switching temperature for thermochromic window</display_name>
+      <description>this value is applied if switchglaze is selected.</description>
       <type>Double</type>
       <units>C</units>
       <required>true</required>
@@ -597,7 +600,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>AADFCB79</checksum>
+      <checksum>32F864E0</checksum>
     </file>
   </files>
 </measure>

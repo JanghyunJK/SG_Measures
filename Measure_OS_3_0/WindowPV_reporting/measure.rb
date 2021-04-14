@@ -400,87 +400,78 @@ class WindowPVReporting < OpenStudio::Measure::ReportingMeasure
       end
     end
     
-    # runner.registerInfo("######################################################")
-    # runner.registerInfo("light_energy_jan = #{light_energy_jan}")
-    # runner.registerInfo("light_energy = #{light_energy}")
-    # runner.registerInfo("light_energy_2 = #{light_energy_2}")
-    # runner.registerInfo("total_electricity_lighting_interior #{total_electricity_lighting_interior}")
-    # runner.registerInfo("######################################################")     
-    #####################################################################################
-    #####################################################################################
-    
     # PV generation
     total_pv = panel_dc_gen
     panel_dc_gen_kwh = total_pv * 277.778 # convert GJ --> kWh
-    runner.registerInfo("Generator produced DC electric energy (GJ): #{total_pv.round(2)} (#{panel_dc_gen_kwh.round(2)} kWh)")
+    runner.registerInfo("Generator produced DC electric energy (GJ): #{total_pv.round(3)} (#{panel_dc_gen_kwh.round(3)} kWh)")
     runner.registerValue('total_pv', total_pv.round(6), 'GJ')
-    runner.registerValue('panel_dc_gen_jan', panel_dc_gen_jan.round(2), 'GJ')
-    runner.registerValue('panel_dc_gen_feb', panel_dc_gen_feb.round(2), 'GJ')
-    runner.registerValue('panel_dc_gen_mar', panel_dc_gen_mar.round(2), 'GJ')
-    runner.registerValue('panel_dc_gen_apr', panel_dc_gen_apr.round(2), 'GJ')
-    runner.registerValue('panel_dc_gen_may', panel_dc_gen_may.round(2), 'GJ')
-    runner.registerValue('panel_dc_gen_jun', panel_dc_gen_jun.round(2), 'GJ')
-    runner.registerValue('panel_dc_gen_jul', panel_dc_gen_jul.round(2), 'GJ')
-    runner.registerValue('panel_dc_gen_aug', panel_dc_gen_aug.round(2), 'GJ')
-    runner.registerValue('panel_dc_gen_sep', panel_dc_gen_sep.round(2), 'GJ')
-    runner.registerValue('panel_dc_gen_oct', panel_dc_gen_oct.round(2), 'GJ')
-    runner.registerValue('panel_dc_gen_nov', panel_dc_gen_nov.round(2), 'GJ')
-    runner.registerValue('panel_dc_gen_dec', panel_dc_gen_dec.round(2), 'GJ')
+    runner.registerValue('panel_dc_gen_jan', panel_dc_gen_jan.round(6), 'GJ')
+    runner.registerValue('panel_dc_gen_feb', panel_dc_gen_feb.round(6), 'GJ')
+    runner.registerValue('panel_dc_gen_mar', panel_dc_gen_mar.round(6), 'GJ')
+    runner.registerValue('panel_dc_gen_apr', panel_dc_gen_apr.round(6), 'GJ')
+    runner.registerValue('panel_dc_gen_may', panel_dc_gen_may.round(6), 'GJ')
+    runner.registerValue('panel_dc_gen_jun', panel_dc_gen_jun.round(6), 'GJ')
+    runner.registerValue('panel_dc_gen_jul', panel_dc_gen_jul.round(6), 'GJ')
+    runner.registerValue('panel_dc_gen_aug', panel_dc_gen_aug.round(6), 'GJ')
+    runner.registerValue('panel_dc_gen_sep', panel_dc_gen_sep.round(6), 'GJ')
+    runner.registerValue('panel_dc_gen_oct', panel_dc_gen_oct.round(6), 'GJ')
+    runner.registerValue('panel_dc_gen_nov', panel_dc_gen_nov.round(6), 'GJ')
+    runner.registerValue('panel_dc_gen_dec', panel_dc_gen_dec.round(6), 'GJ')
     
     ####################################################################################
     
     # Lighting energy consumption
-    runner.registerValue('light_energy_jan', light_energy_jan.round(2), 'GJ')
-    runner.registerValue('light_energy_feb', light_energy_feb.round(2), 'GJ')
-    runner.registerValue('light_energy_mar', light_energy_mar.round(2), 'GJ')
-    runner.registerValue('light_energy_apr', light_energy_apr.round(2), 'GJ')
-    runner.registerValue('light_energy_may', light_energy_may.round(2), 'GJ')
-    runner.registerValue('light_energy_jun', light_energy_jun.round(2), 'GJ')
-    runner.registerValue('light_energy_jul', light_energy_jul.round(2), 'GJ')
-    runner.registerValue('light_energy_aug', light_energy_aug.round(2), 'GJ')
-    runner.registerValue('light_energy_sep', light_energy_sep.round(2), 'GJ')
-    runner.registerValue('light_energy_oct', light_energy_oct.round(2), 'GJ')
-    runner.registerValue('light_energy_nov', light_energy_nov.round(2), 'GJ')
-    runner.registerValue('light_energy_dec', light_energy_dec.round(2), 'GJ')
+    runner.registerValue('light_energy_jan', light_energy_jan.round(6), 'GJ')
+    runner.registerValue('light_energy_feb', light_energy_feb.round(6), 'GJ')
+    runner.registerValue('light_energy_mar', light_energy_mar.round(6), 'GJ')
+    runner.registerValue('light_energy_apr', light_energy_apr.round(6), 'GJ')
+    runner.registerValue('light_energy_may', light_energy_may.round(6), 'GJ')
+    runner.registerValue('light_energy_jun', light_energy_jun.round(6), 'GJ')
+    runner.registerValue('light_energy_jul', light_energy_jul.round(6), 'GJ')
+    runner.registerValue('light_energy_aug', light_energy_aug.round(6), 'GJ')
+    runner.registerValue('light_energy_sep', light_energy_sep.round(6), 'GJ')
+    runner.registerValue('light_energy_oct', light_energy_oct.round(6), 'GJ')
+    runner.registerValue('light_energy_nov', light_energy_nov.round(6), 'GJ')
+    runner.registerValue('light_energy_dec', light_energy_dec.round(6), 'GJ')
     
     ####################################################################################
     
     # Building electricity energy consumption
-    runner.registerValue('building_elec_jan', building_elec_jan.round(2), 'GJ')
-    runner.registerValue('building_elec_feb', building_elec_feb.round(2), 'GJ')
-    runner.registerValue('building_elec_mar', building_elec_mar.round(2), 'GJ')
-    runner.registerValue('building_elec_apr', building_elec_apr.round(2), 'GJ')
-    runner.registerValue('building_elec_may', building_elec_may.round(2), 'GJ')
-    runner.registerValue('building_elec_jun', building_elec_jun.round(2), 'GJ')
-    runner.registerValue('building_elec_jul', building_elec_jul.round(2), 'GJ')
-    runner.registerValue('building_elec_aug', building_elec_aug.round(2), 'GJ')
-    runner.registerValue('building_elec_sep', building_elec_sep.round(2), 'GJ')
-    runner.registerValue('building_elec_oct', building_elec_oct.round(2), 'GJ')
-    runner.registerValue('building_elec_nov', building_elec_nov.round(2), 'GJ')
-    runner.registerValue('building_elec_dec', building_elec_dec.round(2), 'GJ')
+    runner.registerValue('building_elec_jan', building_elec_jan.round(6), 'GJ')
+    runner.registerValue('building_elec_feb', building_elec_feb.round(6), 'GJ')
+    runner.registerValue('building_elec_mar', building_elec_mar.round(6), 'GJ')
+    runner.registerValue('building_elec_apr', building_elec_apr.round(6), 'GJ')
+    runner.registerValue('building_elec_may', building_elec_may.round(6), 'GJ')
+    runner.registerValue('building_elec_jun', building_elec_jun.round(6), 'GJ')
+    runner.registerValue('building_elec_jul', building_elec_jul.round(6), 'GJ')
+    runner.registerValue('building_elec_aug', building_elec_aug.round(6), 'GJ')
+    runner.registerValue('building_elec_sep', building_elec_sep.round(6), 'GJ')
+    runner.registerValue('building_elec_oct', building_elec_oct.round(6), 'GJ')
+    runner.registerValue('building_elec_nov', building_elec_nov.round(6), 'GJ')
+    runner.registerValue('building_elec_dec', building_elec_dec.round(6), 'GJ')
     
     ####################################################################################
     
     # Building gas energy consumption
-    runner.registerValue('building_gas_jan', building_gas_jan.round(2), 'GJ')
-    runner.registerValue('building_gas_feb', building_gas_feb.round(2), 'GJ')
-    runner.registerValue('building_gas_mar', building_gas_mar.round(2), 'GJ')
-    runner.registerValue('building_gas_apr', building_gas_apr.round(2), 'GJ')
-    runner.registerValue('building_gas_may', building_gas_may.round(2), 'GJ')
-    runner.registerValue('building_gas_jun', building_gas_jun.round(2), 'GJ')
-    runner.registerValue('building_gas_jul', building_gas_jul.round(2), 'GJ')
-    runner.registerValue('building_gas_aug', building_gas_aug.round(2), 'GJ')
-    runner.registerValue('building_gas_sep', building_gas_sep.round(2), 'GJ')
-    runner.registerValue('building_gas_oct', building_gas_oct.round(2), 'GJ')
-    runner.registerValue('building_gas_nov', building_gas_nov.round(2), 'GJ')
-    runner.registerValue('building_gas_dec', building_gas_dec.round(2), 'GJ')
+    runner.registerValue('building_gas_jan', building_gas_jan.round(6), 'GJ')
+    runner.registerValue('building_gas_feb', building_gas_feb.round(6), 'GJ')
+    runner.registerValue('building_gas_mar', building_gas_mar.round(6), 'GJ')
+    runner.registerValue('building_gas_apr', building_gas_apr.round(6), 'GJ')
+    runner.registerValue('building_gas_may', building_gas_may.round(6), 'GJ')
+    runner.registerValue('building_gas_jun', building_gas_jun.round(6), 'GJ')
+    runner.registerValue('building_gas_jul', building_gas_jul.round(6), 'GJ')
+    runner.registerValue('building_gas_aug', building_gas_aug.round(6), 'GJ')
+    runner.registerValue('building_gas_sep', building_gas_sep.round(6), 'GJ')
+    runner.registerValue('building_gas_oct', building_gas_oct.round(6), 'GJ')
+    runner.registerValue('building_gas_nov', building_gas_nov.round(6), 'GJ')
+    runner.registerValue('building_gas_dec', building_gas_dec.round(6), 'GJ')
     
     ####################################################################################
 
     # building area
     building_area = model.getBuilding.floorArea
     building_area_ft = OpenStudio.convert(building_area, 'm^2', 'ft^2').get
-    runner.registerValue('building_area_ft', building_area_ft.round(2), 'ft^2')
+    runner.registerValue('building_area_ft', building_area_ft.round(6), 'ft^2')
 
     # capacity factor
     upstream_var = OsLib_HelperMethods.check_upstream_measure_for_arg(runner, 'system_rated_output')
@@ -489,7 +480,7 @@ class WindowPVReporting < OpenStudio::Measure::ReportingMeasure
 	
     # account for base case (zero output)
     capacity_factor = panel_dc_gen.to_f > 0 ? panel_dc_gen.to_f / system_ideal_energy_production : 0.0 # watts, joules, oh my!
-    runner.registerInfo("Capacity Factor: #{capacity_factor.round(6)}")
+    runner.registerInfo("Capacity Factor: #{capacity_factor.round(2)}")
     runner.registerValue('capacity_factor', capacity_factor.round(6), '%')
 	
     # total electricity consumption for building
@@ -497,51 +488,51 @@ class WindowPVReporting < OpenStudio::Measure::ReportingMeasure
     runner.registerValue('total_electricity', total_electricity.round(6), 'GJ')
 	
     # total electricity consumption for heating
-    runner.registerInfo("Total Electricity for Heating: #{total_electricity_heating.round(6)} GJ")
+    runner.registerInfo("Total Electricity for Heating: #{total_electricity_heating.round(2)} GJ")
     runner.registerValue('total_electricity_heating', total_electricity_heating.round(6), 'GJ')
 	
     # total electricity consumption for cooling
-    runner.registerInfo("Total Electricity for Cooling: #{total_electricity_cooling.round(6)} GJ")
+    runner.registerInfo("Total Electricity for Cooling: #{total_electricity_cooling.round(2)} GJ")
     runner.registerValue('total_electricity_cooling', total_electricity_cooling.round(6), 'GJ')
 	
     # total electricity consumption for lighting
-    runner.registerInfo("Total Electricity for Interior Lighting: #{total_electricity_lighting_interior.round(6)} GJ")
+    runner.registerInfo("Total Electricity for Interior Lighting: #{total_electricity_lighting_interior.round(2)} GJ")
     runner.registerValue('total_electricity_lighting_interior', total_electricity_lighting_interior.round(6), 'GJ')
     
     # total electricity consumption for lighting
-    runner.registerInfo("Total Electricity for Exterior Lighting: #{total_electricity_lighting_exterior.round(6)} GJ")
+    runner.registerInfo("Total Electricity for Exterior Lighting: #{total_electricity_lighting_exterior.round(2)} GJ")
     runner.registerValue('total_electricity_lighting_exterior', total_electricity_lighting_exterior.round(6), 'GJ')
     
     # 
-    runner.registerInfo("Total Electricity for Plug Load: #{total_electricity_equipment_interior.round(6)} GJ")
+    runner.registerInfo("Total Electricity for Plug Load: #{total_electricity_equipment_interior.round(2)} GJ")
     runner.registerValue('total_electricity_equipment_interior', total_electricity_equipment_interior.round(6), 'GJ')
     
     # 
-    runner.registerInfo("Total Electricity for Fan: #{total_electricity_fan.round(6)} GJ")
+    runner.registerInfo("Total Electricity for Fan: #{total_electricity_fan.round(2)} GJ")
     runner.registerValue('total_electricity_fan', total_electricity_fan.round(6), 'GJ')
     
     # 
-    runner.registerInfo("Total Electricity for Pump: #{total_electricity_pump.round(6)} GJ")
+    runner.registerInfo("Total Electricity for Pump: #{total_electricity_pump.round(2)} GJ")
     runner.registerValue('total_electricity_pump', total_electricity_pump.round(6), 'GJ')
     
     # 
-    runner.registerInfo("Total Electricity for Heat Rejection: #{total_electricity_heatrejection.round(6)} GJ")
+    runner.registerInfo("Total Electricity for Heat Rejection: #{total_electricity_heatrejection.round(2)} GJ")
     runner.registerValue('total_electricity_heatrejection', total_electricity_heatrejection.round(6), 'GJ')
     
     # 
-    runner.registerInfo("Total Electricity for Humidification: #{total_electricity_humidification.round(6)} GJ")
+    runner.registerInfo("Total Electricity for Humidification: #{total_electricity_humidification.round(2)} GJ")
     runner.registerValue('total_electricity_humidification', total_electricity_humidification.round(6), 'GJ')
     
     # 
-    runner.registerInfo("Total Electricity for Heat Recovery: #{total_electricity_heatrecovery.round(6)} GJ")
+    runner.registerInfo("Total Electricity for Heat Recovery: #{total_electricity_heatrecovery.round(2)} GJ")
     runner.registerValue('total_electricity_heatrecovery', total_electricity_heatrecovery.round(6), 'GJ')
     
     # 
-    runner.registerInfo("Total Electricity for Water System: #{total_electricity_watersystem.round(6)} GJ")
+    runner.registerInfo("Total Electricity for Water System: #{total_electricity_watersystem.round(2)} GJ")
     runner.registerValue('total_electricity_watersystem', total_electricity_watersystem.round(6), 'GJ')
     
     # 
-    runner.registerInfo("Total Electricity for Refrigeration: #{total_electricity_refrigeration.round(6)} GJ")
+    runner.registerInfo("Total Electricity for Refrigeration: #{total_electricity_refrigeration.round(2)} GJ")
     runner.registerValue('total_electricity_refrigeration', total_electricity_refrigeration.round(6), 'GJ')
 	
     # total gas consumption for building
@@ -549,15 +540,15 @@ class WindowPVReporting < OpenStudio::Measure::ReportingMeasure
     runner.registerValue('total_gas', total_gas.round(6), 'GJ')
 	
     # total gas consumption for heating
-    runner.registerInfo("Total Gas for Heating: #{total_gas_heating.round(6)} GJ")
+    runner.registerInfo("Total Gas for Heating: #{total_gas_heating.round(2)} GJ")
     runner.registerValue('total_gas_heating', total_gas_heating.round(6), 'GJ')
     
     # total gas consumption for heating
-    runner.registerInfo("Total Gas for Interior Equipment: #{total_gas_equipment_interior.round(6)} GJ")
+    runner.registerInfo("Total Gas for Interior Equipment: #{total_gas_equipment_interior.round(2)} GJ")
     runner.registerValue('total_gas_equipment_interior', total_gas_equipment_interior.round(6), 'GJ')
     
     # total gas consumption for heating
-    runner.registerInfo("Total Gas for Water System: #{total_gas_watersystem.round(6)} GJ")
+    runner.registerInfo("Total Gas for Water System: #{total_gas_watersystem.round(2)} GJ")
     runner.registerValue('total_gas_watersystem', total_gas_watersystem.round(6), 'GJ')
 	
 

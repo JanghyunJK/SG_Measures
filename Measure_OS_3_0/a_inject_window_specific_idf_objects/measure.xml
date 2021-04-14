@@ -3,8 +3,8 @@
   <schema_version>3.0</schema_version>
   <name>a_inject_window_specific_idf_objects</name>
   <uid>b5cd7571-8ee9-4657-845b-43513fd2b983</uid>
-  <version_id>a184acd4-218b-496d-8413-4e2a8186a64e</version_id>
-  <version_modified>20210414T160527Z</version_modified>
+  <version_id>d5c4b136-075d-452f-a7a2-daf41b448358</version_id>
+  <version_modified>20210414T164922Z</version_modified>
   <xml_checksum>79C5D5D1</xml_checksum>
   <class_name>AInjectWindowSpecificIDFObjects</class_name>
   <display_name> Inject Window Specific IDF Objects</display_name>
@@ -30,36 +30,24 @@ This measure works for when you just need to add new IDF objects. If you need to
           <display_name>Double_Pane</display_name>
         </choice>
         <choice>
-          <value>ASHRAE_Detailed</value>
-          <display_name>ASHRAE_Detailed</display_name>
-        </choice>
-        <choice>
-          <value>Tinted</value>
-          <display_name>Tinted</display_name>
-        </choice>
-        <choice>
-          <value>Triple Pane</value>
-          <display_name>Triple Pane</display_name>
+          <value>Triple_Pane</value>
+          <display_name>Triple_Pane</display_name>
         </choice>
         <choice>
           <value>VIG</value>
           <display_name>VIG</display_name>
         </choice>
         <choice>
+          <value>ASHRAE_Detailed</value>
+          <display_name>ASHRAE_Detailed</display_name>
+        </choice>
+        <choice>
+          <value>Static</value>
+          <display_name>Static</display_name>
+        </choice>
+        <choice>
           <value>SwitchGlaze</value>
           <display_name>SwitchGlaze</display_name>
-        </choice>
-        <choice>
-          <value>Tnt_25%_N</value>
-          <display_name>Tnt_25%_N</display_name>
-        </choice>
-        <choice>
-          <value>Tnt_50%_N</value>
-          <display_name>Tnt_50%_N</display_name>
-        </choice>
-        <choice>
-          <value>Tnt_50%_S</value>
-          <display_name>Tnt_50%_S</display_name>
         </choice>
       </choices>
     </argument>
@@ -216,7 +204,7 @@ This measure works for when you just need to add new IDF objects. If you need to
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>3398950A</checksum>
+      <checksum>05C27742</checksum>
     </file>
   </files>
 </measure>
