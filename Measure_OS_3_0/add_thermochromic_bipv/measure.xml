@@ -3,8 +3,8 @@
   <schema_version>3.0</schema_version>
   <name>add_thermochromic_bipv</name>
   <uid>11088181-e92b-42d3-a1d0-91d4d0261dbb</uid>
-  <version_id>7408dc06-241c-4d4d-b76e-39d4203b61a4</version_id>
-  <version_modified>20210414T173232Z</version_modified>
+  <version_id>2369a9ea-9f8d-476b-b8a2-61cf1113d4ce</version_id>
+  <version_modified>20210415T164628Z</version_modified>
   <xml_checksum>894A4CEA</xml_checksum>
   <class_name>AddThermochromicBIPV</class_name>
   <display_name>Add Thermochromic BIPV</display_name>
@@ -211,6 +211,10 @@
           <display_name>V_5%_N_I0pt8</display_name>
         </choice>
         <choice>
+          <value>Tr_25%_N_I0</value>
+          <display_name>Tr_25%_N_I0</display_name>
+        </choice>
+        <choice>
           <value>Tr_25%_N_I0pt4</value>
           <display_name>Tr_25%_N_I0pt4</display_name>
         </choice>
@@ -221,6 +225,10 @@
         <choice>
           <value>Tr_25%_N_I0pt8</value>
           <display_name>Tr_25%_N_I0pt8</display_name>
+        </choice>
+        <choice>
+          <value>Tr_50%_N_I0</value>
+          <display_name>Tr_50%_N_I0</display_name>
         </choice>
         <choice>
           <value>Tr_50%_N_I0pt4</value>
@@ -235,6 +243,10 @@
           <display_name>Tr_50%_N_I0pt8</display_name>
         </choice>
         <choice>
+          <value>Tr_50%_S_I0</value>
+          <display_name>Tr_50%_S_I0</display_name>
+        </choice>
+        <choice>
           <value>Tr_50%_S_I0pt4</value>
           <display_name>Tr_50%_S_I0pt4</display_name>
         </choice>
@@ -245,6 +257,10 @@
         <choice>
           <value>Tr_50%_S_I0pt8</value>
           <display_name>Tr_50%_S_I0pt8</display_name>
+        </choice>
+        <choice>
+          <value>V_25%_N_I0</value>
+          <display_name>V_25%_N_I0</display_name>
         </choice>
         <choice>
           <value>V_25%_N_I0pt4</value>
@@ -259,6 +275,10 @@
           <display_name>V_25%_N_I0pt8</display_name>
         </choice>
         <choice>
+          <value>V_50%_N_I0</value>
+          <display_name>V_50%_N_I0</display_name>
+        </choice>
+        <choice>
           <value>V_50%_N_I0pt4</value>
           <display_name>V_50%_N_I0pt4</display_name>
         </choice>
@@ -269,6 +289,10 @@
         <choice>
           <value>V_50%_N_I0pt8</value>
           <display_name>V_50%_N_I0pt8</display_name>
+        </choice>
+        <choice>
+          <value>V_50%_S_I0</value>
+          <display_name>V_50%_S_I0</display_name>
         </choice>
         <choice>
           <value>V_50%_S_I0pt4</value>
@@ -600,7 +624,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>32F864E0</checksum>
+      <checksum>3FA669BD</checksum>
     </file>
   </files>
 </measure>

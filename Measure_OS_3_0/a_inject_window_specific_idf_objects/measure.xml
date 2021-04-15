@@ -3,8 +3,8 @@
   <schema_version>3.0</schema_version>
   <name>a_inject_window_specific_idf_objects</name>
   <uid>b5cd7571-8ee9-4657-845b-43513fd2b983</uid>
-  <version_id>d5c4b136-075d-452f-a7a2-daf41b448358</version_id>
-  <version_modified>20210414T164922Z</version_modified>
+  <version_id>84924895-b086-4099-84e8-23e81f6c1e71</version_id>
+  <version_modified>20210415T181311Z</version_modified>
   <xml_checksum>79C5D5D1</xml_checksum>
   <class_name>AInjectWindowSpecificIDFObjects</class_name>
   <display_name> Inject Window Specific IDF Objects</display_name>
@@ -204,7 +204,7 @@ This measure works for when you just need to add new IDF objects. If you need to
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>05C27742</checksum>
+      <checksum>397CF1CF</checksum>
     </file>
   </files>
 </measure>

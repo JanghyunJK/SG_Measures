@@ -263,11 +263,14 @@ class AInjectWindowSpecificIDFObjects < OpenStudio::Ruleset::WorkspaceUserScript
     prefix = ''
     if serverrun==true
       prefix = "../../../lib/resources"
+      runner.registerInfo("Reading window idf from: #{prefix}")
+      idfpath = prefix + "/" + glztype + ".idf"
     else serverrun==false
       prefix = "#{idf_path}"
+      runner.registerInfo("Reading window idf from: #{prefix}")
+      idfpath = prefix + "\\" + glztype + ".idf"
     end
-    runner.registerInfo("Reading window idf from: #{prefix}")
-    idfpath = prefix + "\\" + glztype + ".idf"
+    
     runner.registerInfo("Reading window idf of: #{idfpath}")
     source_idf = OpenStudio::IdfFile::load(OpenStudio::Path.new(idfpath)).get
 
