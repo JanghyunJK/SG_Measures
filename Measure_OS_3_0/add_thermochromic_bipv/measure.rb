@@ -685,7 +685,7 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
         ems_output_var.setUpdateFrequency("SystemTimeStep")
         ####################################################################################################################
    
-        runner.registerInfo("Power conversion efficiency coefficient set of #{dictionary_iqe_pce[iqe]} applied to #{simplepv.name.to_s} for light state")
+        runner.registerInfo("Power conversion efficiency coefficient set of #{dictionary_iqe_pce[iqe]} applied to #{simplepv.name.to_s}")
         
       end
       ######################################################
