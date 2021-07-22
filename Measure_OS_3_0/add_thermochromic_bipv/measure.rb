@@ -512,7 +512,7 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
         pce_sch_actuator.setName("pce_sch_#{surfacename_strip}")
         runner.registerInfo("EMS Actuator object named '#{pce_sch_actuator.name}' representing the temporary schedule to #{surfacename} added to the model.") 
       
-        # Create new EnergyManagementSystem:Program object for computing cooling setpoint and modfying the clg schedule
+        # Create new EnergyManagementSystem:Program object
         ems_pce_prg = OpenStudio::Model::EnergyManagementSystemProgram.new(model)
         ems_pce_prg.setName("program_pce_#{surfacename_strip}")
         ems_pce_prg.addLine("SET T_ref_#{surfacename_strip} = #{temperature_reference.name.to_s}")
