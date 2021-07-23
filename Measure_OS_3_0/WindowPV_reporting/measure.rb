@@ -483,8 +483,6 @@ class WindowPVReporting < OpenStudio::Measure::ReportingMeasure
     # capacity factor
     upstream_var = OsLib_HelperMethods.check_upstream_measure_for_arg(runner, 'system_rated_output')
 
-    runner.registerInfo("DEBUGGING: upstream_var = #{upstream_var}")
-
     system_rated_output = upstream_var[:value].to_f
     system_ideal_energy_production = system_rated_output * (31636000*1E-9) # assumed running at peak all seconds in a year, (GJ)
 	

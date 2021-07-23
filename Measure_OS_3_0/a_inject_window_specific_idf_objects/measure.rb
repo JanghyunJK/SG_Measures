@@ -233,9 +233,7 @@ class AInjectWindowSpecificIDFObjects < OpenStudio::Ruleset::WorkspaceUserScript
       runner.registerInfo("Tint and IQE setting = #{iqe}")
   
       glztype = climateregion.concat("_#{glztype.to_s}")
-      runner.registerInfo("DEBUGGING: iqe = #{iqe}")
       iqe = iqe.sub("Tnt_", "")
-      runner.registerInfo("DEBUGGING: iqe = #{iqe}")
       glztype = glztype.concat("_"+iqe) #specific string for tinted 1 window files
 
       runner.registerInfo("glztype = #{glztype}")
