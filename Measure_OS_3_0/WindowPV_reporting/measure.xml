@@ -3,8 +3,8 @@
   <schema_version>3.0</schema_version>
   <name>window_pv_reporting</name>
   <uid>431bcf0c-88e8-43be-97f6-40b274da8bd3</uid>
-  <version_id>a52a70d4-32b5-4086-b138-1d7138d4be4d</version_id>
-  <version_modified>20210414T171346Z</version_modified>
+  <version_id>6c6467da-c090-4938-8cb9-90a4d88e582b</version_id>
+  <version_modified>20210723T154805Z</version_modified>
   <xml_checksum>909877B3</xml_checksum>
   <class_name>WindowPVReporting</class_name>
   <display_name>WindowPV Reporting</display_name>
@@ -565,7 +565,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>93EBC584</checksum>
+      <checksum>4C6BC8E9</checksum>
     </file>
   </files>
 </measure>

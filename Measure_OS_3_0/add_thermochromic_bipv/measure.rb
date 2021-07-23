@@ -716,6 +716,9 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
     pv_area_total_ip = pv_area_total * 10.7639 # m^2 --> ft^2
     panel_rated_output_ip = panel_rated_output * 0.09290304 # w/m^2 --> w/ft^2
 
+    runner.registerInfo("DEBUGGING: pv_area_total_ip = #{pv_area_total_ip}")
+    runner.registerInfo("DEBUGGING: panel_rated_output_ip = #{panel_rated_output_ip}")
+
     system_rated_output = panel_rated_output * pv_area_total #w
     runner.registerValue("system_rated_output", system_rated_output.round(2))
     runner.registerInfo("Total system rated output is #{system_rated_output} watts, (panel: #{panel_rated_output_ip} w/ft^2 * panel area: #{pv_area_total_ip} ft^2)")

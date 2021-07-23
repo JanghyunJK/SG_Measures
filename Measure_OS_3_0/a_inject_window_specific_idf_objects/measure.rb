@@ -82,8 +82,10 @@ class AInjectWindowSpecificIDFObjects < OpenStudio::Ruleset::WorkspaceUserScript
     runner.workflow.workflowSteps.each do |step|
       if step.to_MeasureStep.is_initialized
         measure_step = step.to_MeasureStep.get
-
         measure_name = measure_step.measureDirName
+
+        #runner.registerInfo("DEBUGGING: measure_name = #{measure_name}")
+
         if measure_step.name.is_initialized
           measure_name = measure_step.name.get # this is instance name in PAT
         end
@@ -92,6 +94,10 @@ class AInjectWindowSpecificIDFObjects < OpenStudio::Ruleset::WorkspaceUserScript
           result.stepValues.each do |arg|
             name = arg.name
             value = arg.valueAsVariant.to_s
+
+            #runner.registerInfo("DEBUGGING: name = #{name}")
+            #runner.registerInfo("DEBUGGING: value = #{value}")
+
             if name == arg_name
               arg_name_value[:value] = value
               arg_name_value[:measure_name] = measure_name

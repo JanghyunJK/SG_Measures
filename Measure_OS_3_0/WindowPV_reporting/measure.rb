@@ -156,10 +156,6 @@ class WindowPVReporting < OpenStudio::Measure::ReportingMeasure
     total_gas_equipment_interior = sqlFile.naturalGasInteriorEquipment.to_f
     total_gas_watersystem = sqlFile.naturalGasWaterSystems.to_f
     #####################################################################################
-
-    
-    # get building PV generation directly from BIPV panels
-    # using: [Output:Variable,*,Generator Produced DC Electric Energy,Annual;] from E+
     
     environment = nil
     sqlFile.availableEnvPeriods.each do |env_pd|
@@ -241,12 +237,14 @@ class WindowPVReporting < OpenStudio::Measure::ReportingMeasure
     
     key_value = ""
     
+    runner.registerInfo("reading monthly electricity consumptions from sqlfile")
     if sqlFile.timeSeries(environment, timestep_m, "Electricity:Facility", key_value).is_initialized
       time_series_monthly['Electricity'] = sqlFile.timeSeries(environment, timestep_m, "Electricity:Facility", key_value).get.values
     end
     
-    if sqlFile.timeSeries(environment, timestep_m, "Gas:Facility", key_value).is_initialized
-      time_series_monthly['Gas'] = sqlFile.timeSeries(environment, timestep_m, "Gas:Facility", key_value).get.values
+    runner.registerInfo("reading monthly gas consumptions from sqlfile")
+    if sqlFile.timeSeries(environment, timestep_m, "NaturalGas:Facility", key_value).is_initialized
+      time_series_monthly['Gas'] = sqlFile.timeSeries(environment, timestep_m, "NaturalGas:Facility", key_value).get.values
     end
     
     if not time_series_monthly['Electricity'].nil? then
@@ -280,26 +278,32 @@ class WindowPVReporting < OpenStudio::Measure::ReportingMeasure
       building_gas_nov += time_series_monthly['Gas'][10]*1E-9	#J to GJ
       building_gas_dec += time_series_monthly['Gas'][11]*1E-9	#J to GJ
     else
-      puts 'Failed to find Gas:Facility'
+      puts 'Failed to find NaturalGas:Facility'
     end
     
     #####################################################################################
     #####################################################################################
     # save timeseries PV generation
-    series = "Generator Produced DC Electric Energy" # in Joule
+    series = "Generator Produced DC Electricity Energy" # in Joule
     model.getGeneratorPhotovoltaics.each do |gp|
       name_gp = gp.name.get
       key_gp = name_gp.upcase
     
+      
       if not sqlFile.timeSeries(environment, timestep_h, series, key_gp).empty?
+        runner.registerInfo("PV panel processing: key_gp = #{name_gp} | environment = #{environment} | timestep_h = #{timestep_h} | series = #{series}")
         time_series_hourly[name_gp] = sqlFile.timeSeries(environment, timestep_h, series, key_gp).get.values
       end
       
+      
       if not sqlFile.timeSeries(environment, timestep_m, series, key_gp).empty?
+        runner.registerInfo("PV panel processing: key_gp = #{name_gp} | environment = #{environment} | timestep_h = #{timestep_m} | series = #{series}")
         time_series_monthly[name_gp] = sqlFile.timeSeries(environment, timestep_m, series, key_gp).get.values
       end
       
+      
       if not sqlFile.timeSeries(environment, timestep_rp, series, key_gp).empty?
+        runner.registerInfo("PV panel processing: key_gp = #{name_gp} | environment = #{environment} | timestep_h = #{timestep_rp} | series = #{series}")
         time_series_runperiod[name_gp] = sqlFile.timeSeries(environment, timestep_rp, series, key_gp).get.values
       end
     
@@ -311,6 +315,7 @@ class WindowPVReporting < OpenStudio::Measure::ReportingMeasure
         puts 'Failed to find ' + name_gp
       end
     
+      
       if not time_series_monthly[name_gp].nil? then
         # for i in 0..(time_series_monthly[name_gp].size - 1)
           #runner.registerInfo("#{name_gp}	#{i+1}	=	#{time_series_monthly[name_gp][i]*1E-9}")
@@ -348,7 +353,7 @@ class WindowPVReporting < OpenStudio::Measure::ReportingMeasure
       end
     end    
     
-    series = "Lights Electric Energy" # in Joule
+    series = "Lights Electricity Energy" # in Joule
     spaces = model.getSpaces
     spaces.each do |space|
       # runner.registerInfo("######################################################")
@@ -399,11 +404,13 @@ class WindowPVReporting < OpenStudio::Measure::ReportingMeasure
       
       end
     end
+
+    ####################################################################################
     
     # PV generation
     total_pv = panel_dc_gen
     panel_dc_gen_kwh = total_pv * 277.778 # convert GJ --> kWh
-    runner.registerInfo("Generator produced DC electric energy (GJ): #{total_pv.round(3)} (#{panel_dc_gen_kwh.round(3)} kWh)")
+    runner.registerInfo("Generator produced DC electricity energy (GJ): #{total_pv.round(3)} (#{panel_dc_gen_kwh.round(3)} kWh)")
     runner.registerValue('total_pv', total_pv.round(6), 'GJ')
     runner.registerValue('panel_dc_gen_jan', panel_dc_gen_jan.round(6), 'GJ')
     runner.registerValue('panel_dc_gen_feb', panel_dc_gen_feb.round(6), 'GJ')
@@ -475,6 +482,9 @@ class WindowPVReporting < OpenStudio::Measure::ReportingMeasure
 
     # capacity factor
     upstream_var = OsLib_HelperMethods.check_upstream_measure_for_arg(runner, 'system_rated_output')
+
+    runner.registerInfo("DEBUGGING: upstream_var = #{upstream_var}")
+
     system_rated_output = upstream_var[:value].to_f
     system_ideal_energy_production = system_rated_output * (31636000*1E-9) # assumed running at peak all seconds in a year, (GJ)
 	
