@@ -146,7 +146,7 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
     pv_eff.setDisplayName("Fixed PV power conversion efficiency")
     pv_eff.setDescription('this value is applied if dynamic power conversion efficiency is false.')
     pv_eff.setUnits("fraction")
-    pv_eff.setDefaultValue(0.0)
+    pv_eff.setDefaultValue(1.0)
     args << pv_eff
 
     inverter_eff = OpenStudio::Ruleset::OSArgument.makeDoubleArgument("inverter_eff", true)
