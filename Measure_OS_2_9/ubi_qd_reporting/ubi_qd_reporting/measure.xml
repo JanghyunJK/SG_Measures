@@ -1,0 +1,122 @@
+<measure>
+  <schema_version>3.0</schema_version>
+  <name>ubi_qd_reporting</name>
+  <uid>431bcf0c-88e8-43be-97f6-40b274da8bd3</uid>
+  <version_id>ed7a7401-0f74-4782-87e6-d4e8cb509f57</version_id>
+  <version_modified>20180627T163952Z</version_modified>
+  <xml_checksum>909877B3</xml_checksum>
+  <class_name>UbiQdReporting</class_name>
+  <display_name>UbiQD Reporting</display_name>
+  <description>Report PV</description>
+  <modeler_description>Report measure</modeler_description>
+  <arguments/>
+  <outputs>
+    <output>
+      <name>panel_dc_gen_gj</name>
+      <display_name>panel_dc_gen_gj</display_name>
+      <short_name>panel_dc_gen_gj</short_name>
+      <type>Double</type>
+      <model_dependent>false</model_dependent>
+    </output>
+    <output>
+      <name>panel_dc_gen_kwh</name>
+      <display_name>panel_dc_gen_kwh</display_name>
+      <short_name>panel_dc_gen_kwh</short_name>
+      <type>Double</type>
+      <model_dependent>false</model_dependent>
+    </output>
+    <output>
+      <name>building_area_ip</name>
+      <display_name>building_area_ip</display_name>
+      <short_name>building_area_ip</short_name>
+      <type>Double</type>
+      <model_dependent>false</model_dependent>
+    </output>
+    <output>
+      <name>capacity_factor</name>
+      <display_name>capacity_factor</display_name>
+      <short_name>capacity_factor</short_name>
+      <type>Double</type>
+      <model_dependent>false</model_dependent>
+    </output>
+  </outputs>
+  <provenances/>
+  <tags>
+    <tag>Reporting.QAQC</tag>
+  </tags>
+  <attributes>
+    <attribute>
+      <name>Measure Type</name>
+      <value>ReportingMeasure</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>OpenStudio Application</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>Parametric Analysis Tool</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>Analysis Spreadsheet</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Use Case</name>
+      <value>Calibration</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Use Case</name>
+      <value>Automatic Report Generation</value>
+      <datatype>string</datatype>
+    </attribute>
+  </attributes>
+  <files>
+    <file>
+      <filename>ubi_qd_reporting_test.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>test</usage_type>
+      <checksum>7073E48D</checksum>
+    </file>
+    <file>
+      <filename>example_model.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>39B6E26C</checksum>
+    </file>
+    <file>
+      <filename>USA_CO_Golden-NREL.724666_TMY3.epw</filename>
+      <filetype>epw</filetype>
+      <usage_type>test</usage_type>
+      <checksum>BDF687C1</checksum>
+    </file>
+    <file>
+      <filename>report.html.in</filename>
+      <filetype>in</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>3F69E3FB</checksum>
+    </file>
+    <file>
+      <filename>os_lib_helper_methods.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>A6430141</checksum>
+    </file>
+    <file>
+      <version>
+        <software_program>OpenStudio</software_program>
+        <identifier>2.1.0</identifier>
+        <min_compatible>2.1.0</min_compatible>
+      </version>
+      <filename>measure.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>script</usage_type>
+      <checksum>70DE4F7E</checksum>
+    </file>
+  </files>
+</measure>
