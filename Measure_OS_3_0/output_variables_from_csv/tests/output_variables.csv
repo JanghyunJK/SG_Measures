@@ -1,0 +1,5 @@
+metric,key,variable_name,reporting_frequency,reporting_schedule,explanation
+Operative temperature for comfort,"Zone1,Zone2",Zone Operative Temperature,Monthly,,"This will report for the annual since the reporting schedule is blank, for Zone1 and Zone2"
+,Zone1,Zone Air Temperature,Detailed,Reporting_schedule_3_days_per_Month,"Will report a Tuesday, a Saturday and a Sunday for each month, for Zone1 only"
+,,Zone Thermostat Cooling Setpoint Temperature,Timestep,MyCustomReportingScheduleEnteredIntheOSApp,Will report all zones (key is blank) and use the reporting schedule I created in the app
+,,Zone Heating Setpoint Not Met Time,Hourly,AScheduleThatDoesntExistInMyModel,Will not request the variable since the schedule doesn't exists: issues a warning.
