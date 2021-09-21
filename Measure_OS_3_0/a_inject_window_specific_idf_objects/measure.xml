@@ -3,8 +3,8 @@
   <schema_version>3.0</schema_version>
   <name>a_inject_window_specific_idf_objects</name>
   <uid>b5cd7571-8ee9-4657-845b-43513fd2b983</uid>
-  <version_id>3cc095c6-ebdd-4aff-b500-472eafb6bf4a</version_id>
-  <version_modified>20210723T174454Z</version_modified>
+  <version_id>7c3b7c51-affa-4b79-bf06-6a709ef20096</version_id>
+  <version_modified>20210916T205733Z</version_modified>
   <xml_checksum>79C5D5D1</xml_checksum>
   <class_name>AInjectWindowSpecificIDFObjects</class_name>
   <display_name> Inject Window Specific IDF Objects</display_name>

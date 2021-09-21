@@ -2,9 +2,9 @@
 <measure>
   <schema_version>3.0</schema_version>
   <name>hard_size_hvac</name>
-  <uid>d7da749f-6318-4077-b502-25994a713b27</uid>
-  <version_id>81dc5f4c-67bf-423b-ae86-492f32316d21</version_id>
-  <version_modified>20210610T171510Z</version_modified>
+  <uid>c973d6b3-7586-45e5-b975-53553137328b</uid>
+  <version_id>8d7af5f7-e25d-4a9f-9fc9-967cf92ec769</version_id>
+  <version_modified>20210916T154506Z</version_modified>
   <xml_checksum>2B526343</xml_checksum>
   <class_name>HardSizeHVAC</class_name>
   <display_name>Hard Size HVAC</display_name>
@@ -80,4 +80,3 @@
     </file>
   </files>
 </measure>
-<error>superclass mismatch for class HardSizeHVAC</error>

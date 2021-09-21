@@ -3,8 +3,8 @@
   <schema_version>3.0</schema_version>
   <name>output_variables_from_csv</name>
   <uid>180543a3-3a8e-4987-9c43-f77fac3e9d2a</uid>
-  <version_id>fc261560-3c6e-4fcc-8851-5079626f687a</version_id>
-  <version_modified>20210811T202029Z</version_modified>
+  <version_id>a5107489-2462-4f63-ae80-d13fddbba117</version_id>
+  <version_modified>20210816T203450Z</version_modified>
   <xml_checksum>59C2BE35</xml_checksum>
   <class_name>OutputVariablesFromCsv</class_name>
   <display_name>Output variables from csv</display_name>
@@ -103,7 +103,7 @@ In Windows Explorer You use Shift + Right click on your file then 'copy as path'
       <filename>output_variables.csv</filename>
       <filetype>csv</filetype>
       <usage_type>resource</usage_type>
-      <checksum>113D2B8A</checksum>
+      <checksum>1B52FF1F</checksum>
     </file>
   </files>
 </measure>
