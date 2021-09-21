@@ -3,8 +3,8 @@
   <schema_version>3.0</schema_version>
   <name>a_inject_window_specific_idf_objects</name>
   <uid>b5cd7571-8ee9-4657-845b-43513fd2b983</uid>
-  <version_id>7c3b7c51-affa-4b79-bf06-6a709ef20096</version_id>
-  <version_modified>20210916T205733Z</version_modified>
+  <version_id>fdea5103-f329-4b02-9e9d-947029de4bd4</version_id>
+  <version_modified>20210921T201311Z</version_modified>
   <xml_checksum>79C5D5D1</xml_checksum>
   <class_name>AInjectWindowSpecificIDFObjects</class_name>
   <display_name> Inject Window Specific IDF Objects</display_name>
@@ -196,6 +196,12 @@ This measure works for when you just need to add new IDF objects. If you need to
       <checksum>9640B6CB</checksum>
     </file>
     <file>
+      <filename>Hot_Tnt_50%_S_I0pt6.idf</filename>
+      <filetype>idf</filetype>
+      <usage_type>resource</usage_type>
+      <checksum>80375D29</checksum>
+    </file>
+    <file>
       <version>
         <software_program>OpenStudio</software_program>
         <identifier>2.0.0</identifier>
@@ -204,7 +210,7 @@ This measure works for when you just need to add new IDF objects. If you need to
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>1464ECE1</checksum>
+      <checksum>3498C7FF</checksum>
     </file>
   </files>
 </measure>
