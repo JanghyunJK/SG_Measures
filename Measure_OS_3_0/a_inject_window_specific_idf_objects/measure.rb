@@ -259,6 +259,20 @@ class AInjectWindowSpecificIDFObjects < OpenStudio::Ruleset::WorkspaceUserScript
 
       runner.registerInfo("glztype = #{glztype}")
       runner.registerInfo("Window name to be implemented = #{glztype}")
+
+    elsif (glztype == "Triple_Pane")
+    
+      glztype = "Triple_Pane"
+      
+      location = check_upstream_measure_for_arg(runner, 'weather_file_name')
+      location = location[:value].split("\\")[-1]
+      runner.registerInfo("Weather file defined in the upstream = #{location}")
+      
+      climateregion = dictionary_weather[location]
+      runner.registerInfo("Simple climate classification for this location = #{climateregion}")
+  
+      glztype = climateregion.concat("_#{glztype.to_s}")
+      runner.registerInfo("Window name to be implemented = #{glztype}")
                          
     end
     
