@@ -262,7 +262,7 @@ class AInjectWindowSpecificIDFObjects < OpenStudio::Ruleset::WorkspaceUserScript
 
     elsif (glztype == "Triple_Pane")
     
-      glztype = "Triple_Pane"
+      glztype = "Tr_Pane"
       
       location = check_upstream_measure_for_arg(runner, 'weather_file_name')
       location = location[:value].split("\\")[-1]
