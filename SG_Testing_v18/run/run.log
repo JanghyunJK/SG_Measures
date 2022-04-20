@@ -1,0 +1,20 @@
+[08:18:54.744895 WARN] No valid weather file defined in either the osm or osw.
+[08:18:59.601048 WARN] User-defined single floor area was used for calculation of total building floor area
+[08:18:59.601077 WARN] Cannot use custom height bar with single floor area method, will not create custom height bar.
+[08:19:17.591762 WARN] [openstudio.standards.Construction] Can only set the u-value of opaque constructions or simple glazing. U 0.72 SHGC 0.25 Sgl Ref-B-M Tint 6mm is not opaque or simple glazing.
+[08:19:17.591957 WARN] [openstudio.standards.Construction] Can only set the u-value of opaque constructions or simple glazing. U 0.88 SHGC 0.16 Sgl Ref-A-L Clr 6mm is not opaque or simple glazing.
+[08:19:17.592031 WARN] [openstudio.standards.Construction] Requested U-value of 1.1686635536297982 for Typical Overhead Door is greater than the sum of the inside and outside resistance, and the max U-value (6.636 SI) is used instead.
+[08:19:17.592166 WARN] [openstudio.standards.Construction] Can only set the u-value of opaque constructions or simple glazing. U 1.98 SHGC 0.36 Sgl Ref-B-H Clr 6mm is not opaque or simple glazing.
+[08:19:17.601746 WARN] [openstudio.model.AirTerminalSingleDuctVAVReheat] setZoneMinimumAirFlowMethod is deprecated, please use setZoneMinimumAirFlowInputMethod
+[08:19:17.602247 WARN] [openstudio.model.AirTerminalSingleDuctVAVReheat] setZoneMinimumAirFlowMethod is deprecated, please use setZoneMinimumAirFlowInputMethod
+[08:19:17.602291 WARN] [openstudio.model.AirTerminalSingleDuctVAVReheat] setZoneMinimumAirFlowMethod is deprecated, please use setZoneMinimumAirFlowInputMethod
+[08:19:17.602324 WARN] [openstudio.model.AirTerminalSingleDuctVAVReheat] setZoneMinimumAirFlowMethod is deprecated, please use setZoneMinimumAirFlowInputMethod
+[08:19:17.602362 WARN] [openstudio.model.AirTerminalSingleDuctVAVReheat] setZoneMinimumAirFlowMethod is deprecated, please use setZoneMinimumAirFlowInputMethod
+[08:19:17.602395 WARN] [openstudio.model.AirTerminalSingleDuctVAVReheat] setZoneMinimumAirFlowMethod is deprecated, please use setZoneMinimumAirFlowInputMethod
+[08:19:17.602810 WARN] [openstudio.model.AirTerminalSingleDuctVAVReheat] setZoneMinimumAirFlowMethod is deprecated, please use setZoneMinimumAirFlowInputMethod
+[08:19:17.602846 WARN] [openstudio.model.AirTerminalSingleDuctVAVReheat] setZoneMinimumAirFlowMethod is deprecated, please use setZoneMinimumAirFlowInputMethod
+[08:19:17.602876 WARN] [openstudio.model.AirTerminalSingleDuctVAVReheat] setZoneMinimumAirFlowMethod is deprecated, please use setZoneMinimumAirFlowInputMethod
+[08:19:17.602911 WARN] [openstudio.model.AirTerminalSingleDuctVAVReheat] setZoneMinimumAirFlowMethod is deprecated, please use setZoneMinimumAirFlowInputMethod
+[08:19:17.602947 WARN] [openstudio.model.AirTerminalSingleDuctVAVReheat] setZoneMinimumAirFlowMethod is deprecated, please use setZoneMinimumAirFlowInputMethod
+[08:19:17.603698 WARN] [openstudio.standards.Fan] For 5 Zone VAV Fan, there is no greater nominal HP.  Use the efficiency of the largest motor category.
+[08:19:17.612180 WARN] [openstudio.standards.Fan] For 5 Zone VAV Fan, there is no greater nominal HP.  Use the efficiency of the largest motor category.
