@@ -3,8 +3,8 @@
   <schema_version>3.0</schema_version>
   <name>add_thermochromic_bipv</name>
   <uid>11088181-e92b-42d3-a1d0-91d4d0261dbb</uid>
-  <version_id>334a3e07-c14d-4b90-a411-83e231919eb9</version_id>
-  <version_modified>20220421T143942Z</version_modified>
+  <version_id>702fc36a-f9f7-4f35-aac3-e54b8d17c3d9</version_id>
+  <version_modified>20220421T213721Z</version_modified>
   <xml_checksum>894A4CEA</xml_checksum>
   <class_name>AddThermochromicBIPV</class_name>
   <display_name>Add Thermochromic BIPV</display_name>
@@ -12,7 +12,7 @@
   <modeler_description>Adds simple PV object for BIPV implementation. Implement thermochromic window with switching temperature definition. Implement power conversion efficiency difference betwee light and dark state windows.</modeler_description>
   <arguments>
     <argument>
-      <name>BIPV type</name>
+      <name>bipv_type</name>
       <display_name>BIPV type</display_name>
       <type>Choice</type>
       <required>true</required>
@@ -331,8 +331,8 @@
       </choices>
     </argument>
     <argument>
-      <name>facade</name>
-      <display_name>facade</display_name>
+      <name>pv_orientation</name>
+      <display_name>PV orientation</display_name>
       <type>Choice</type>
       <required>true</required>
       <model_dependent>false</model_dependent>
@@ -513,9 +513,9 @@
       <model_dependent>false</model_dependent>
     </output>
     <output>
-      <name>facade</name>
-      <display_name>facade</display_name>
-      <short_name>facade</short_name>
+      <name>pv_orientation</name>
+      <display_name>pv_orientation</display_name>
+      <short_name>pv_orientation</short_name>
       <type>String</type>
       <model_dependent>false</model_dependent>
     </output>
@@ -646,7 +646,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>178C0E0C</checksum>
+      <checksum>9ADF63BF</checksum>
     </file>
   </files>
 </measure>
