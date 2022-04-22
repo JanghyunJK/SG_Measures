@@ -385,33 +385,6 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
     end
 
     ##########################################################################
-    # setting transmittance for opaque/transparent/all scenarios
-    ##########################################################################
-	  target_transmittance_transparent = 1.0
-    target_transmittance_opaque = 0.0
-    inputs_transparent = {
-        'name' => "PV Shading Transmittance Schedule Transparent",
-        'winterTimeValuePairs' => { 24.0 => target_transmittance_transparent },
-        'summerTimeValuePairs' => { 24.0 => target_transmittance_transparent },
-        'defaultTimeValuePairs' => { 24.0 => target_transmittance_transparent }
-    }
-    inputs_opaque = {
-      'name' => "PV Shading Transmittance Schedule Opaque",
-      'winterTimeValuePairs' => { 24.0 => target_transmittance_opaque },
-      'summerTimeValuePairs' => { 24.0 => target_transmittance_opaque },
-      'defaultTimeValuePairs' => { 24.0 => target_transmittance_opaque }
-    }
-    shading_surface_transmittance_schedule_transparent = OsLib_Schedules.createSimpleSchedule(model,inputs_transparent)
-    shading_surface_transmittance_schedule_opaque = OsLib_Schedules.createSimpleSchedule(model,inputs_opaque)
-    if bipv_type == "BIPV on transparent (window) facade"
-      runner.registerInfo("Option selected for PVs only on transparent (window) façade")
-    elsif bipv_type == "BIPV on opaque (wall) facade"
-      runner.registerInfo("Option selected for PVs only on opaque (exterior wall) façade")
-    elsif bipv_type == "BIPV on all facade"
-      runner.registerInfo("Option selected for PVs on both transparent (window) and opaque (exterior wall) façade")
-    end
-
-    ##########################################################################
     # get the windows
     ##########################################################################
     ext_windows = []
@@ -432,6 +405,13 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
     ##########################################################################
     # report initial condition
     ##########################################################################
+    if bipv_type == "BIPV on transparent (window) facade"
+      runner.registerInfo("Option selected for PVs only on transparent (window) façade")
+    elsif bipv_type == "BIPV on opaque (wall) facade"
+      runner.registerInfo("Option selected for PVs only on opaque (exterior wall) façade")
+    elsif bipv_type == "BIPV on all facade"
+      runner.registerInfo("Option selected for PVs on both transparent (window) and opaque (exterior wall) façade")
+    end
     runner.registerInitialCondition("Input building contains #{ext_windows.size.to_s} exterior window surfaces and #{ext_walls.size.to_s} exterior wall surfaces")
 
     ##########################################################################
@@ -612,26 +592,49 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
         return false
       else
         points_windows = transform_window.inverse * points_windows # send back to space coords
+        points_walls_upper = transform_wall.inverse * points_walls_upper # send back to space coords
+        points_walls_lower = transform_wall.inverse * points_walls_lower # send back to space coords
       end
 
       #-----------------------------------------------------
       # mounting PV based on PV vertivies information
       #-----------------------------------------------------
+      # setting list of objects based on BIPV type to mount PV surfaces
       if (bipv_type == "BIPV on transparent (window) facade")
         list_points = [points_windows]
         list_labels = ["window"]
       elsif (bipv_type == "BIPV on opaque (wall) facade") 
         list_points = [points_walls_upper, points_walls_lower]
-        list_labels = ["wall_upper", "wall_lower"]
+        list_labels = ["wall (upper)", "wall (lower)"]
       elsif (bipv_type == "BIPV on all facade")
         list_points = [points_windows, points_walls_upper, points_walls_lower]
-        list_labels = ["window", "wall_upper", "wall_lower"]
+        list_labels = ["window", "wall (upper)", "wall (lower)"]
       end
        
+      # adding PV surface and configuration for each surface
       list_points.zip(list_labels).each do |points, label|
         runner.registerInfo("Adding PV surfaces to #{label} surfaces.")
-        #surface_name_updated = surface_window.name.to_s + "_" + label
-        surface_name_updated = surface_window.name.to_s
+
+        # setting transmittance for opaque/transparent/all scenarios
+        if label == "window"
+          target_transmittance = 1.0
+          surface_reference = surface_window
+        elsif (label == "wall (upper)") || (label == "wall (lower)")
+          target_transmittance = 0.0
+          surface_reference = surface_wall
+        end
+        inputs = {
+            'name' => "PV Shading Transmittance Schedule Transparent",
+            'winterTimeValuePairs' => { 24.0 => target_transmittance },
+            'summerTimeValuePairs' => { 24.0 => target_transmittance },
+            'defaultTimeValuePairs' => { 24.0 => target_transmittance }
+        }
+        shading_surface_transmittance_schedule = OsLib_Schedules.createSimpleSchedule(model,inputs)
+        runner.registerInfo("Setting transmittance of virtual PV surface to #{target_transmittance}.")
+
+        # simplifying label name for defining unique surface names for each PV surface
+        label = label.gsub("(", "").gsub(")", "").gsub(" ", "").downcase
+        surface_name_updated = (surface_reference.name.to_s.gsub(" ", "_") + "_" + label).downcase
       
         shading_surface = OpenStudio::Model::ShadingSurface.new(points, model)
         pv_area = OpenStudio::getArea(shading_surface.vertices()).get
@@ -639,7 +642,7 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
         pv_area_ip = OpenStudio.convert(pv_area, "m^2", "ft^2")
         shading_surface.setShadingSurfaceGroup(shading_surface_group_window)
         shading_surface.setName("PV - #{surface_name_updated}")
-        shading_surface.setTransmittanceSchedule(shading_surface_transmittance_schedule_transparent)
+        shading_surface.setTransmittanceSchedule(shading_surface_transmittance_schedule)
         panel = OpenStudio::Model::GeneratorPhotovoltaic::simple(model)
         panel.setSurface(shading_surface)
 
@@ -657,45 +660,42 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
         #-----------------------------------------------------            
         if (pce_scenario == "SwitchGlaze") && (use_tint_iqe == "false") && (pv_orientation != "NONE")
         
-          surfacename = surface_name_updated
-          surfacename_strip = surfacename.gsub(/\s+/, "")
-        
           pce_sch = OpenStudio::Model::ScheduleConstant.new(model)
-          pce_sch.setName("PCE_SCH_#{surfacename_strip}")
+          pce_sch.setName("PCE_SCH_#{surface_name_updated}")
           pce_sch.setValue(0.05)
           runner.registerInfo("Created new Schedule:Constant object (#{pce_sch.name}) representing constant power conversion efficiency.") 
       
           simplepv.setEfficiencySchedule(pce_sch)
       
           runner.registerInfo("Simple PV object name = #{simplepv.name}")
-          runner.registerInfo("Associated surface name = #{surfacename_strip}")
+          runner.registerInfo("Associated surface name = #{surface_name_updated}")
           runner.registerInfo("Associated schedule name = #{pce_sch.name}")
         
           # Create new EnergyManagementSystem:Sensor object
           temperature_reference = OpenStudio::Model::EnergyManagementSystemSensor.new(model, "Surface Window Thermochromic Layer Property Specification Temperature")
-          temperature_reference.setName("t_#{surfacename_strip}")
-          temperature_reference.setKeyName(surfacename.to_s)
-          runner.registerInfo("EMS Sensor named #{temperature_reference.name} measuring the reference temperature on #{surfacename} added to the model.")
+          temperature_reference.setName("t_#{surface_name_updated}")
+          temperature_reference.setKeyName(surface_reference.name.to_s)
+          runner.registerInfo("EMS Sensor named #{temperature_reference.name} measuring the reference temperature on #{surface_reference.name.to_s} added to the model.")
       
           # Create EMS Actuator Objects
           pce_sch_actuator = OpenStudio::Model::EnergyManagementSystemActuator.new(pce_sch,"Schedule:Constant","Schedule Value")
-          pce_sch_actuator.setName("pce_sch_#{surfacename_strip}")
-          runner.registerInfo("EMS Actuator object named '#{pce_sch_actuator.name}' representing the temporary schedule to #{surfacename} added to the model.") 
+          pce_sch_actuator.setName("pce_sch_#{surface_name_updated}")
+          runner.registerInfo("EMS Actuator object named '#{pce_sch_actuator.name}' representing the temporary schedule to #{surface_reference.name.to_s} added to the model.") 
         
           # Create new EnergyManagementSystem:Program object
           ems_pce_prg = OpenStudio::Model::EnergyManagementSystemProgram.new(model)
-          ems_pce_prg.setName("program_pce_#{surfacename_strip}")
-          ems_pce_prg.addLine("SET T_ref_#{surfacename_strip} = #{temperature_reference.name.to_s}")
-          ems_pce_prg.addLine("IF (T_ref_#{surfacename_strip} < #{switch_t})")
+          ems_pce_prg.setName("program_pce_#{surface_name_updated}")
+          ems_pce_prg.addLine("SET T_ref_#{surface_name_updated} = #{temperature_reference.name.to_s}")
+          ems_pce_prg.addLine("IF (T_ref_#{surface_name_updated} < #{switch_t})")
           ems_pce_prg.addLine("SET #{pce_sch.name} = #{pv_eff_light}")
-          ems_pce_prg.addLine("ELSEIF (T_ref_#{surfacename_strip} >= #{switch_t})") 
+          ems_pce_prg.addLine("ELSEIF (T_ref_#{surface_name_updated} >= #{switch_t})") 
           ems_pce_prg.addLine("SET #{pce_sch.name} = #{pv_eff_dark}")
           ems_pce_prg.addLine("ENDIF") 
-          runner.registerInfo("EMS Program object named '#{ems_pce_prg.name}' added to modify the PCE schedule on #{surfacename}.")
+          runner.registerInfo("EMS Program object named '#{ems_pce_prg.name}' added to modify the PCE schedule on #{surface_reference.name.to_s}.")
         
           # create new EnergyManagementSystem:ProgramCallingManager object 
           ems_prgm_calling_mngr = OpenStudio::Model::EnergyManagementSystemProgramCallingManager.new(model)
-          ems_prgm_calling_mngr.setName("callingmanager_pce_#{surfacename_strip}")
+          ems_prgm_calling_mngr.setName("callingmanager_pce_#{surface_name_updated}")
           ems_prgm_calling_mngr.setCallingPoint("BeginTimestepBeforePredictor")
           ems_prgm_calling_mngr.addProgram(ems_pce_prg)
           runner.registerInfo("EMS Program Calling Manager object named '#{ems_prgm_calling_mngr.name}' added to call #{ems_pce_prg.name} EMS program.")
@@ -704,77 +704,74 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
           runner.registerInfo("Power conversion efficiency of #{pv_eff_dark} applied to #{simplepv.name.to_s} for dark state")
           
         elsif (pce_scenario == "SwitchGlaze") && (use_tint_iqe == "true") && (pv_orientation != "NONE")
-        
-          surfacename = surface_name_updated
-          surfacename_strip = surfacename.gsub(/\s+/, "")
-        
+                
           pce_sch = OpenStudio::Model::ScheduleConstant.new(model)
-          pce_sch.setName("PCE_SCH_#{surfacename_strip}")
+          pce_sch.setName("PCE_SCH_#{surface_name_updated}")
           pce_sch.setValue(0.05)
           runner.registerInfo("Created new Schedule:Constant object (#{pce_sch.name}) representing constant power conversion efficiency.") 
       
           simplepv.setEfficiencySchedule(pce_sch)
       
           runner.registerInfo("Simple PV object name = #{simplepv.name}")
-          runner.registerInfo("Associated surface name = #{surfacename_strip}")
+          runner.registerInfo("Associated surface name = #{surface_name_updated}")
           runner.registerInfo("Associated schedule name = #{pce_sch.name}")
         
           # Create new EnergyManagementSystem:Sensor object
           temperature_reference = OpenStudio::Model::EnergyManagementSystemSensor.new(model, "Surface Window Thermochromic Layer Property Specification Temperature")
-          temperature_reference.setName("t_#{surfacename_strip}")
-          temperature_reference.setKeyName(surfacename.to_s)
-          runner.registerInfo("EMS Sensor named #{temperature_reference.name} measuring the reference temperature on #{surfacename} added to the model.")
+          temperature_reference.setName("t_#{surface_name_updated}")
+          temperature_reference.setKeyName(surface_reference.name.to_s)
+          runner.registerInfo("EMS Sensor named #{temperature_reference.name} measuring the reference temperature on #{surface_reference.name.to_s} added to the model.")
           
           incident_angle = OpenStudio::Model::EnergyManagementSystemSensor.new(model, "Surface Outside Face Beam Solar Incident Angle Cosine Value")
-          incident_angle.setName("a_#{surfacename_strip}")
-          incident_angle.setKeyName(surfacename.to_s)
-          runner.registerInfo("EMS Sensor named #{incident_angle.name} measuring the solar incident angle on #{surfacename} added to the model.")
+          incident_angle.setName("a_#{surface_name_updated}")
+          incident_angle.setKeyName(surface_reference.name.to_s)
+          runner.registerInfo("EMS Sensor named #{incident_angle.name} measuring the solar incident angle on #{surface_reference.name.to_s} added to the model.")
       
           # Create EMS Actuator Objects
           pce_sch_actuator = OpenStudio::Model::EnergyManagementSystemActuator.new(pce_sch,"Schedule:Constant","Schedule Value")
-          pce_sch_actuator.setName("pce_sch_#{surfacename_strip}")
-          runner.registerInfo("EMS Actuator object named '#{pce_sch_actuator.name}' representing the temporary schedule to #{surfacename} added to the model.")       
+          pce_sch_actuator.setName("pce_sch_#{surface_name_updated}")
+          runner.registerInfo("EMS Actuator object named '#{pce_sch_actuator.name}' representing the temporary schedule to #{surface_reference.name.to_s} added to the model.")       
         
           # Create new EnergyManagementSystem:Program object 
           runner.registerInfo("EMS Program being created to simulate PCE variation for #{iqe}") 
           ems_pce_prg = OpenStudio::Model::EnergyManagementSystemProgram.new(model)
-          ems_pce_prg.setName("program_pce_#{surfacename_strip}")
-          ems_pce_prg.addLine("SET a_deg_#{surfacename_strip} = (@ArcCos a_#{surfacename_strip})*180/PI")
-          ems_pce_prg.addLine("SET T_ref_#{surfacename_strip} = #{temperature_reference.name.to_s}")
-          ems_pce_prg.addLine("IF (T_ref_#{surfacename_strip} < #{switch_t})")
-          ems_pce_prg.addLine("IF (a_deg_#{surfacename_strip} == 90)")
+          ems_pce_prg.setName("program_pce_#{surface_name_updated}")
+          ems_pce_prg.addLine("SET a_deg_#{surface_name_updated} = (@ArcCos a_#{surface_name_updated})*180/PI")
+          ems_pce_prg.addLine("SET T_ref_#{surface_name_updated} = #{temperature_reference.name.to_s}")
+          ems_pce_prg.addLine("IF (T_ref_#{surface_name_updated} < #{switch_t})")
+          ems_pce_prg.addLine("IF (a_deg_#{surface_name_updated} == 90)")
           ems_pce_prg.addLine("SET #{pce_sch.name} = 0")
-          ems_pce_prg.addLine("ELSEIF (a_deg_#{surfacename_strip} > 90)")
+          ems_pce_prg.addLine("ELSEIF (a_deg_#{surface_name_updated} > 90)")
           ems_pce_prg.addLine("SET #{pce_sch.name} = 0")
           ems_pce_prg.addLine("ELSE")
-          ems_pce_prg.addLine("SET expterm_l_#{surfacename_strip} = #{dictionary_iqe_pce[iqe+"_Light"][2]}*(a_deg_#{surfacename_strip}-90)")
-          ems_pce_prg.addLine("SET #{pce_sch.name} = #{dictionary_iqe_pce[iqe+"_Light"][0]}-#{dictionary_iqe_pce[iqe+"_Light"][1]}*(@EXP expterm_l_#{surfacename_strip})")
+          ems_pce_prg.addLine("SET expterm_l_#{surface_name_updated} = #{dictionary_iqe_pce[iqe+"_Light"][2]}*(a_deg_#{surface_name_updated}-90)")
+          ems_pce_prg.addLine("SET #{pce_sch.name} = #{dictionary_iqe_pce[iqe+"_Light"][0]}-#{dictionary_iqe_pce[iqe+"_Light"][1]}*(@EXP expterm_l_#{surface_name_updated})")
           ems_pce_prg.addLine("ENDIF")
-          ems_pce_prg.addLine("ELSEIF (T_ref_#{surfacename_strip} >= #{switch_t})") 
-          ems_pce_prg.addLine("IF (a_deg_#{surfacename_strip} == 90)")
+          ems_pce_prg.addLine("ELSEIF (T_ref_#{surface_name_updated} >= #{switch_t})") 
+          ems_pce_prg.addLine("IF (a_deg_#{surface_name_updated} == 90)")
           ems_pce_prg.addLine("SET #{pce_sch.name} = 0")
-          ems_pce_prg.addLine("ELSEIF (a_deg_#{surfacename_strip} > 90)")
+          ems_pce_prg.addLine("ELSEIF (a_deg_#{surface_name_updated} > 90)")
           ems_pce_prg.addLine("SET #{pce_sch.name} = 0")
           ems_pce_prg.addLine("ELSE")
-          ems_pce_prg.addLine("SET expterm_d_#{surfacename_strip} = #{dictionary_iqe_pce[iqe+"_Dark"][2]}*(a_deg_#{surfacename_strip}-90)")
-          ems_pce_prg.addLine("SET #{pce_sch.name} = #{dictionary_iqe_pce[iqe+"_Dark"][0]}-#{dictionary_iqe_pce[iqe+"_Dark"][1]}*(@EXP expterm_d_#{surfacename_strip})")
+          ems_pce_prg.addLine("SET expterm_d_#{surface_name_updated} = #{dictionary_iqe_pce[iqe+"_Dark"][2]}*(a_deg_#{surface_name_updated}-90)")
+          ems_pce_prg.addLine("SET #{pce_sch.name} = #{dictionary_iqe_pce[iqe+"_Dark"][0]}-#{dictionary_iqe_pce[iqe+"_Dark"][1]}*(@EXP expterm_d_#{surface_name_updated})")
           ems_pce_prg.addLine("ENDIF")
           ems_pce_prg.addLine("ENDIF") 
-          runner.registerInfo("EMS Program object named '#{ems_pce_prg.name}' added to modify the PCE schedule on #{surfacename}.")
+          runner.registerInfo("EMS Program object named '#{ems_pce_prg.name}' added to modify the PCE schedule on #{surface_reference.name.to_s}.")
         
           # create new EnergyManagementSystem:ProgramCallingManager object 
           ems_prgm_calling_mngr = OpenStudio::Model::EnergyManagementSystemProgramCallingManager.new(model)
-          ems_prgm_calling_mngr.setName("callingmanager_pce_#{surfacename_strip}")
+          ems_prgm_calling_mngr.setName("callingmanager_pce_#{surface_name_updated}")
           ems_prgm_calling_mngr.setCallingPoint("BeginTimestepBeforePredictor")
           ems_prgm_calling_mngr.addProgram(ems_pce_prg)
           runner.registerInfo("EMS Program Calling Manager object named '#{ems_prgm_calling_mngr.name}' added to call #{ems_pce_prg.name} EMS program.") 
           
           # Create new EnergyManagementSystem:GlobalVariable object 
-          dynamic_pce = OpenStudio::Model::EnergyManagementSystemGlobalVariable.new(model, "dynamic_pce_#{surfacename_strip}")
+          dynamic_pce = OpenStudio::Model::EnergyManagementSystemGlobalVariable.new(model, "dynamic_pce_#{surface_name_updated}")
         
           # Create new EMS Output Variable Object
           ems_output_var = OpenStudio::Model::EnergyManagementSystemOutputVariable.new(model,dynamic_pce)
-          ems_output_var.setName("dynamic_pce_#{surfacename_strip}")
+          ems_output_var.setName("dynamic_pce_#{surface_name_updated}")
           ems_output_var.setEMSVariableName("#{pce_sch.name}")
           ems_output_var.setTypeOfDataInVariable("Averaged")
           ems_output_var.setUpdateFrequency("SystemTimeStep")
@@ -794,59 +791,56 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
           
         elsif (pce_scenario == "Static") && (use_tint_iqe == "true") && (pv_orientation != "NONE")
         
-          surfacename = surface_name_updated
-          surfacename_strip = surfacename.gsub(/\s+/, "")
-        
           pce_sch = OpenStudio::Model::ScheduleConstant.new(model)
-          pce_sch.setName("PCE_SCH_#{surfacename_strip}")
+          pce_sch.setName("PCE_SCH_#{surface_name_updated}")
           pce_sch.setValue(0.05)
           runner.registerInfo("Created new Schedule:Constant object (#{pce_sch.name}) representing constant power conversion efficiency.") 
       
           simplepv.setEfficiencySchedule(pce_sch)
       
           runner.registerInfo("Simple PV object name = #{simplepv.name}")
-          runner.registerInfo("Associated surface name = #{surfacename_strip}")
+          runner.registerInfo("Associated surface name = #{surface_name_updated}")
           runner.registerInfo("Associated schedule name = #{pce_sch.name}")
         
           # Create new EnergyManagementSystem:Sensor object        
           incident_angle = OpenStudio::Model::EnergyManagementSystemSensor.new(model, "Surface Outside Face Beam Solar Incident Angle Cosine Value")
-          incident_angle.setName("a_#{surfacename_strip}")
-          incident_angle.setKeyName(surfacename.to_s)
-          runner.registerInfo("EMS Sensor named #{incident_angle.name} measuring the solar incident angle on #{surfacename} added to the model.")
+          incident_angle.setName("a_#{surface_name_updated}")
+          incident_angle.setKeyName(surface_reference.name.to_s)
+          runner.registerInfo("EMS Sensor named #{incident_angle.name} measuring the solar incident angle on #{surface_reference.name.to_s} added to the model.")
       
           # Create EMS Actuator Objects
           pce_sch_actuator = OpenStudio::Model::EnergyManagementSystemActuator.new(pce_sch,"Schedule:Constant","Schedule Value")
-          pce_sch_actuator.setName("pce_sch_#{surfacename_strip}")
-          runner.registerInfo("EMS Actuator object named '#{pce_sch_actuator.name}' representing the temporary schedule to #{surfacename} added to the model.")       
+          pce_sch_actuator.setName("pce_sch_#{surface_name_updated}")
+          runner.registerInfo("EMS Actuator object named '#{pce_sch_actuator.name}' representing the temporary schedule to #{surface_reference.name.to_s} added to the model.")       
         
           # Create new EnergyManagementSystem:Program object
           runner.registerInfo("EMS Program being created to simulate PCE variation for #{iqe}")
           ems_pce_prg = OpenStudio::Model::EnergyManagementSystemProgram.new(model)
-          ems_pce_prg.setName("program_pce_#{surfacename_strip}")
-          ems_pce_prg.addLine("SET a_deg_#{surfacename_strip} = (@ArcCos a_#{surfacename_strip})*180/PI")
-          ems_pce_prg.addLine("IF (a_deg_#{surfacename_strip} == 90)")
+          ems_pce_prg.setName("program_pce_#{surface_name_updated}")
+          ems_pce_prg.addLine("SET a_deg_#{surface_name_updated} = (@ArcCos a_#{surface_name_updated})*180/PI")
+          ems_pce_prg.addLine("IF (a_deg_#{surface_name_updated} == 90)")
           ems_pce_prg.addLine("SET #{pce_sch.name} = 0")
-          ems_pce_prg.addLine("ELSEIF (a_deg_#{surfacename_strip} > 90)")
+          ems_pce_prg.addLine("ELSEIF (a_deg_#{surface_name_updated} > 90)")
           ems_pce_prg.addLine("SET #{pce_sch.name} = 0")
           ems_pce_prg.addLine("ELSE")
-          ems_pce_prg.addLine("SET expterm_l_#{surfacename_strip} = #{dictionary_iqe_pce[iqe][2]}*(a_deg_#{surfacename_strip}-90)")
-          ems_pce_prg.addLine("SET #{pce_sch.name} = #{dictionary_iqe_pce[iqe][0]}-#{dictionary_iqe_pce[iqe][1]}*(@EXP expterm_l_#{surfacename_strip})")
+          ems_pce_prg.addLine("SET expterm_l_#{surface_name_updated} = #{dictionary_iqe_pce[iqe][2]}*(a_deg_#{surface_name_updated}-90)")
+          ems_pce_prg.addLine("SET #{pce_sch.name} = #{dictionary_iqe_pce[iqe][0]}-#{dictionary_iqe_pce[iqe][1]}*(@EXP expterm_l_#{surface_name_updated})")
           ems_pce_prg.addLine("ENDIF") 
-          runner.registerInfo("EMS Program object named '#{ems_pce_prg.name}' added to modify the PCE schedule on #{surfacename}.")
+          runner.registerInfo("EMS Program object named '#{ems_pce_prg.name}' added to modify the PCE schedule on #{surface_reference.name.to_s}.")
         
           # create new EnergyManagementSystem:ProgramCallingManager object 
           ems_prgm_calling_mngr = OpenStudio::Model::EnergyManagementSystemProgramCallingManager.new(model)
-          ems_prgm_calling_mngr.setName("callingmanager_pce_#{surfacename_strip}")
+          ems_prgm_calling_mngr.setName("callingmanager_pce_#{surface_name_updated}")
           ems_prgm_calling_mngr.setCallingPoint("BeginTimestepBeforePredictor")
           ems_prgm_calling_mngr.addProgram(ems_pce_prg)
           runner.registerInfo("EMS Program Calling Manager object named '#{ems_prgm_calling_mngr.name}' added to call #{ems_pce_prg.name} EMS program.") 
           
           # Create new EnergyManagementSystem:GlobalVariable object 
-          dynamic_pce = OpenStudio::Model::EnergyManagementSystemGlobalVariable.new(model, "dynamic_pce_#{surfacename_strip}")
+          dynamic_pce = OpenStudio::Model::EnergyManagementSystemGlobalVariable.new(model, "dynamic_pce_#{surface_name_updated}")
         
           # Create new EMS Output Variable Object
           ems_output_var = OpenStudio::Model::EnergyManagementSystemOutputVariable.new(model,dynamic_pce)
-          ems_output_var.setName("dynamic_pce_#{surfacename_strip}")
+          ems_output_var.setName("dynamic_pce_#{surface_name_updated}")
           ems_output_var.setEMSVariableName("#{pce_sch.name}")
           ems_output_var.setTypeOfDataInVariable("Averaged")
           ems_output_var.setUpdateFrequency("SystemTimeStep")
