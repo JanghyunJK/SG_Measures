@@ -110,7 +110,7 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
     choices << "V_50%_S_I0pt8"
     
     iqe = OpenStudio::Ruleset::OSArgument::makeChoiceArgument("iqe", choices)
-    iqe.setDisplayName("iqe")
+    iqe.setDisplayName("IGU type")
     iqe.setDefaultValue("25%_N_I0")
     args << iqe
 
@@ -129,13 +129,13 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
     args << pv_orientation
 
     # thermochromic window implementation 
-    pce_scenarios = OpenStudio::StringVector.new
-    pce_scenarios << "Static"
-    pce_scenarios << "SwitchGlaze"    
-    pce_scenario = OpenStudio::Ruleset::OSArgument::makeChoiceArgument('pce_scenario', pce_scenarios, true)
-    pce_scenario.setDisplayName("Choice of power conversion efficiency modeling scenario")
-    pce_scenario.setDefaultValue("Static")
-    args << pce_scenario
+    switching_scenarios = OpenStudio::StringVector.new
+    switching_scenarios << "Static"
+    switching_scenarios << "SwitchGlaze"    
+    switching_scenario = OpenStudio::Ruleset::OSArgument::makeChoiceArgument('switching_scenario', switching_scenarios, true)
+    switching_scenario.setDisplayName("Choice between static and switching windows")
+    switching_scenario.setDefaultValue("Static")
+    args << switching_scenario
 
     # PV surface QD coverage (%)
     dot_coverage = OpenStudio::Ruleset::OSArgument.makeDoubleArgument("dot_coverage", true)
@@ -154,7 +154,7 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
     # pv module efficiency (%)
     pv_eff = OpenStudio::Ruleset::OSArgument.makeDoubleArgument("pv_eff", true)
     pv_eff.setDisplayName("Fixed PV power conversion efficiency")
-    pv_eff.setDescription('this value is applied if dynamic power conversion efficiency is false.')
+    pv_eff.setDescription('this value is applied if dynamic power conversion efficiency is false and static window is selected.')
     pv_eff.setUnits("fraction")
     pv_eff.setDefaultValue(1.0)
     args << pv_eff
@@ -168,7 +168,7 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
     # pv module efficiency (%)
     pv_eff_light = OpenStudio::Ruleset::OSArgument.makeDoubleArgument("pv_eff_light", true)
     pv_eff_light.setDisplayName("PV power conversion efficiency in light state")
-    pv_eff_light.setDescription('this value is applied if dynamic power conversion efficiency is false.')
+    pv_eff_light.setDescription('this value is applied if dynamic power conversion efficiency is false and switching window is selected.')
     pv_eff_light.setUnits("fraction")
     pv_eff_light.setDefaultValue(0.0053)
     args << pv_eff_light
@@ -176,7 +176,7 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
     # pv module efficiency (%)
     pv_eff_dark = OpenStudio::Ruleset::OSArgument.makeDoubleArgument("pv_eff_dark", true)
     pv_eff_dark.setDisplayName("PV power conversion efficiency in dark state")
-    pv_eff_dark.setDescription('this value is applied if dynamic power conversion efficiency is false.')
+    pv_eff_dark.setDescription('this value is applied if dynamic power conversion efficiency is false and switching window is selected.')
     pv_eff_dark.setUnits("fraction")
     pv_eff_dark.setDefaultValue(0.18)
     args << pv_eff_dark
@@ -184,7 +184,7 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
     # thermochromic switching temperature
     switch_t = OpenStudio::Ruleset::OSArgument.makeDoubleArgument('switch_t', true)
     switch_t.setDisplayName('State switching temperature for thermochromic window')
-    switch_t.setDescription('this value is applied if switchglaze is selected.')
+    switch_t.setDescription('this value is applied if switching window is selected.')
     switch_t.setUnits("C")
     switch_t.setDefaultValue(30.0)
     args << switch_t
@@ -233,7 +233,7 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
     debug_mode = runner.getStringArgumentValue('debug_mode',user_arguments)
     use_tint_iqe = runner.getStringArgumentValue('use_tint_iqe',user_arguments)
     iqe = runner.getStringArgumentValue('iqe',user_arguments)
-    pce_scenario = runner.getStringArgumentValue('pce_scenario',user_arguments)
+    switching_scenario = runner.getStringArgumentValue('switching_scenario',user_arguments)
     pv_eff_light = runner.getDoubleArgumentValue('pv_eff_light',user_arguments)
     pv_eff_dark = runner.getDoubleArgumentValue('pv_eff_dark',user_arguments)
     switch_t = runner.getDoubleArgumentValue('switch_t', user_arguments)
@@ -559,23 +559,23 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
           if count == 0
             pp_upper = pp
             pp_lower = OpenStudio::Point3d.new(pp_x,pp_y,height_adjustments[1])
-            runner.registerInfo("DEBUGGING: pp_upper = #{pp_upper}")
-            runner.registerInfo("DEBUGGING: pp_lower = #{pp_lower}")
+            # runner.registerInfo("DEBUGGING: pp_upper = #{pp_upper}")
+            # runner.registerInfo("DEBUGGING: pp_lower = #{pp_lower}")
           elsif count==1
             pp_upper = OpenStudio::Point3d.new(pp_x,pp_y,height_adjustments[0])
             pp_lower = pp
-            runner.registerInfo("DEBUGGING: pp_upper = #{pp_upper}")
-            runner.registerInfo("DEBUGGING: pp_lower = #{pp_lower}")
+            # runner.registerInfo("DEBUGGING: pp_upper = #{pp_upper}")
+            # runner.registerInfo("DEBUGGING: pp_lower = #{pp_lower}")
           elsif count==2
             pp_upper = OpenStudio::Point3d.new(pp_x,pp_y,height_adjustments[0])
             pp_lower = pp
-            runner.registerInfo("DEBUGGING: pp_upper = #{pp_upper}")
-            runner.registerInfo("DEBUGGING: pp_lower = #{pp_lower}")
+            # runner.registerInfo("DEBUGGING: pp_upper = #{pp_upper}")
+            # runner.registerInfo("DEBUGGING: pp_lower = #{pp_lower}")
           elsif count==3
             pp_upper = pp
             pp_lower = OpenStudio::Point3d.new(pp_x,pp_y,height_adjustments[1])
-            runner.registerInfo("DEBUGGING: pp_upper = #{pp_upper}")
-            runner.registerInfo("DEBUGGING: pp_lower = #{pp_lower}")
+            # runner.registerInfo("DEBUGGING: pp_upper = #{pp_upper}")
+            # runner.registerInfo("DEBUGGING: pp_lower = #{pp_lower}")
           end
           # add projected PV surfaces from window surfaces to points variable if necessary
           points_walls_upper << pp_upper
@@ -658,7 +658,7 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
         #-----------------------------------------------------
         # implement power conversion efficiency scenarios
         #-----------------------------------------------------            
-        if (pce_scenario == "SwitchGlaze") && (use_tint_iqe == "false") && (pv_orientation != "NONE")
+        if (switching_scenario == "SwitchGlaze") && (use_tint_iqe == "false") && (pv_orientation != "NONE")
         
           pce_sch = OpenStudio::Model::ScheduleConstant.new(model)
           pce_sch.setName("PCE_SCH_#{surface_name_updated}")
@@ -703,7 +703,7 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
           runner.registerInfo("Power conversion efficiency of #{pv_eff_light} applied to #{simplepv.name.to_s} for light state")
           runner.registerInfo("Power conversion efficiency of #{pv_eff_dark} applied to #{simplepv.name.to_s} for dark state")
           
-        elsif (pce_scenario == "SwitchGlaze") && (use_tint_iqe == "true") && (pv_orientation != "NONE")
+        elsif (switching_scenario == "SwitchGlaze") && (use_tint_iqe == "true") && (pv_orientation != "NONE")
                 
           pce_sch = OpenStudio::Model::ScheduleConstant.new(model)
           pce_sch.setName("PCE_SCH_#{surface_name_updated}")
@@ -779,17 +779,17 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
           runner.registerInfo("Power conversion efficiency coefficient set of #{dictionary_iqe_pce[iqe+"_Light"]} applied to #{simplepv.name.to_s} for light state")
           runner.registerInfo("Power conversion efficiency coefficient set of #{dictionary_iqe_pce[iqe+"_Dark"]} applied to #{simplepv.name.to_s} for dark state")
           
-        elsif (pce_scenario == "Static") && (use_tint_iqe == "false") && (pv_orientation != "NONE")
+        elsif (switching_scenario == "Static") && (use_tint_iqe == "false") && (pv_orientation != "NONE")
         
           simplepv.setFixedEfficiency(pv_eff)
           runner.registerInfo("Constant power conversion efficiency of #{pv_eff} applied to #{simplepv.name.to_s}")
           
-        elsif (pce_scenario == "SwitchGlaze") && (use_tint_iqe == "false") && (pv_orientation == "NONE")
+        elsif (switching_scenario == "SwitchGlaze") && (use_tint_iqe == "false") && (pv_orientation == "NONE")
         
           simplepv.setFixedEfficiency(dictionary_iqe_pce[iqe])
           runner.registerInfo("Constant power conversion efficiency of #{dictionary_iqe_pce[iqe]} applied to #{simplepv.name.to_s}")
           
-        elsif (pce_scenario == "Static") && (use_tint_iqe == "true") && (pv_orientation != "NONE")
+        elsif (switching_scenario == "Static") && (use_tint_iqe == "true") && (pv_orientation != "NONE")
         
           pce_sch = OpenStudio::Model::ScheduleConstant.new(model)
           pce_sch.setName("PCE_SCH_#{surface_name_updated}")

@@ -3,8 +3,8 @@
   <schema_version>3.0</schema_version>
   <name>add_thermochromic_bipv</name>
   <uid>11088181-e92b-42d3-a1d0-91d4d0261dbb</uid>
-  <version_id>e99b3d60-7948-4230-a191-10d34d285a00</version_id>
-  <version_modified>20220422T155226Z</version_modified>
+  <version_id>cad2959c-e6ea-4254-bab4-d3f3a216f193</version_id>
+  <version_modified>20220422T161617Z</version_modified>
   <xml_checksum>894A4CEA</xml_checksum>
   <class_name>AddThermochromicBIPV</class_name>
   <display_name>Add Thermochromic BIPV</display_name>
@@ -35,7 +35,7 @@
     </argument>
     <argument>
       <name>iqe</name>
-      <display_name>iqe</display_name>
+      <display_name>IGU type</display_name>
       <type>Choice</type>
       <required>true</required>
       <model_dependent>false</model_dependent>
@@ -369,8 +369,8 @@
       </choices>
     </argument>
     <argument>
-      <name>pce_scenario</name>
-      <display_name>Choice of power conversion efficiency modeling scenario</display_name>
+      <name>switching_scenario</name>
+      <display_name>Choice between static and switching windows</display_name>
       <type>Choice</type>
       <required>true</required>
       <model_dependent>false</model_dependent>
@@ -417,7 +417,7 @@
     <argument>
       <name>pv_eff</name>
       <display_name>Fixed PV power conversion efficiency</display_name>
-      <description>this value is applied if dynamic power conversion efficiency is false.</description>
+      <description>this value is applied if dynamic power conversion efficiency is false and static window is selected.</description>
       <type>Double</type>
       <units>fraction</units>
       <required>true</required>
@@ -436,7 +436,7 @@
     <argument>
       <name>pv_eff_light</name>
       <display_name>PV power conversion efficiency in light state</display_name>
-      <description>this value is applied if dynamic power conversion efficiency is false.</description>
+      <description>this value is applied if dynamic power conversion efficiency is false and switching window is selected.</description>
       <type>Double</type>
       <units>fraction</units>
       <required>true</required>
@@ -446,7 +446,7 @@
     <argument>
       <name>pv_eff_dark</name>
       <display_name>PV power conversion efficiency in dark state</display_name>
-      <description>this value is applied if dynamic power conversion efficiency is false.</description>
+      <description>this value is applied if dynamic power conversion efficiency is false and switching window is selected.</description>
       <type>Double</type>
       <units>fraction</units>
       <required>true</required>
@@ -456,7 +456,7 @@
     <argument>
       <name>switch_t</name>
       <display_name>State switching temperature for thermochromic window</display_name>
-      <description>this value is applied if switchglaze is selected.</description>
+      <description>this value is applied if switching window is selected.</description>
       <type>Double</type>
       <units>C</units>
       <required>true</required>
@@ -646,7 +646,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>D1AC77D7</checksum>
+      <checksum>08472C97</checksum>
     </file>
   </files>
 </measure>
