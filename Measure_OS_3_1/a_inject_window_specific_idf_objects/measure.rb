@@ -160,39 +160,55 @@ class AInjectWindowSpecificIDFObjects < OpenStudio::Ruleset::WorkspaceUserScript
     }
     
     ####################################################################################
-    ####################################################################################
-    
     # check if thermochromic was defined in upstream measure AddThermochromicBIPV
-    pce_scenario = check_upstream_measure_for_arg(runner, 'pce_scenario')
-    pce_scenario = pce_scenario[:value]
-    if not pce_scenario.nil? || pce_scenario.empty?
-      runner.registerInfo("PV PCE scenario type defined in AddThermochromicBIPV measure = #{pce_scenario}")
+    ####################################################################################
+
+    bipv_type = check_upstream_measure_for_arg(runner, 'bipv_type')
+    bipv_type = bipv_type[:value]
+    if not bipv_type.nil? || bipv_type.empty?
+      runner.registerInfo("BIPV type defined in AddThermochromicBIPV measure = #{bipv_type}")
+    end
+
+    switching_scenario = check_upstream_measure_for_arg(runner, 'switching_scenario')
+    switching_scenario = switching_scenario[:value]
+    if not switching_scenario.nil? || switching_scenario.empty?
+      runner.registerInfo("Window type (switching/static) defined in AddThermochromicBIPV measure = #{switching_scenario}")
     end
         
-    if pce_scenario=='SwitchGlaze'
-      pce_scenario = true
-    elsif pce_scenario=='Static'
-      pce_scenario = false
+    if switching_scenario=='SwitchGlaze'
+      switching_scenario = true
+    elsif switching_scenario=='Static'
+      switching_scenario = false
+    end
+
+    use_tint_iqe = check_upstream_measure_for_arg(runner, 'use_tint_iqe')
+    use_tint_iqe = use_tint_iqe[:value]
+    if not use_tint_iqe.nil? || use_tint_iqe.empty?
+      runner.registerInfo("PV power conversion efficiency (PCE) modeling type (true=dynamic/false=constant) defined in AddThermochromicBIPV measure = #{use_tint_iqe}")
     end
     
-    pv_eff_fixed = check_upstream_measure_for_arg(runner, 'pv_eff')
-    pv_eff_fixed = pv_eff_fixed[:value]
-    if not pv_eff_fixed.nil? || pv_eff_fixed.empty?
-      runner.registerInfo("Fixed PCE (if PCE variation is not applied) = #{pv_eff_fixed}")
+    if use_tint_iqe==false
+      pv_eff_fixed = check_upstream_measure_for_arg(runner, 'pv_eff')
+      pv_eff_fixed = pv_eff_fixed[:value]
+      if not pv_eff_fixed.nil? || pv_eff_fixed.empty?
+        runner.registerInfo("Fixed PCE = #{pv_eff_fixed}")
+      end
     end
     
     # check PV orientation from upstream measure AddThermochromicBIPV
-    pv_orientation = check_upstream_measure_for_arg(runner, 'facade')
+    pv_orientation = check_upstream_measure_for_arg(runner, 'pv_orientation')
     pv_orientation = pv_orientation[:value]
     if not pv_orientation.nil? || pv_orientation.empty?
       runner.registerInfo("PV orientation defined in AddThermochromicBIPV measure = #{pv_orientation}")
     end
     
-    t_switching = check_upstream_measure_for_arg(runner, 'switch_t')
-    t_switching = t_switching[:value]
-    if not t_switching.nil? || t_switching.empty?
-      runner.registerInfo("Thermochromic switching temperature defiend in AddThermochromicBIPV measure = #{t_switching}")
-      t_switching = t_switching.to_f
+    if switching_scenario==true 
+      t_switching = check_upstream_measure_for_arg(runner, 'switch_t')
+      t_switching = t_switching[:value]
+      if not t_switching.nil? || t_switching.empty?
+        runner.registerInfo("Thermochromic switching temperature defiend in AddThermochromicBIPV measure = #{t_switching}")
+        t_switching = t_switching.to_f
+      end
     end
     
     ####################################################################################
@@ -399,7 +415,7 @@ class AInjectWindowSpecificIDFObjects < OpenStudio::Ruleset::WorkspaceUserScript
     ####################################################################################
     #find the thermochromic object and replace switching temperature based on input
     ####################################################################################
-    if pce_scenario==true 
+    if switching_scenario==true 
       applicable = true
       tcglazings = workspace.getObjectsByType("WindowMaterial:GlazingGroup:Thermochromic".to_IddObjectType)
       tcglazings.each do |tcglazing|
