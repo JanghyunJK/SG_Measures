@@ -3,8 +3,8 @@
   <schema_version>3.0</schema_version>
   <name>a_inject_window_specific_idf_objects</name>
   <uid>b5cd7571-8ee9-4657-845b-43513fd2b983</uid>
-  <version_id>04be3312-9e97-4c2d-a870-6b351de804d9</version_id>
-  <version_modified>20220427T212049Z</version_modified>
+  <version_id>4f420bcf-90ed-470d-b73b-166e80fcac77</version_id>
+  <version_modified>20220429T145148Z</version_modified>
   <xml_checksum>79C5D5D1</xml_checksum>
   <class_name>AInjectWindowSpecificIDFObjects</class_name>
   <display_name> Inject Window Specific IDF Objects</display_name>
@@ -19,7 +19,7 @@ This measure works for when you just need to add new IDF objects. If you need to
       <type>Choice</type>
       <required>true</required>
       <model_dependent>false</model_dependent>
-      <default_value>SwitchGlaze</default_value>
+      <default_value>Thermochromic</default_value>
       <choices>
         <choice>
           <value>Single_Pane</value>
@@ -46,8 +46,8 @@ This measure works for when you just need to add new IDF objects. If you need to
           <display_name>Static</display_name>
         </choice>
         <choice>
-          <value>SwitchGlaze</value>
-          <display_name>SwitchGlaze</display_name>
+          <value>Thermochromic</value>
+          <display_name>Thermochromic</display_name>
         </choice>
       </choices>
     </argument>
@@ -204,7 +204,7 @@ This measure works for when you just need to add new IDF objects. If you need to
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>B2F443D9</checksum>
+      <checksum>7184FFD1</checksum>
     </file>
   </files>
 </measure>

@@ -3,8 +3,8 @@
   <schema_version>3.0</schema_version>
   <name>add_thermochromic_bipv</name>
   <uid>11088181-e92b-42d3-a1d0-91d4d0261dbb</uid>
-  <version_id>74a1341b-99d2-47ae-a8e5-796b5a9a4ffe</version_id>
-  <version_modified>20220422T202130Z</version_modified>
+  <version_id>2e18f2fe-6e3b-4570-ade6-eb27450abd22</version_id>
+  <version_modified>20220429T153602Z</version_modified>
   <xml_checksum>894A4CEA</xml_checksum>
   <class_name>AddThermochromicBIPV</class_name>
   <display_name>Add Thermochromic BIPV</display_name>
@@ -13,7 +13,8 @@
   <arguments>
     <argument>
       <name>bipv_type</name>
-      <display_name>BIPV type</display_name>
+      <display_name>BIPV Type</display_name>
+      <description>Select different BIPV options. Currently, only supporting PVs on vertical façade.</description>
       <type>Choice</type>
       <required>true</required>
       <model_dependent>false</model_dependent>
@@ -35,7 +36,8 @@
     </argument>
     <argument>
       <name>iqe</name>
-      <display_name>IGU type</display_name>
+      <display_name>IGU Type</display_name>
+      <description>Select specific window name. This argument is used to create (hard coded) regression models for implementing the dynamic power conversion efficiency in this measure. This argument is also used to read specific window idf files from the disk in inject_window_specific_idf_objects measure.</description>
       <type>Choice</type>
       <required>true</required>
       <model_dependent>false</model_dependent>
@@ -332,7 +334,8 @@
     </argument>
     <argument>
       <name>pv_orientation</name>
-      <display_name>PV orientation</display_name>
+      <display_name>PV Orientation</display_name>
+      <description>Select cardinal direction options for mounting PV on vertial building façade.</description>
       <type>Choice</type>
       <required>true</required>
       <model_dependent>false</model_dependent>
@@ -370,7 +373,8 @@
     </argument>
     <argument>
       <name>switching_scenario</name>
-      <display_name>Choice between static and switching windows</display_name>
+      <display_name>Switching Scenario</display_name>
+      <description>Select between static and switching windows. Currently, thermochromic window is only supported and electrochromic is not supported for switching windows.</description>
       <type>Choice</type>
       <required>true</required>
       <model_dependent>false</model_dependent>
@@ -381,14 +385,15 @@
           <display_name>Static</display_name>
         </choice>
         <choice>
-          <value>SwitchGlaze</value>
-          <display_name>SwitchGlaze</display_name>
+          <value>Thermochromic</value>
+          <display_name>Thermochromic</display_name>
         </choice>
       </choices>
     </argument>
     <argument>
       <name>dot_coverage</name>
-      <display_name>Active portion of PV from window surface area</display_name>
+      <display_name>PV Active Portion</display_name>
+      <description>Define fraction value of an active portion of PV from window surface area. Only the fraction defined in this argument from the window surface will act as PV surface (for electricity generation).</description>
       <type>Double</type>
       <units>fraction</units>
       <required>true</required>
@@ -397,8 +402,8 @@
     </argument>
     <argument>
       <name>use_tint_iqe</name>
-      <display_name>Dynamic power conversion efficiency?</display_name>
-      <description>select true if selection of window will be based on tinted level and IQE setting (associated PCE value will be automatically applied)</description>
+      <display_name>Dynamic PV Power Conversion Efficiency?</display_name>
+      <description>Select true if PV power conversion efficiency will be dynamically calculated based on regression models. If false, Fixed PV Power Conversion Efficiency (defined below) will be used.</description>
       <type>Boolean</type>
       <required>false</required>
       <model_dependent>false</model_dependent>
@@ -416,8 +421,8 @@
     </argument>
     <argument>
       <name>pv_eff</name>
-      <display_name>Fixed PV power conversion efficiency</display_name>
-      <description>this value is applied if dynamic power conversion efficiency is false and static window is selected.</description>
+      <display_name>Fixed PV Power Conversion Efficiency</display_name>
+      <description>Define fixed power conversion efficiency for PV. This value is only applied if Dynamic PV Power Conversion efficiency is false and Switching Scenario selected with static window.</description>
       <type>Double</type>
       <units>fraction</units>
       <required>true</required>
@@ -427,6 +432,7 @@
     <argument>
       <name>inverter_eff</name>
       <display_name>Fixed Inverter Efficiency</display_name>
+      <description>Define fixed inverter efficiency.</description>
       <type>Double</type>
       <units>fraction</units>
       <required>true</required>
@@ -435,8 +441,8 @@
     </argument>
     <argument>
       <name>pv_eff_light</name>
-      <display_name>PV power conversion efficiency in light state</display_name>
-      <description>this value is applied if dynamic power conversion efficiency is false and switching window is selected.</description>
+      <display_name>Fixed PV Power Conversion Efficiency in Light State Switching Window</display_name>
+      <description>Defined fixed power conversion efficiency for window in light state. This value is applied if Dynamic PV Power Conversion Efficiency is false and Switching Scenario selected with thermochromic window.</description>
       <type>Double</type>
       <units>fraction</units>
       <required>true</required>
@@ -445,8 +451,8 @@
     </argument>
     <argument>
       <name>pv_eff_dark</name>
-      <display_name>PV power conversion efficiency in dark state</display_name>
-      <description>this value is applied if dynamic power conversion efficiency is false and switching window is selected.</description>
+      <display_name>Fixed PV Power Conversion Efficiency in Dark State Switching Window</display_name>
+      <description>Defined fixed power conversion efficiency for window in dark state. This value is applied if Dynamic PV Power Conversion Efficiency is false and Switching Scenario selected with thermochromic window.</description>
       <type>Double</type>
       <units>fraction</units>
       <required>true</required>
@@ -455,8 +461,8 @@
     </argument>
     <argument>
       <name>switch_t</name>
-      <display_name>State switching temperature for thermochromic window</display_name>
-      <description>this value is applied if switching window is selected.</description>
+      <display_name>Thermochromic Switching Temperature</display_name>
+      <description>Define temperature value to simulate when thermochromic window swtiches between light and dark states. The reference temperature is the temperature of the outermost window layer. This value is applied if Switching Scenario is selected with thermochromic window.</description>
       <type>Double</type>
       <units>C</units>
       <required>true</required>
@@ -466,7 +472,7 @@
     <argument>
       <name>debug_mode</name>
       <display_name>Debug Mode</display_name>
-      <description>Print debugging info</description>
+      <description>Select true if user wants to print out more details for debugging.</description>
       <type>Boolean</type>
       <required>false</required>
       <model_dependent>false</model_dependent>
@@ -646,7 +652,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>C257767A</checksum>
+      <checksum>6FD9B0E5</checksum>
     </file>
   </files>
 </measure>

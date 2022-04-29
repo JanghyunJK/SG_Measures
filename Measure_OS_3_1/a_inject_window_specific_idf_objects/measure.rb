@@ -32,11 +32,11 @@ class AInjectWindowSpecificIDFObjects < OpenStudio::Ruleset::WorkspaceUserScript
     glzsys << "VIG"
     glzsys << "ASHRAE_Detailed"
     glzsys << "Static"
-    glzsys << "SwitchGlaze"
+    glzsys << "Thermochromic"
     
     glztype = OpenStudio::Ruleset::OSArgument::makeChoiceArgument('glztype', glzsys, true)
     glztype.setDisplayName("Choice of IGU")
-    glztype.setDefaultValue("SwitchGlaze")
+    glztype.setDefaultValue("Thermochromic")
     args << glztype
     
     #make choice arguments for fenestration surface
@@ -176,7 +176,7 @@ class AInjectWindowSpecificIDFObjects < OpenStudio::Ruleset::WorkspaceUserScript
       runner.registerInfo("Window type (switching/static) defined in AddThermochromicBIPV measure = #{switching_scenario}")
     end
         
-    if switching_scenario=='SwitchGlaze'
+    if switching_scenario=='Thermochromic'
       switching_scenario = true
     elsif switching_scenario=='Static'
       switching_scenario = false
@@ -234,7 +234,7 @@ class AInjectWindowSpecificIDFObjects < OpenStudio::Ruleset::WorkspaceUserScript
       glztype = climateregion.concat("_#{glztype.to_s}")
       runner.registerInfo("Window name to be implemented = #{glztype}")
                     
-    elsif (glztype == "SwitchGlaze")
+    elsif (glztype == "Thermochromic")
     
       glztype = "SG"
       
