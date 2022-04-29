@@ -193,11 +193,12 @@ class AddWindAndStackOpenArea < OpenStudio::Measure::EnergyPlusMeasure
     constructions.each do |construction|
       construction_choices << construction.getString(0).to_s
     end
+    construction_choices << 'U 0.72 SHGC 0.25 Sgl Ref-B-M Tint 6mm'
     # argument for construction
     construction = OpenStudio::Ruleset::OSArgument::makeChoiceArgument('construction', construction_choices, true)
     construction.setDisplayName('Window Construction for Operable Windows:')
     construction.setDescription('(Leave blank to apply to all windows)')
-    construction.setDefaultValue('')
+    construction.setDefaultValue('U 0.72 SHGC 0.25 Sgl Ref-B-M Tint 6mm')
     args << construction
 
     # make choice argument for fractional schedule
