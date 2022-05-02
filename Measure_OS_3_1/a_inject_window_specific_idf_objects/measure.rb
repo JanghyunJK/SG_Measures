@@ -181,20 +181,6 @@ class AInjectWindowSpecificIDFObjects < OpenStudio::Ruleset::WorkspaceUserScript
     elsif switching_scenario=='Static'
       switching_scenario = false
     end
-
-    use_tint_iqe = check_upstream_measure_for_arg(runner, 'use_tint_iqe')
-    use_tint_iqe = use_tint_iqe[:value]
-    if not use_tint_iqe.nil? || use_tint_iqe.empty?
-      runner.registerInfo("PV power conversion efficiency (PCE) modeling type (true=dynamic/false=constant) defined in AddThermochromicBIPV measure = #{use_tint_iqe}")
-    end
-    
-    if use_tint_iqe==false
-      pv_eff_fixed = check_upstream_measure_for_arg(runner, 'pv_eff')
-      pv_eff_fixed = pv_eff_fixed[:value]
-      if not pv_eff_fixed.nil? || pv_eff_fixed.empty?
-        runner.registerInfo("Fixed PCE = #{pv_eff_fixed}")
-      end
-    end
     
     # check PV orientation from upstream measure AddThermochromicBIPV
     pv_orientation = check_upstream_measure_for_arg(runner, 'pv_orientation')
@@ -245,13 +231,13 @@ class AInjectWindowSpecificIDFObjects < OpenStudio::Ruleset::WorkspaceUserScript
       climateregion = dictionary_weather[location]
       runner.registerInfo("Simple climate classification for this location = #{climateregion}")
       
-      iqe = check_upstream_measure_for_arg(runner, 'iqe')
-      iqe = iqe[:value]
-      runner.registerInfo("Tint and IQE setting = #{iqe}")
+      iqe_transparent = check_upstream_measure_for_arg(runner, 'iqe_transparent')
+      iqe_transparent = iqe_transparent[:value]
+      runner.registerInfo("Tint and IQE setting = #{iqe_transparent}")
   
       glztype = climateregion.concat("_#{glztype.to_s}")
-      iqe = iqe.sub("Tnt_", "")
-      glztype = glztype.concat("_"+iqe) #specific string for tinted 1 window files
+      iqe_transparent = iqe_transparent.sub("Tnt_", "")
+      glztype = glztype.concat("_"+iqe_transparent) #specific string for tinted 1 window files
 
       runner.registerInfo("glztype = #{glztype}")
       runner.registerInfo("Window name to be implemented = #{glztype}")
@@ -267,12 +253,12 @@ class AInjectWindowSpecificIDFObjects < OpenStudio::Ruleset::WorkspaceUserScript
       climateregion = dictionary_weather[location]
       runner.registerInfo("Simple climate classification for this location = #{climateregion}")
       
-      iqe = check_upstream_measure_for_arg(runner, 'iqe')
-      iqe = iqe[:value]
-      runner.registerInfo("Tint and IQE setting = #{iqe}")
+      iqe_transparent = check_upstream_measure_for_arg(runner, 'iqe_transparent')
+      iqe_transparent = iqe_transparent[:value]
+      runner.registerInfo("Tint and IQE setting = #{iqe_transparent}")
   
       glztype = climateregion.concat("#{glztype.to_s}")
-      glztype = glztype.concat("_"+iqe) #specific string for tinted 1 window files
+      glztype = glztype.concat("_"+iqe_transparent) #specific string for tinted 1 window files
 
       runner.registerInfo("glztype = #{glztype}")
       runner.registerInfo("Window name to be implemented = #{glztype}")
