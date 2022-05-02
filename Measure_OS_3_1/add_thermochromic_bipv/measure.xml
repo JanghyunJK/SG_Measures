@@ -3,13 +3,13 @@
   <schema_version>3.0</schema_version>
   <name>add_thermochromic_bipv</name>
   <uid>11088181-e92b-42d3-a1d0-91d4d0261dbb</uid>
-  <version_id>2e18f2fe-6e3b-4570-ade6-eb27450abd22</version_id>
-  <version_modified>20220429T153602Z</version_modified>
+  <version_id>02c1e836-6e99-4e42-92f8-21d62db45ce8</version_id>
+  <version_modified>20220502T155750Z</version_modified>
   <xml_checksum>894A4CEA</xml_checksum>
   <class_name>AddThermochromicBIPV</class_name>
   <display_name>Add Thermochromic BIPV</display_name>
-  <description>Adds BIPV (Building Integrated Photovoltaic) on window surfaces. Define switching temperature for thermochromic windows. Implement power conversion efficiency difference between light and dark state windows.</description>
-  <modeler_description>Adds simple PV object for BIPV implementation. Implement thermochromic window with switching temperature definition. Implement power conversion efficiency difference betwee light and dark state windows.</modeler_description>
+  <description>Adds BIPV (Building Integrated Photovoltaic) on exterior façade.</description>
+  <modeler_description>Adds simple PV object for BIPV implementation. PV can be installed on opaque (wall) and/or transparent (window) façade. Power conversion efficiency of PV can be either constant or dynamic (based on hard-coded regression model reflecting solar incident angle variation). Cardinal directions (East, West, South, North, etc.) for mounting PV can be selected. BIPV on transparent façade can be either static or switching (thermochromic switching between light and dark state) window. BIPV on transparent façade with switching window can specifiy switching temperature (based on window's outermost temperature).</modeler_description>
   <arguments>
     <argument>
       <name>bipv_type</name>
@@ -35,12 +35,13 @@
       </choices>
     </argument>
     <argument>
-      <name>iqe</name>
-      <display_name>IGU Type</display_name>
+      <name>iqe_transparent</name>
+      <display_name>IQE Type (for BIPV on transparent façade)</display_name>
       <description>Select specific window name. This argument is used to create (hard coded) regression models for implementing the dynamic power conversion efficiency in this measure. This argument is also used to read specific window idf files from the disk in inject_window_specific_idf_objects measure.</description>
       <type>Choice</type>
       <required>true</required>
       <model_dependent>false</model_dependent>
+      <default_value>Tnt_50%_S_I0pt8</default_value>
       <choices>
         <choice>
           <value>Tnt_50%_S_I0</value>
@@ -333,6 +334,21 @@
       </choices>
     </argument>
     <argument>
+      <name>iqe_opaque</name>
+      <display_name>IQE Type (for BIPV on opaque façade)</display_name>
+      <description>Select cardinal direction options for mounting PV on vertial building façade.</description>
+      <type>Choice</type>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>standard</default_value>
+      <choices>
+        <choice>
+          <value>standard</value>
+          <display_name>standard</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
       <name>pv_orientation</name>
       <display_name>PV Orientation</display_name>
       <description>Select cardinal direction options for mounting PV on vertial building façade.</description>
@@ -420,9 +436,9 @@
       </choices>
     </argument>
     <argument>
-      <name>pv_eff</name>
-      <display_name>Fixed PV Power Conversion Efficiency</display_name>
-      <description>Define fixed power conversion efficiency for PV. This value is only applied if Dynamic PV Power Conversion efficiency is false and Switching Scenario selected with static window.</description>
+      <name>pv_eff_trnpt</name>
+      <display_name>Fixed PV Power Conversion Efficiency (for transparent façade)</display_name>
+      <description>Define fixed power conversion efficiency for PV on transparent façade. This value is only applied if Dynamic PV Power Conversion efficiency is false and Switching Scenario selected with static window.</description>
       <type>Double</type>
       <units>fraction</units>
       <required>true</required>
@@ -430,9 +446,9 @@
       <default_value>1</default_value>
     </argument>
     <argument>
-      <name>inverter_eff</name>
-      <display_name>Fixed Inverter Efficiency</display_name>
-      <description>Define fixed inverter efficiency.</description>
+      <name>pv_eff_opq</name>
+      <display_name>Fixed PV Power Conversion Efficiency (for opaque façade)</display_name>
+      <description>Define fixed power conversion efficiency for PV on opaque façade. This value is only applied if Dynamic PV Power Conversion efficiency is false and Switching Scenario selected with static window.</description>
       <type>Double</type>
       <units>fraction</units>
       <required>true</required>
@@ -468,6 +484,16 @@
       <required>true</required>
       <model_dependent>false</model_dependent>
       <default_value>30</default_value>
+    </argument>
+    <argument>
+      <name>inverter_eff</name>
+      <display_name>Fixed Inverter Efficiency</display_name>
+      <description>Define fixed inverter efficiency.</description>
+      <type>Double</type>
+      <units>fraction</units>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>1</default_value>
     </argument>
     <argument>
       <name>debug_mode</name>
@@ -652,7 +678,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>6FD9B0E5</checksum>
+      <checksum>C223BD2A</checksum>
     </file>
   </files>
 </measure>

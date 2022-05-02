@@ -12,12 +12,12 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
 
   # summary description
   def description
-    return "Adds BIPV (Building Integrated Photovoltaic) on window surfaces. Define switching temperature for thermochromic windows. Implement power conversion efficiency difference between light and dark state windows."
+    return "Adds BIPV (Building Integrated Photovoltaic) on exterior façade."
   end
 
   # description of modeling approach
   def modeler_description
-    return "Adds simple PV object for BIPV implementation. Implement thermochromic window with switching temperature definition. Implement power conversion efficiency difference betwee light and dark state windows."
+    return "Adds simple PV object for BIPV implementation. PV can be installed on opaque (wall) and/or transparent (window) façade. Power conversion efficiency of PV can be either constant or dynamic (based on hard-coded regression model reflecting solar incident angle variation). Cardinal directions (East, West, South, North, etc.) for mounting PV can be selected. BIPV on transparent façade can be either static or switching (thermochromic switching between light and dark state) window. BIPV on transparent façade with switching window can specifiy switching temperature (based on window's outermost temperature)."
   end
 
   # define the user arguments
@@ -35,7 +35,7 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
     bipv_type.setDefaultValue("BIPV on transparent (window) facade")
     args << bipv_type
 
-    # facades to receive BIPV
+    # IQE type for transparent facade
     choices = OpenStudio::StringVector.new
     choices << "Tnt_50%_S_I0"
     choices << "Tnt_50%_S_I0pt4"
@@ -109,12 +109,20 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
     choices << "V_50%_S_I0pt4"
     choices << "V_50%_S_I0pt6"
     choices << "V_50%_S_I0pt8"
-    
-    iqe = OpenStudio::Ruleset::OSArgument::makeChoiceArgument("iqe", choices)
-    iqe.setDisplayName("IGU Type")
-    iqe.setDescription("Select specific window name. This argument is used to create (hard coded) regression models for implementing the dynamic power conversion efficiency in this measure. This argument is also used to read specific window idf files from the disk in inject_window_specific_idf_objects measure.")
-    iqe.setDefaultValue("25%_N_I0")
-    args << iqe
+    iqe_transparent = OpenStudio::Ruleset::OSArgument::makeChoiceArgument("iqe_transparent", choices)
+    iqe_transparent.setDisplayName("IQE Type (for BIPV on transparent façade)")
+    iqe_transparent.setDescription("Select specific window name. This argument is used to create (hard coded) regression models for implementing the dynamic power conversion efficiency in this measure. This argument is also used to read specific window idf files from the disk in inject_window_specific_idf_objects measure.")
+    iqe_transparent.setDefaultValue("Tnt_50%_S_I0pt8")
+    args << iqe_transparent
+
+    # IQE type for opaque facade
+    choices = OpenStudio::StringVector.new
+    choices << "standard"
+    iqe_opaque = OpenStudio::Ruleset::OSArgument::makeChoiceArgument("iqe_opaque", choices)
+    iqe_opaque.setDisplayName("IQE Type (for BIPV on opaque façade)")
+    iqe_opaque.setDescription("Select cardinal direction options for mounting PV on vertial building façade.")
+    iqe_opaque.setDefaultValue("standard")
+    args << iqe_opaque
 
     # facades to install BIPV
     choices = OpenStudio::StringVector.new
@@ -156,21 +164,21 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
     use_tint_iqe.setDefaultValue('false')
     args << use_tint_iqe
     
-    # pv module efficiency (%)
-    pv_eff = OpenStudio::Ruleset::OSArgument.makeDoubleArgument("pv_eff", true)
-    pv_eff.setDisplayName("Fixed PV Power Conversion Efficiency")
-    pv_eff.setDescription('Define fixed power conversion efficiency for PV. This value is only applied if Dynamic PV Power Conversion efficiency is false and Switching Scenario selected with static window.')
-    pv_eff.setUnits("fraction")
-    pv_eff.setDefaultValue(1.0)
-    args << pv_eff
+    # pv fixed efficiency (%)
+    pv_eff_trnpt = OpenStudio::Ruleset::OSArgument.makeDoubleArgument("pv_eff_trnpt", true)
+    pv_eff_trnpt.setDisplayName("Fixed PV Power Conversion Efficiency (for transparent façade)")
+    pv_eff_trnpt.setDescription('Define fixed power conversion efficiency for PV on transparent façade. This value is only applied if Dynamic PV Power Conversion efficiency is false and Switching Scenario selected with static window.')
+    pv_eff_trnpt.setUnits("fraction")
+    pv_eff_trnpt.setDefaultValue(1.0)
+    args << pv_eff_trnpt  
 
-    # inverter efficiency
-    inverter_eff = OpenStudio::Ruleset::OSArgument.makeDoubleArgument("inverter_eff", true)
-    inverter_eff.setDisplayName("Fixed Inverter Efficiency")
-    inverter_eff.setDescription("Define fixed inverter efficiency.")
-    inverter_eff.setUnits("fraction")
-    inverter_eff.setDefaultValue(1.0)
-    args << inverter_eff    
+    # pv fixed efficiency (%)
+    pv_eff_opq = OpenStudio::Ruleset::OSArgument.makeDoubleArgument("pv_eff_opq", true)
+    pv_eff_opq.setDisplayName("Fixed PV Power Conversion Efficiency (for opaque façade)")
+    pv_eff_opq.setDescription('Define fixed power conversion efficiency for PV on opaque façade. This value is only applied if Dynamic PV Power Conversion efficiency is false and Switching Scenario selected with static window.')
+    pv_eff_opq.setUnits("fraction")
+    pv_eff_opq.setDefaultValue(1.0)
+    args << pv_eff_opq 
     
     # pv module efficiency (%)
     pv_eff_light = OpenStudio::Ruleset::OSArgument.makeDoubleArgument("pv_eff_light", true)
@@ -195,6 +203,14 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
     switch_t.setUnits("C")
     switch_t.setDefaultValue(30.0)
     args << switch_t
+    
+    # inverter efficiency
+    inverter_eff = OpenStudio::Ruleset::OSArgument.makeDoubleArgument("inverter_eff", true)
+    inverter_eff.setDisplayName("Fixed Inverter Efficiency")
+    inverter_eff.setDescription("Define fixed inverter efficiency.")
+    inverter_eff.setUnits("fraction")
+    inverter_eff.setDefaultValue(1.0)
+    args << inverter_eff  
 
     # debug mode
     debug_mode = OpenStudio::Ruleset::OSArgument::makeBoolArgument('debug_mode', false)
@@ -234,20 +250,22 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
     ##########################################################################
     bipv_type = runner.getStringArgumentValue('bipv_type',user_arguments)
     dot_coverage = runner.getDoubleArgumentValue('dot_coverage',user_arguments)
-    pv_eff = runner.getDoubleArgumentValue('pv_eff',user_arguments)
+    pv_eff_trnpt = runner.getDoubleArgumentValue('pv_eff_trnpt',user_arguments)
+    pv_eff_opq = runner.getDoubleArgumentValue('pv_eff_opq',user_arguments)
     inverter_eff = runner.getDoubleArgumentValue('inverter_eff',user_arguments)
-    panel_rated_output = (dot_coverage * pv_eff) * 1000 #w/m^2 (basis 50w/m^2, 0.05 eff, 0.50 coverage (5% conversion, 1Kw/m^2))
+    panel_rated_output = (dot_coverage * pv_eff_trnpt) * 1000 #w/m^2 (basis 50w/m^2, 0.05 eff, 0.50 coverage (5% conversion, 1Kw/m^2))
     pv_orientation = runner.getStringArgumentValue('pv_orientation',user_arguments)
     debug_mode = runner.getStringArgumentValue('debug_mode',user_arguments)
     use_tint_iqe = runner.getStringArgumentValue('use_tint_iqe',user_arguments)
-    iqe = runner.getStringArgumentValue('iqe',user_arguments)
+    iqe_transparent = runner.getStringArgumentValue('iqe_transparent',user_arguments)
+    iqe_opaque = runner.getStringArgumentValue('iqe_opaque',user_arguments)
     switching_scenario = runner.getStringArgumentValue('switching_scenario',user_arguments)
     pv_eff_light = runner.getDoubleArgumentValue('pv_eff_light',user_arguments)
     pv_eff_dark = runner.getDoubleArgumentValue('pv_eff_dark',user_arguments)
     switch_t = runner.getDoubleArgumentValue('switch_t', user_arguments)
     
     ##########################################################################
-    # dictionary for IQE and PCE connection
+    # hard-coded dictionary for IQE and PCE connection
     ##########################################################################
     dictionary_iqe_pce = Hash.new
     dictionary_iqe_pce = {
@@ -382,22 +400,35 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
       "V_25%_N_I0pt4" => [0.06382,0.063153,0.12693],
       "V_25%_N_I0pt6" => [0.09572,0.094725,0.12696],
       "V_25%_N_I0pt8" => [0.12764,0.12631,0.12693],
+      # standard
+      "standard" => [0.20647,0.204,0.104],
     }
-    if (switching_scenario=="Static")
-      runner.registerInfo("Checking if PCE regression model coefficients are available with selected IGU Type #{iqe}: #{dictionary_iqe_pce[iqe]}") if debug_mode
-      if (dictionary_iqe_pce[iqe].nil?)
-        runner.registerWarning("Dynamic power conversion cannot be applied. Selected IGU Type does not have (hard coded) regression model. BIPV not implemented. Exiting...")
-        return false
+
+    if (use_tint_iqe == true)
+      if (bipv_type == "BIPV on transparent (window) facade") || (bipv_type == "BIPV on all facade")
+        if (switching_scenario=="Static")
+          runner.registerInfo("Checking if PCE regression model coefficients are available with selected IQE Type #{iqe_transparent}: #{dictionary_iqe_pce[iqe_transparent]}") if debug_mode
+          if (dictionary_iqe_pce[iqe_transparent].nil?)
+            runner.registerWarning("Dynamic power conversion cannot be applied. Selected IQE Type does not have (hard coded) regression model. BIPV not implemented. Exiting...")
+            return false
+          end
+        elsif (switching_scenario=="Thermochromic")
+          runner.registerInfo("Checking if PCE regression model coefficients are available with selected IGU Type  #{iqe_transparent} (light state): #{dictionary_iqe_pce[iqe_transparent+"_Dark"]}") if debug_mode
+          runner.registerInfo("Checking if PCE regression model coefficients are available with selected IGU Type  #{iqe_transparent} (dark state): #{dictionary_iqe_pce[iqe_transparent+"_Light"]}") if debug_mode
+          if (dictionary_iqe_pce[iqe_transparent+"_Dark"].nil?)||(dictionary_iqe_pce[iqe_transparent+"_Light"].nil?)
+            runner.registerWarning("Dynamic power conversion cannot be applied. Selected IGU Type does not have (hard coded) regression model. BIPV not implemented. Exiting...")
+            return false
+          end
+        end
+      elsif (bipv_type == "BIPV on opaque (wall) facade") || (bipv_type == "BIPV on all facade")
+        runner.registerInfo("Checking if PCE regression model coefficients are available with selected IQE Type #{iqe_opaque}: #{dictionary_iqe_pce[iqe_opaque]}") if debug_mode
+        if (dictionary_iqe_pce[iqe_opaque].nil?)
+          runner.registerWarning("Dynamic power conversion cannot be applied. Selected IQE Type does not have (hard coded) regression model. BIPV not implemented. Exiting...")
+          return false
+        end
       end
-    elsif (switching_scenario!="Static")
-      runner.registerInfo("Checking if PCE regression model coefficients are available with selected IGU Type  #{iqe} (light state): #{dictionary_iqe_pce[iqe+"_Dark"]}") if debug_mode
-      runner.registerInfo("Checking if PCE regression model coefficients are available with selected IGU Type  #{iqe} (dark state): #{dictionary_iqe_pce[iqe+"_Light"]}") if debug_mode
-      if (dictionary_iqe_pce[iqe+"_Dark"].nil?)||(dictionary_iqe_pce[iqe+"_Light"].nil?)
-        runner.registerWarning("Dynamic power conversion cannot be applied. Selected IGU Type does not have (hard coded) regression model. BIPV not implemented. Exiting...")
-        return false
-      end
-    end      
-      
+    end
+
     ##########################################################################
     # skip PV implementation if PV orientation is selected as NONE
     ##########################################################################
@@ -429,12 +460,14 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
     ##########################################################################
     if bipv_type == "BIPV on transparent (window) facade"
       runner.registerInfo("Option selected for PVs only on transparent (window) façade")
+      runner.registerInitialCondition("Input building contains #{ext_windows.size.to_s} exterior window surfaces.")
     elsif bipv_type == "BIPV on opaque (wall) facade"
       runner.registerInfo("Option selected for PVs only on opaque (exterior wall) façade")
+      runner.registerInitialCondition("Input building contains #{ext_walls.size.to_s} exterior wall surfaces.")
     elsif bipv_type == "BIPV on all facade"
       runner.registerInfo("Option selected for PVs on both transparent (window) and opaque (exterior wall) façade")
+      runner.registerInitialCondition("Input building contains #{ext_windows.size.to_s} exterior window surfaces and #{ext_walls.size.to_s} exterior wall surfaces.")
     end
-    runner.registerInitialCondition("Input building contains #{ext_windows.size.to_s} exterior window surfaces and #{ext_walls.size.to_s} exterior wall surfaces")
 
     ##########################################################################
     # get user selection set
@@ -484,8 +517,8 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
       ext_walls_name << s.name.to_s if (azimuth >= 225.0 and azimuth < 315.0) && pv_orientation == 'W'
       ext_walls_name << s.name.to_s if (azimuth >= 45.0 and azimuth < 315.0) && pv_orientation == 'ESW'
     end
-    runner.registerInfo("#{candidate_walls.size.to_s} exterior wall(s) meet PV orientation selection criteria (PV orientation = '#{pv_orientation}')")
-    runner.registerInfo("Surface names affected = #{ext_walls_name}")
+    runner.registerInfo("#{candidate_walls.size.to_s} exterior wall(s) meet PV orientation selection criteria (PV orientation = '#{pv_orientation}')") if bipv_type != "BIPV on transparent (window) facade"
+    runner.registerInfo("Surface names affected = #{ext_walls_name}") if bipv_type != "BIPV on transparent (window) facade"
 
 
     ##########################################################################
@@ -565,11 +598,23 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
 
       #-----------------------------------------------------
       # create vertices for walls (upper & lower)
+      # WARNING!!!!
       # this part is mostly a limitation (hard-coded)
       # since it'll only work if there is one window per one wall
       # and window width is almost the same as wall width
+      #      -------------------------------------
+      #      |               wall                |
+      #      |                                   |
+      #      | --------------------------------- |
+      #      | |                               | |
+      #      | |            window             | |
+      #      | |                               | |
+      #      | --------------------------------- |
+      #      |                                   |
+      #      |                                   | 
+      #      ------------------------------------- 
       #-----------------------------------------------------
-      if (bipv_type == "BIPV on opaque (wall) facade") || (bipv_type == "BIPV on all facade")
+      if bipv_type != "BIPV on transparent (window) facade"
         count=0
         vertices_wall.each do |f|
           runner.registerInfo("For wall surface (#{surface_wall.name}): wall vertex #{f} -> projected PV vertex #{f + vec}") if debug_mode
@@ -639,9 +684,13 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
         if label == "window"
           target_transmittance = 1.0
           surface_reference = surface_window
+          pv_eff = pv_eff_trnpt
+          key = iqe_transparent
         elsif (label == "wall (upper)") || (label == "wall (lower)")
           target_transmittance = 0.0
           surface_reference = surface_wall
+          pv_eff = pv_eff_opq
+          key = iqe_opaque
         end
         inputs = {
             'name' => "PV Shading Transmittance Schedule Transparent",
@@ -678,7 +727,7 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
         #-----------------------------------------------------
         # implement power conversion efficiency scenarios
         #-----------------------------------------------------            
-        if (switching_scenario == "Thermochromic") && (use_tint_iqe == "false") && (pv_orientation != "NONE")
+        if (label == "window") && (switching_scenario == "Thermochromic") && (use_tint_iqe == "false")
         
           pce_sch = OpenStudio::Model::ScheduleConstant.new(model)
           pce_sch.setName("PCE_SCH_#{surface_name_updated}")
@@ -723,7 +772,7 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
           runner.registerInfo("Power conversion efficiency of #{pv_eff_light} applied to #{simplepv.name.to_s} for light state")
           runner.registerInfo("Power conversion efficiency of #{pv_eff_dark} applied to #{simplepv.name.to_s} for dark state")
           
-        elsif (switching_scenario == "Thermochromic") && (use_tint_iqe == "true") && (pv_orientation != "NONE")
+        elsif (label == "window") && (switching_scenario == "Thermochromic") && (use_tint_iqe == "true")
                 
           pce_sch = OpenStudio::Model::ScheduleConstant.new(model)
           pce_sch.setName("PCE_SCH_#{surface_name_updated}")
@@ -753,7 +802,7 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
           runner.registerInfo("EMS Actuator object named '#{pce_sch_actuator.name}' representing the temporary schedule to #{surface_reference.name.to_s} added to the model.")       
         
           # Create new EnergyManagementSystem:Program object 
-          runner.registerInfo("EMS Program being created to simulate PCE variation for #{iqe}") 
+          runner.registerInfo("EMS Program being created to simulate PCE variation for #{key}") 
           ems_pce_prg = OpenStudio::Model::EnergyManagementSystemProgram.new(model)
           ems_pce_prg.setName("program_pce_#{surface_name_updated}")
           ems_pce_prg.addLine("SET a_deg_#{surface_name_updated} = (@ArcCos a_#{surface_name_updated})*180/PI")
@@ -764,8 +813,8 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
           ems_pce_prg.addLine("ELSEIF (a_deg_#{surface_name_updated} > 90)")
           ems_pce_prg.addLine("SET #{pce_sch.name} = 0")
           ems_pce_prg.addLine("ELSE")
-          ems_pce_prg.addLine("SET expterm_l_#{surface_name_updated} = #{dictionary_iqe_pce[iqe+"_Light"][2]}*(a_deg_#{surface_name_updated}-90)")
-          ems_pce_prg.addLine("SET #{pce_sch.name} = #{dictionary_iqe_pce[iqe+"_Light"][0]}-#{dictionary_iqe_pce[iqe+"_Light"][1]}*(@EXP expterm_l_#{surface_name_updated})")
+          ems_pce_prg.addLine("SET expterm_l_#{surface_name_updated} = #{dictionary_iqe_pce[key+"_Light"][2]}*(a_deg_#{surface_name_updated}-90)")
+          ems_pce_prg.addLine("SET #{pce_sch.name} = #{dictionary_iqe_pce[key+"_Light"][0]}-#{dictionary_iqe_pce[key+"_Light"][1]}*(@EXP expterm_l_#{surface_name_updated})")
           ems_pce_prg.addLine("ENDIF")
           ems_pce_prg.addLine("ELSEIF (T_ref_#{surface_name_updated} >= #{switch_t})") 
           ems_pce_prg.addLine("IF (a_deg_#{surface_name_updated} == 90)")
@@ -773,8 +822,8 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
           ems_pce_prg.addLine("ELSEIF (a_deg_#{surface_name_updated} > 90)")
           ems_pce_prg.addLine("SET #{pce_sch.name} = 0")
           ems_pce_prg.addLine("ELSE")
-          ems_pce_prg.addLine("SET expterm_d_#{surface_name_updated} = #{dictionary_iqe_pce[iqe+"_Dark"][2]}*(a_deg_#{surface_name_updated}-90)")
-          ems_pce_prg.addLine("SET #{pce_sch.name} = #{dictionary_iqe_pce[iqe+"_Dark"][0]}-#{dictionary_iqe_pce[iqe+"_Dark"][1]}*(@EXP expterm_d_#{surface_name_updated})")
+          ems_pce_prg.addLine("SET expterm_d_#{surface_name_updated} = #{dictionary_iqe_pce[key+"_Dark"][2]}*(a_deg_#{surface_name_updated}-90)")
+          ems_pce_prg.addLine("SET #{pce_sch.name} = #{dictionary_iqe_pce[key+"_Dark"][0]}-#{dictionary_iqe_pce[key+"_Dark"][1]}*(@EXP expterm_d_#{surface_name_updated})")
           ems_pce_prg.addLine("ENDIF")
           ems_pce_prg.addLine("ENDIF") 
           runner.registerInfo("EMS Program object named '#{ems_pce_prg.name}' added to modify the PCE schedule on #{surface_reference.name.to_s}.")
@@ -796,20 +845,20 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
           ems_output_var.setTypeOfDataInVariable("Averaged")
           ems_output_var.setUpdateFrequency("SystemTimeStep")
     
-          runner.registerInfo("Power conversion efficiency coefficient set of #{dictionary_iqe_pce[iqe+"_Light"]} applied to #{simplepv.name.to_s} for light state")
-          runner.registerInfo("Power conversion efficiency coefficient set of #{dictionary_iqe_pce[iqe+"_Dark"]} applied to #{simplepv.name.to_s} for dark state")
+          runner.registerInfo("Power conversion efficiency coefficient set of #{dictionary_iqe_pce[key+"_Light"]} applied to #{simplepv.name.to_s} for light state")
+          runner.registerInfo("Power conversion efficiency coefficient set of #{dictionary_iqe_pce[key+"_Dark"]} applied to #{simplepv.name.to_s} for dark state")
           
-        elsif (switching_scenario == "Static") && (use_tint_iqe == "false") && (pv_orientation != "NONE")
+        elsif (switching_scenario == "Static") && (use_tint_iqe == "false")
         
           simplepv.setFixedEfficiency(pv_eff)
           runner.registerInfo("Constant power conversion efficiency of #{pv_eff} applied to #{simplepv.name.to_s}")
           
-        elsif (switching_scenario == "Thermochromic") && (use_tint_iqe == "false") && (pv_orientation == "NONE")
+        elsif (label == "window") && (switching_scenario == "Thermochromic") && (use_tint_iqe == "false")
         
-          simplepv.setFixedEfficiency(dictionary_iqe_pce[iqe])
-          runner.registerInfo("Constant power conversion efficiency of #{dictionary_iqe_pce[iqe]} applied to #{simplepv.name.to_s}")
+          simplepv.setFixedEfficiency(dictionary_iqe_pce[key])
+          runner.registerInfo("Constant power conversion efficiency of #{dictionary_iqe_pce[key]} applied to #{simplepv.name.to_s}")
           
-        elsif (switching_scenario == "Static") && (use_tint_iqe == "true") && (pv_orientation != "NONE")
+        elsif (switching_scenario == "Static") && (use_tint_iqe == "true")
         
           pce_sch = OpenStudio::Model::ScheduleConstant.new(model)
           pce_sch.setName("PCE_SCH_#{surface_name_updated}")
@@ -834,7 +883,7 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
           runner.registerInfo("EMS Actuator object named '#{pce_sch_actuator.name}' representing the temporary schedule to #{surface_reference.name.to_s} added to the model.")       
         
           # Create new EnergyManagementSystem:Program object
-          runner.registerInfo("EMS Program being created to simulate PCE variation for #{iqe}")
+          runner.registerInfo("EMS Program being created to simulate PCE variation for #{key}")
           ems_pce_prg = OpenStudio::Model::EnergyManagementSystemProgram.new(model)
           ems_pce_prg.setName("program_pce_#{surface_name_updated}")
           ems_pce_prg.addLine("SET a_deg_#{surface_name_updated} = (@ArcCos a_#{surface_name_updated})*180/PI")
@@ -843,8 +892,8 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
           ems_pce_prg.addLine("ELSEIF (a_deg_#{surface_name_updated} > 90)")
           ems_pce_prg.addLine("SET #{pce_sch.name} = 0")
           ems_pce_prg.addLine("ELSE")
-          ems_pce_prg.addLine("SET expterm_l_#{surface_name_updated} = #{dictionary_iqe_pce[iqe][2]}*(a_deg_#{surface_name_updated}-90)")
-          ems_pce_prg.addLine("SET #{pce_sch.name} = #{dictionary_iqe_pce[iqe][0]}-#{dictionary_iqe_pce[iqe][1]}*(@EXP expterm_l_#{surface_name_updated})")
+          ems_pce_prg.addLine("SET expterm_l_#{surface_name_updated} = #{dictionary_iqe_pce[key][2]}*(a_deg_#{surface_name_updated}-90)")
+          ems_pce_prg.addLine("SET #{pce_sch.name} = #{dictionary_iqe_pce[key][0]}-#{dictionary_iqe_pce[key][1]}*(@EXP expterm_l_#{surface_name_updated})")
           ems_pce_prg.addLine("ENDIF") 
           runner.registerInfo("EMS Program object named '#{ems_pce_prg.name}' added to modify the PCE schedule on #{surface_reference.name.to_s}.")
         
@@ -865,7 +914,7 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
           ems_output_var.setTypeOfDataInVariable("Averaged")
           ems_output_var.setUpdateFrequency("SystemTimeStep")
     
-          runner.registerInfo("Power conversion efficiency coefficient set of #{dictionary_iqe_pce[iqe]} applied to #{simplepv.name.to_s}")
+          runner.registerInfo("Power conversion efficiency coefficient set of #{dictionary_iqe_pce[key]} applied to #{simplepv.name.to_s}")
           
         end
 
