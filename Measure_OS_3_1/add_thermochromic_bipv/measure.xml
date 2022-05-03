@@ -1,0 +1,684 @@
+<?xml version="1.0"?>
+<measure>
+  <schema_version>3.0</schema_version>
+  <name>add_thermochromic_bipv</name>
+  <uid>11088181-e92b-42d3-a1d0-91d4d0261dbb</uid>
+  <version_id>090fb3cf-ad6e-45e7-ac73-9ba15590670e</version_id>
+  <version_modified>20220503T175905Z</version_modified>
+  <xml_checksum>894A4CEA</xml_checksum>
+  <class_name>AddThermochromicBIPV</class_name>
+  <display_name>Add Thermochromic BIPV</display_name>
+  <description>Adds BIPV (Building Integrated Photovoltaic) on exterior façade.</description>
+  <modeler_description>Adds simple PV object for BIPV implementation. PV can be installed on opaque (wall) and/or transparent (window) façade. Power conversion efficiency of PV can be either constant or dynamic (based on hard-coded regression model reflecting solar incident angle variation). Cardinal directions (East, West, South, North, etc.) for mounting PV can be selected. BIPV on transparent façade can be either static or switching (thermochromic switching between light and dark state) window. BIPV on transparent façade with switching window can specifiy switching temperature (based on window's outermost temperature).</modeler_description>
+  <arguments>
+    <argument>
+      <name>bipv_type</name>
+      <display_name>BIPV Type</display_name>
+      <description>Select different BIPV options. Currently, only supporting PVs on vertical façade.</description>
+      <type>Choice</type>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>BIPV on transparent (window) facade</default_value>
+      <choices>
+        <choice>
+          <value>BIPV on transparent (window) facade</value>
+          <display_name>BIPV on transparent (window) facade</display_name>
+        </choice>
+        <choice>
+          <value>BIPV on opaque (wall) facade</value>
+          <display_name>BIPV on opaque (wall) facade</display_name>
+        </choice>
+        <choice>
+          <value>BIPV on all facade</value>
+          <display_name>BIPV on all facade</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>iqe_transparent</name>
+      <display_name>IQE Type (for BIPV on transparent façade)</display_name>
+      <description>Select specific window name. This argument is used to create (hard coded) regression models for implementing the dynamic power conversion efficiency in this measure. This argument is also used to read specific window idf files from the disk in inject_window_specific_idf_objects measure.</description>
+      <type>Choice</type>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>Tnt_50%_S_I0pt8</default_value>
+      <choices>
+        <choice>
+          <value>Tnt_50%_S_I0</value>
+          <display_name>Tnt_50%_S_I0</display_name>
+        </choice>
+        <choice>
+          <value>Tnt_50%_S_I0pt4</value>
+          <display_name>Tnt_50%_S_I0pt4</display_name>
+        </choice>
+        <choice>
+          <value>Tnt_50%_S_I0pt6</value>
+          <display_name>Tnt_50%_S_I0pt6</display_name>
+        </choice>
+        <choice>
+          <value>Tnt_50%_S_I0pt8</value>
+          <display_name>Tnt_50%_S_I0pt8</display_name>
+        </choice>
+        <choice>
+          <value>Tnt_50%_N_I0</value>
+          <display_name>Tnt_50%_N_I0</display_name>
+        </choice>
+        <choice>
+          <value>Tnt_50%_N_I0pt4</value>
+          <display_name>Tnt_50%_N_I0pt4</display_name>
+        </choice>
+        <choice>
+          <value>Tnt_50%_N_I0pt6</value>
+          <display_name>Tnt_50%_N_I0pt6</display_name>
+        </choice>
+        <choice>
+          <value>Tnt_50%_N_I0pt8</value>
+          <display_name>Tnt_50%_N_I0pt8</display_name>
+        </choice>
+        <choice>
+          <value>Tnt_25%_N_I0</value>
+          <display_name>Tnt_25%_N_I0</display_name>
+        </choice>
+        <choice>
+          <value>Tnt_25%_N_I0pt4</value>
+          <display_name>Tnt_25%_N_I0pt4</display_name>
+        </choice>
+        <choice>
+          <value>Tnt_25%_N_I0pt6</value>
+          <display_name>Tnt_25%_N_I0pt6</display_name>
+        </choice>
+        <choice>
+          <value>Tnt_25%_N_I0pt8</value>
+          <display_name>Tnt_25%_N_I0pt8</display_name>
+        </choice>
+        <choice>
+          <value>Tnt_20%_N_I0</value>
+          <display_name>Tnt_20%_N_I0</display_name>
+        </choice>
+        <choice>
+          <value>Tnt_20%_N_I0pt4</value>
+          <display_name>Tnt_20%_N_I0pt4</display_name>
+        </choice>
+        <choice>
+          <value>Tnt_20%_N_I0pt6</value>
+          <display_name>Tnt_20%_N_I0pt6</display_name>
+        </choice>
+        <choice>
+          <value>Tnt_20%_N_I0pt8</value>
+          <display_name>Tnt_20%_N_I0pt8</display_name>
+        </choice>
+        <choice>
+          <value>Tnt_15%_N_I0</value>
+          <display_name>Tnt_15%_N_I0</display_name>
+        </choice>
+        <choice>
+          <value>Tnt_15%_N_I0pt4</value>
+          <display_name>Tnt_15%_N_I0pt4</display_name>
+        </choice>
+        <choice>
+          <value>Tnt_15%_N_I0pt6</value>
+          <display_name>Tnt_15%_N_I0pt6</display_name>
+        </choice>
+        <choice>
+          <value>Tnt_15%_N_I0pt8</value>
+          <display_name>Tnt_15%_N_I0pt8</display_name>
+        </choice>
+        <choice>
+          <value>Tnt_10%_N_I0</value>
+          <display_name>Tnt_10%_N_I0</display_name>
+        </choice>
+        <choice>
+          <value>Tnt_10%_N_I0pt4</value>
+          <display_name>Tnt_10%_N_I0pt4</display_name>
+        </choice>
+        <choice>
+          <value>Tnt_10%_N_I0pt6</value>
+          <display_name>Tnt_10%_N_I0pt6</display_name>
+        </choice>
+        <choice>
+          <value>Tnt_10%_N_I0pt8</value>
+          <display_name>Tnt_10%_N_I0pt8</display_name>
+        </choice>
+        <choice>
+          <value>Tnt_5%_N_I0</value>
+          <display_name>Tnt_5%_N_I0</display_name>
+        </choice>
+        <choice>
+          <value>Tnt_5%_N_I0pt4</value>
+          <display_name>Tnt_5%_N_I0pt4</display_name>
+        </choice>
+        <choice>
+          <value>Tnt_5%_N_I0pt6</value>
+          <display_name>Tnt_5%_N_I0pt6</display_name>
+        </choice>
+        <choice>
+          <value>Tnt_5%_N_I0pt8</value>
+          <display_name>Tnt_5%_N_I0pt8</display_name>
+        </choice>
+        <choice>
+          <value>Tnt_0pt5%_N_I0</value>
+          <display_name>Tnt_0pt5%_N_I0</display_name>
+        </choice>
+        <choice>
+          <value>Tnt_0pt5%_N_I0pt4</value>
+          <display_name>Tnt_0pt5%_N_I0pt4</display_name>
+        </choice>
+        <choice>
+          <value>Tnt_0pt5%_N_I0pt6</value>
+          <display_name>Tnt_0pt5%_N_I0pt6</display_name>
+        </choice>
+        <choice>
+          <value>Tnt_0pt5%_N_I0pt8</value>
+          <display_name>Tnt_0pt5%_N_I0pt8</display_name>
+        </choice>
+        <choice>
+          <value>Tr_0pt5%_N_I0</value>
+          <display_name>Tr_0pt5%_N_I0</display_name>
+        </choice>
+        <choice>
+          <value>Tr_0pt5%_N_I0pt4</value>
+          <display_name>Tr_0pt5%_N_I0pt4</display_name>
+        </choice>
+        <choice>
+          <value>Tr_0pt5%_N_I0pt6</value>
+          <display_name>Tr_0pt5%_N_I0pt6</display_name>
+        </choice>
+        <choice>
+          <value>Tr_0pt5%_N_I0pt8</value>
+          <display_name>Tr_0pt5%_N_I0pt8</display_name>
+        </choice>
+        <choice>
+          <value>Tr_5%_N_I0</value>
+          <display_name>Tr_5%_N_I0</display_name>
+        </choice>
+        <choice>
+          <value>Tr_5%_N_I0pt4</value>
+          <display_name>Tr_5%_N_I0pt4</display_name>
+        </choice>
+        <choice>
+          <value>Tr_5%_N_I0pt6</value>
+          <display_name>Tr_5%_N_I0pt6</display_name>
+        </choice>
+        <choice>
+          <value>Tr_5%_N_I0pt8</value>
+          <display_name>Tr_5%_N_I0pt8</display_name>
+        </choice>
+        <choice>
+          <value>V_0pt5%_N_I0</value>
+          <display_name>V_0pt5%_N_I0</display_name>
+        </choice>
+        <choice>
+          <value>V_0pt5%_N_I0pt4</value>
+          <display_name>V_0pt5%_N_I0pt4</display_name>
+        </choice>
+        <choice>
+          <value>V_0pt5%_N_I0pt6</value>
+          <display_name>V_0pt5%_N_I0pt6</display_name>
+        </choice>
+        <choice>
+          <value>V_0pt5%_N_I0pt8</value>
+          <display_name>V_0pt5%_N_I0pt8</display_name>
+        </choice>
+        <choice>
+          <value>V_5%_N_I0</value>
+          <display_name>V_5%_N_I0</display_name>
+        </choice>
+        <choice>
+          <value>V_5%_N_I0pt4</value>
+          <display_name>V_5%_N_I0pt4</display_name>
+        </choice>
+        <choice>
+          <value>V_5%_N_I0pt6</value>
+          <display_name>V_5%_N_I0pt6</display_name>
+        </choice>
+        <choice>
+          <value>V_5%_N_I0pt8</value>
+          <display_name>V_5%_N_I0pt8</display_name>
+        </choice>
+        <choice>
+          <value>Tr_25%_N_I0</value>
+          <display_name>Tr_25%_N_I0</display_name>
+        </choice>
+        <choice>
+          <value>Tr_25%_N_I0pt4</value>
+          <display_name>Tr_25%_N_I0pt4</display_name>
+        </choice>
+        <choice>
+          <value>Tr_25%_N_I0pt6</value>
+          <display_name>Tr_25%_N_I0pt6</display_name>
+        </choice>
+        <choice>
+          <value>Tr_25%_N_I0pt8</value>
+          <display_name>Tr_25%_N_I0pt8</display_name>
+        </choice>
+        <choice>
+          <value>Tr_50%_N_I0</value>
+          <display_name>Tr_50%_N_I0</display_name>
+        </choice>
+        <choice>
+          <value>Tr_50%_N_I0pt4</value>
+          <display_name>Tr_50%_N_I0pt4</display_name>
+        </choice>
+        <choice>
+          <value>Tr_50%_N_I0pt6</value>
+          <display_name>Tr_50%_N_I0pt6</display_name>
+        </choice>
+        <choice>
+          <value>Tr_50%_N_I0pt8</value>
+          <display_name>Tr_50%_N_I0pt8</display_name>
+        </choice>
+        <choice>
+          <value>Tr_50%_S_I0</value>
+          <display_name>Tr_50%_S_I0</display_name>
+        </choice>
+        <choice>
+          <value>Tr_50%_S_I0pt4</value>
+          <display_name>Tr_50%_S_I0pt4</display_name>
+        </choice>
+        <choice>
+          <value>Tr_50%_S_I0pt6</value>
+          <display_name>Tr_50%_S_I0pt6</display_name>
+        </choice>
+        <choice>
+          <value>Tr_50%_S_I0pt8</value>
+          <display_name>Tr_50%_S_I0pt8</display_name>
+        </choice>
+        <choice>
+          <value>V_25%_N_I0</value>
+          <display_name>V_25%_N_I0</display_name>
+        </choice>
+        <choice>
+          <value>V_25%_N_I0pt4</value>
+          <display_name>V_25%_N_I0pt4</display_name>
+        </choice>
+        <choice>
+          <value>V_25%_N_I0pt6</value>
+          <display_name>V_25%_N_I0pt6</display_name>
+        </choice>
+        <choice>
+          <value>V_25%_N_I0pt8</value>
+          <display_name>V_25%_N_I0pt8</display_name>
+        </choice>
+        <choice>
+          <value>V_50%_N_I0</value>
+          <display_name>V_50%_N_I0</display_name>
+        </choice>
+        <choice>
+          <value>V_50%_N_I0pt4</value>
+          <display_name>V_50%_N_I0pt4</display_name>
+        </choice>
+        <choice>
+          <value>V_50%_N_I0pt6</value>
+          <display_name>V_50%_N_I0pt6</display_name>
+        </choice>
+        <choice>
+          <value>V_50%_N_I0pt8</value>
+          <display_name>V_50%_N_I0pt8</display_name>
+        </choice>
+        <choice>
+          <value>V_50%_S_I0</value>
+          <display_name>V_50%_S_I0</display_name>
+        </choice>
+        <choice>
+          <value>V_50%_S_I0pt4</value>
+          <display_name>V_50%_S_I0pt4</display_name>
+        </choice>
+        <choice>
+          <value>V_50%_S_I0pt6</value>
+          <display_name>V_50%_S_I0pt6</display_name>
+        </choice>
+        <choice>
+          <value>V_50%_S_I0pt8</value>
+          <display_name>V_50%_S_I0pt8</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>iqe_opaque</name>
+      <display_name>IQE Type (for BIPV on opaque façade)</display_name>
+      <description>Select cardinal direction options for mounting PV on vertial building façade.</description>
+      <type>Choice</type>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>standard</default_value>
+      <choices>
+        <choice>
+          <value>standard</value>
+          <display_name>standard</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>pv_orientation</name>
+      <display_name>PV Orientation</display_name>
+      <description>Select cardinal direction options for mounting PV on vertial building façade.</description>
+      <type>Choice</type>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>S</default_value>
+      <choices>
+        <choice>
+          <value>N</value>
+          <display_name>N</display_name>
+        </choice>
+        <choice>
+          <value>E</value>
+          <display_name>E</display_name>
+        </choice>
+        <choice>
+          <value>S</value>
+          <display_name>S</display_name>
+        </choice>
+        <choice>
+          <value>W</value>
+          <display_name>W</display_name>
+        </choice>
+        <choice>
+          <value>ESW</value>
+          <display_name>ESW</display_name>
+        </choice>
+        <choice>
+          <value>ALL</value>
+          <display_name>ALL</display_name>
+        </choice>
+        <choice>
+          <value>NONE</value>
+          <display_name>NONE</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>switching_scenario</name>
+      <display_name>Switching Scenario</display_name>
+      <description>Select between static and switching windows. Currently, thermochromic window is only supported and electrochromic is not supported for switching windows.</description>
+      <type>Choice</type>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>Static</default_value>
+      <choices>
+        <choice>
+          <value>Static</value>
+          <display_name>Static</display_name>
+        </choice>
+        <choice>
+          <value>Thermochromic</value>
+          <display_name>Thermochromic</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>dot_coverage</name>
+      <display_name>PV Active Portion</display_name>
+      <description>Define fraction value of an active portion of PV from window surface area. Only the fraction defined in this argument from the window surface will act as PV surface (for electricity generation).</description>
+      <type>Double</type>
+      <units>fraction</units>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>1</default_value>
+    </argument>
+    <argument>
+      <name>use_tint_iqe</name>
+      <display_name>Dynamic PV Power Conversion Efficiency?</display_name>
+      <description>Select true if PV power conversion efficiency will be dynamically calculated based on regression models. If false, Fixed PV Power Conversion Efficiency (defined below) will be used.</description>
+      <type>Boolean</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>false</default_value>
+      <choices>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>pv_eff_trnpt</name>
+      <display_name>Fixed PV Power Conversion Efficiency (for transparent façade)</display_name>
+      <description>Define fixed power conversion efficiency for PV on transparent façade. This value is only applied if Dynamic PV Power Conversion efficiency is false and Switching Scenario selected with static window.</description>
+      <type>Double</type>
+      <units>fraction</units>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>1</default_value>
+    </argument>
+    <argument>
+      <name>pv_eff_opq</name>
+      <display_name>Fixed PV Power Conversion Efficiency (for opaque façade)</display_name>
+      <description>Define fixed power conversion efficiency for PV on opaque façade. This value is only applied if Dynamic PV Power Conversion efficiency is false and Switching Scenario selected with static window.</description>
+      <type>Double</type>
+      <units>fraction</units>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>1</default_value>
+    </argument>
+    <argument>
+      <name>pv_eff_light</name>
+      <display_name>Fixed PV Power Conversion Efficiency in Light State Switching Window</display_name>
+      <description>Defined fixed power conversion efficiency for window in light state. This value is applied if Dynamic PV Power Conversion Efficiency is false and Switching Scenario selected with thermochromic window.</description>
+      <type>Double</type>
+      <units>fraction</units>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>0.0053</default_value>
+    </argument>
+    <argument>
+      <name>pv_eff_dark</name>
+      <display_name>Fixed PV Power Conversion Efficiency in Dark State Switching Window</display_name>
+      <description>Defined fixed power conversion efficiency for window in dark state. This value is applied if Dynamic PV Power Conversion Efficiency is false and Switching Scenario selected with thermochromic window.</description>
+      <type>Double</type>
+      <units>fraction</units>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>0.18</default_value>
+    </argument>
+    <argument>
+      <name>switch_t</name>
+      <display_name>Thermochromic Switching Temperature</display_name>
+      <description>Define temperature value to simulate when thermochromic window swtiches between light and dark states. The reference temperature is the temperature of the outermost window layer. This value is applied if Switching Scenario is selected with thermochromic window.</description>
+      <type>Double</type>
+      <units>C</units>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>30</default_value>
+    </argument>
+    <argument>
+      <name>inverter_eff</name>
+      <display_name>Fixed Inverter Efficiency</display_name>
+      <description>Define fixed inverter efficiency.</description>
+      <type>Double</type>
+      <units>fraction</units>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>1</default_value>
+    </argument>
+    <argument>
+      <name>debug_mode</name>
+      <display_name>Debug Mode</display_name>
+      <description>Select true if user wants to print out more details for debugging.</description>
+      <type>Boolean</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>false</default_value>
+      <choices>
+        <choice>
+          <value>true</value>
+          <display_name>true</display_name>
+        </choice>
+        <choice>
+          <value>false</value>
+          <display_name>false</display_name>
+        </choice>
+      </choices>
+    </argument>
+  </arguments>
+  <outputs>
+    <output>
+      <name>panel_rated_output</name>
+      <display_name>panel_rated_output</display_name>
+      <short_name>panel_rated_output</short_name>
+      <type>Double</type>
+      <model_dependent>false</model_dependent>
+    </output>
+    <output>
+      <name>panel_rated_output_ip</name>
+      <display_name>panel_rated_output_ip</display_name>
+      <short_name>panel_rated_output_ip</short_name>
+      <type>Double</type>
+      <model_dependent>false</model_dependent>
+    </output>
+    <output>
+      <name>system_rated_output</name>
+      <display_name>system_rated_output</display_name>
+      <short_name>system_rated_output</short_name>
+      <type>Double</type>
+      <model_dependent>false</model_dependent>
+    </output>
+    <output>
+      <name>pv_area_total_ip</name>
+      <display_name>pv_area_total_ip</display_name>
+      <short_name>pv_area_total_ip</short_name>
+      <type>Double</type>
+      <model_dependent>false</model_dependent>
+    </output>
+    <output>
+      <name>pv_orientation</name>
+      <display_name>pv_orientation</display_name>
+      <short_name>pv_orientation</short_name>
+      <type>String</type>
+      <model_dependent>false</model_dependent>
+    </output>
+  </outputs>
+  <provenances />
+  <tags>
+    <tag>Onsite Power Generation.Photovoltaic</tag>
+  </tags>
+  <attributes>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>Apply Measure Now</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>OpenStudio Application</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>Parametric Analysis Tool</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>Analysis Spreadsheet</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Use Case</name>
+      <value>Model Articulation</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Use Case</name>
+      <value>New Construction EE</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Use Case</name>
+      <value>Retrofit EE</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>Apply Measure Now</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>OpenStudio Application</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>Parametric Analysis Tool</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>Analysis Spreadsheet</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Use Case</name>
+      <value>Model Articulation</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Use Case</name>
+      <value>New Construction EE</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Use Case</name>
+      <value>Retrofit EE</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Measure Type</name>
+      <value>ModelMeasure</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>Apply Measure Now</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>OpenStudio Application</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>Parametric Analysis Tool</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>Analysis Spreadsheet</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Use Case</name>
+      <value>Model Articulation</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Use Case</name>
+      <value>New Construction EE</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Use Case</name>
+      <value>Retrofit EE</value>
+      <datatype>string</datatype>
+    </attribute>
+  </attributes>
+  <files>
+    <file>
+      <version>
+        <software_program>OpenStudio</software_program>
+        <identifier>1.9.0</identifier>
+        <min_compatible>1.9.0</min_compatible>
+      </version>
+      <filename>measure.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>script</usage_type>
+      <checksum>FAD61127</checksum>
+    </file>
+  </files>
+</measure>

@@ -3,14 +3,54 @@
   <schema_version>3.0</schema_version>
   <name>add_thermochromic_bipv</name>
   <uid>11088181-e92b-42d3-a1d0-91d4d0261dbb</uid>
-  <version_id>35677f6c-d7d9-4e0f-8a32-0e98c7770fe1</version_id>
-  <version_modified>20210723T174454Z</version_modified>
+  <version_id>d25715f2-0f0b-4f01-8ec3-e018e8a8fb5d</version_id>
+  <version_modified>20220420T211623Z</version_modified>
   <xml_checksum>894A4CEA</xml_checksum>
   <class_name>AddThermochromicBIPV</class_name>
   <display_name>Add Thermochromic BIPV</display_name>
   <description>Adds BIPV (Building Integrated Photovoltaic) on window surfaces. Define switching temperature for thermochromic windows. Implement power conversion efficiency difference between light and dark state windows.</description>
   <modeler_description>Adds simple PV object for BIPV implementation. Implement thermochromic window with switching temperature definition. Implement power conversion efficiency difference betwee light and dark state windows.</modeler_description>
   <arguments>
+    <argument>
+      <name>BIPV type</name>
+      <display_name>BIPV type</display_name>
+      <type>Choice</type>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>BIPV on transparent (window) facade</default_value>
+      <choices>
+        <choice>
+          <value>BIPV on transparent (window) facade</value>
+          <display_name>BIPV on transparent (window) facade</display_name>
+        </choice>
+        <choice>
+          <value>BIPV on opaque (wall) facade</value>
+          <display_name>BIPV on opaque (wall) facade</display_name>
+        </choice>
+        <choice>
+          <value>BIPV on all facade</value>
+          <display_name>BIPV on all facade</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>pce_scenario</name>
+      <display_name>Choice of power conversion efficiency modeling scenario</display_name>
+      <type>Choice</type>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>Static</default_value>
+      <choices>
+        <choice>
+          <value>Static</value>
+          <display_name>Static</display_name>
+        </choice>
+        <choice>
+          <value>SwitchGlaze</value>
+          <display_name>SwitchGlaze</display_name>
+        </choice>
+      </choices>
+    </argument>
     <argument>
       <name>iqe</name>
       <display_name>iqe</display_name>
@@ -624,7 +664,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>FCD435EC</checksum>
+      <checksum>F30499FA</checksum>
     </file>
   </files>
 </measure>

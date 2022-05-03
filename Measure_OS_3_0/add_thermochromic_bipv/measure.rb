@@ -26,6 +26,16 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
 
     # facades to receive BIPV
     choices = OpenStudio::StringVector.new
+    choices << "BIPV on transparent (window) facade"
+    choices << "BIPV on opaque (wall) facade"
+    choices << "BIPV on all facade"
+    bipv_type = OpenStudio::Ruleset::OSArgument::makeChoiceArgument("BIPV type", choices)
+    bipv_type.setDisplayName("BIPV type")
+    bipv_type.setDefaultValue("BIPV on transparent (window) facade")
+    args << bipv_type
+
+    # facades to receive BIPV
+    choices = OpenStudio::StringVector.new
     choices << "Tnt_50%_S_I0"
     choices << "Tnt_50%_S_I0pt4"
     choices << "Tnt_50%_S_I0pt6"
