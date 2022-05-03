@@ -407,21 +407,21 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
     if (use_tint_iqe == true)
       if (bipv_type == "BIPV on transparent (window) facade") || (bipv_type == "BIPV on all facade")
         if (switching_scenario=="Static")
-          runner.registerInfo("Checking if PCE regression model coefficients are available with selected IQE Type #{iqe_transparent}: #{dictionary_iqe_pce[iqe_transparent]}") if debug_mode
+          runner.registerInfo("### DEBUGGING: Checking if PCE regression model coefficients are available with selected IQE Type #{iqe_transparent}: #{dictionary_iqe_pce[iqe_transparent]}") if (debug_mode == true)
           if (dictionary_iqe_pce[iqe_transparent].nil?)
             runner.registerWarning("Dynamic power conversion cannot be applied. Selected IQE Type does not have (hard coded) regression model. BIPV not implemented. Exiting...")
             return false
           end
         elsif (switching_scenario=="Thermochromic")
-          runner.registerInfo("Checking if PCE regression model coefficients are available with selected IGU Type  #{iqe_transparent} (light state): #{dictionary_iqe_pce[iqe_transparent+"_Dark"]}") if debug_mode
-          runner.registerInfo("Checking if PCE regression model coefficients are available with selected IGU Type  #{iqe_transparent} (dark state): #{dictionary_iqe_pce[iqe_transparent+"_Light"]}") if debug_mode
+          runner.registerInfo("### DEBUGGING: Checking if PCE regression model coefficients are available with selected IGU Type  #{iqe_transparent} (light state): #{dictionary_iqe_pce[iqe_transparent+"_Dark"]}") if (debug_mode == true)
+          runner.registerInfo("### DEBUGGING: Checking if PCE regression model coefficients are available with selected IGU Type  #{iqe_transparent} (dark state): #{dictionary_iqe_pce[iqe_transparent+"_Light"]}") if (debug_mode == true)
           if (dictionary_iqe_pce[iqe_transparent+"_Dark"].nil?)||(dictionary_iqe_pce[iqe_transparent+"_Light"].nil?)
             runner.registerWarning("Dynamic power conversion cannot be applied. Selected IGU Type does not have (hard coded) regression model. BIPV not implemented. Exiting...")
             return false
           end
         end
       elsif (bipv_type == "BIPV on opaque (wall) facade") || (bipv_type == "BIPV on all facade")
-        runner.registerInfo("Checking if PCE regression model coefficients are available with selected IQE Type #{iqe_opaque}: #{dictionary_iqe_pce[iqe_opaque]}") if debug_mode
+        runner.registerInfo("### DEBUGGING: Checking if PCE regression model coefficients are available with selected IQE Type #{iqe_opaque}: #{dictionary_iqe_pce[iqe_opaque]}") if (debug_mode == true)
         if (dictionary_iqe_pce[iqe_opaque].nil?)
           runner.registerWarning("Dynamic power conversion cannot be applied. Selected IQE Type does not have (hard coded) regression model. BIPV not implemented. Exiting...")
           return false
@@ -470,10 +470,14 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
     end
 
     ##########################################################################
-    # get user selection set
+    # get surfaces based on cardinal direction setting
+    # WARNING
+    # this only works when there is one window on one wall
+    # maybe it'll be better to start with wall searching and then window
     ##########################################################################
     # find candidate windows
     candidate_windows = []
+    candidate_walls = []
     ext_windows.each do |s|
       azimuth = OpenStudio::Quantity.new(s.azimuth,OpenStudio::createSIAngle)
       azimuth = OpenStudio::convert(azimuth,OpenStudio::createIPAngle).get.value
@@ -493,32 +497,17 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
       ext_windows_name << s.name.to_s if (azimuth >= 225.0 and azimuth < 315.0) && pv_orientation == 'W'
       ext_windows_name << s.name.to_s if (azimuth >= 45.0 and azimuth < 315.0) && pv_orientation == 'ESW'
     end
-    runner.registerInfo("#{candidate_windows.size.to_s} window(s) meet PV orientation selection criteria (PV orientation = '#{pv_orientation}')")
-    runner.registerInfo("Surface names affected = #{ext_windows_name}")
-    
-    # find candidate walls
-    candidate_walls = []
-    ext_walls.each do |s|
-      azimuth = OpenStudio::Quantity.new(s.azimuth,OpenStudio::createSIAngle)
-      azimuth = OpenStudio::convert(azimuth,OpenStudio::createIPAngle).get.value
-      if pv_orientation == "ALL"
-        candidate_walls << s
-        ext_windows_name << s.name.to_s
-        next
-      end
-      candidate_walls << s if (azimuth >= 315.0 or azimuth < 45.0) && pv_orientation == 'N'
-      candidate_walls << s if (azimuth >= 45.0 and azimuth < 135.0) && pv_orientation == 'E'
-      candidate_walls << s if (azimuth >= 135.0 and azimuth < 225.0) && pv_orientation == 'S'
-      candidate_walls << s if (azimuth >= 225.0 and azimuth < 315.0) && pv_orientation == 'W'
-      candidate_walls << s if (azimuth >= 45.0 and azimuth < 315.0) && pv_orientation == 'ESW'
-      ext_walls_name << s.name.to_s if (azimuth >= 315.0 or azimuth < 45.0) && pv_orientation == 'N'
-      ext_walls_name << s.name.to_s if (azimuth >= 45.0 and azimuth < 135.0) && pv_orientation == 'E'
-      ext_walls_name << s.name.to_s if (azimuth >= 135.0 and azimuth < 225.0) && pv_orientation == 'S'
-      ext_walls_name << s.name.to_s if (azimuth >= 225.0 and azimuth < 315.0) && pv_orientation == 'W'
-      ext_walls_name << s.name.to_s if (azimuth >= 45.0 and azimuth < 315.0) && pv_orientation == 'ESW'
+    runner.registerInfo("#{candidate_windows.size.to_s} window(s) meet PV orientation selection criteria (PV orientation = '#{pv_orientation}')") if (bipv_type != "BIPV on opaque (wall) facade")
+    runner.registerInfo("### DEBUGGING: Surface names affected = #{ext_windows_name}") if (bipv_type != "BIPV on opaque (wall) facade") && (debug_mode == true)
+
+    # find candidate walls associated with selected windows
+    candidate_windows.each do |window|
+      runner.registerInfo("### DEBUGGING: associated wall name (#{window.surface().get.name}) for window (#{window.name})") if (debug_mode == true)
+      candidate_walls << window.surface().get
+      ext_walls_name << window.surface().get.name.get
     end
-    runner.registerInfo("#{candidate_walls.size.to_s} exterior wall(s) meet PV orientation selection criteria (PV orientation = '#{pv_orientation}')") if bipv_type != "BIPV on transparent (window) facade"
-    runner.registerInfo("Surface names affected = #{ext_walls_name}") if bipv_type != "BIPV on transparent (window) facade"
+    runner.registerInfo("#{candidate_walls.size.to_s} exterior wall(s) meet PV orientation selection criteria (PV orientation = '#{pv_orientation}')") if (bipv_type != "BIPV on transparent (window) facade")
+    runner.registerInfo("### DEBUGGING: Surface names affected = #{ext_walls_name}") if (bipv_type != "BIPV on transparent (window) facade") && (debug_mode == true)
 
 
     ##########################################################################
@@ -541,6 +530,8 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
     pv_area_total = 0.0
     system_rated_output = 0.0
     candidate_windows.zip(candidate_walls).each do |surface_window, surface_wall|
+
+      runner.registerInfo("### DEBUGGING: adding virtual PV surface(s) on #{surface_window.name} (window) and #{surface_wall.name} (wall).") if (debug_mode == true)
 
       #-----------------------------------------------------
       # make single shading surface group for each window
@@ -587,7 +578,7 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
       # create vertices for windows
       #-----------------------------------------------------
       vertices_window.each do |f|
-        runner.registerInfo("For window surface (#{surface_window.name}): window vertex #{f} -> projected PV vertex #{f + vec}") if debug_mode
+        runner.registerInfo("### DEBUGGING: For window surface (#{surface_window.name}): window vertex #{f} -> projected PV vertex #{f + vec}") if (debug_mode == true)
         pp = f + vec
         # add projected PV surface from window surface to points variable if necessary
         if (bipv_type == "BIPV on transparent (window) facade") || (bipv_type == "BIPV on all facade")
@@ -617,30 +608,30 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
       if bipv_type != "BIPV on transparent (window) facade"
         count=0
         vertices_wall.each do |f|
-          runner.registerInfo("For wall surface (#{surface_wall.name}): wall vertex #{f} -> projected PV vertex #{f + vec}") if debug_mode
+          runner.registerInfo("### DEBUGGING: For wall surface (#{surface_wall.name}): wall vertex #{f} -> projected PV vertex #{f + vec}") if (debug_mode == true)
           pp = f + vec
           pp_x = pp.x
           pp_y = pp.y
           if count == 0
             pp_upper = pp
             pp_lower = OpenStudio::Point3d.new(pp_x,pp_y,height_adjustments[1])
-            runner.registerInfo("DEBUGGING: pp_upper = #{pp_upper}") if debug_mode
-            runner.registerInfo("DEBUGGING: pp_lower = #{pp_lower}") if debug_mode
+            runner.registerInfo("### DEBUGGING: pp_upper = #{pp_upper}") if (debug_mode == true)
+            runner.registerInfo("### DEBUGGING: pp_lower = #{pp_lower}") if (debug_mode == true)
           elsif count==1
             pp_upper = OpenStudio::Point3d.new(pp_x,pp_y,height_adjustments[0])
             pp_lower = pp
-            runner.registerInfo("DEBUGGING: pp_upper = #{pp_upper}") if debug_mode
-            runner.registerInfo("DEBUGGING: pp_lower = #{pp_lower}") if debug_mode
+            runner.registerInfo("### DEBUGGING: pp_upper = #{pp_upper}") if (debug_mode == true)
+            runner.registerInfo("### DEBUGGING: pp_lower = #{pp_lower}") if (debug_mode == true)
           elsif count==2
             pp_upper = OpenStudio::Point3d.new(pp_x,pp_y,height_adjustments[0])
             pp_lower = pp
-            runner.registerInfo("DEBUGGING: pp_upper = #{pp_upper}") if debug_mode
-            runner.registerInfo("DEBUGGING: pp_lower = #{pp_lower}") if debug_mode
+            runner.registerInfo("### DEBUGGING: pp_upper = #{pp_upper}") if (debug_mode == true)
+            runner.registerInfo("### DEBUGGING: pp_lower = #{pp_lower}") if (debug_mode == true)
           elsif count==3
             pp_upper = pp
             pp_lower = OpenStudio::Point3d.new(pp_x,pp_y,height_adjustments[1])
-            runner.registerInfo("DEBUGGING: pp_upper = #{pp_upper}") if debug_mode
-            runner.registerInfo("DEBUGGING: pp_lower = #{pp_lower}") if debug_mode
+            runner.registerInfo("### DEBUGGING: pp_upper = #{pp_upper}") if (debug_mode == true)
+            runner.registerInfo("### DEBUGGING: pp_lower = #{pp_lower}") if (debug_mode == true)
           end
           # add projected PV surfaces from window surfaces to points variable if necessary
           points_walls_upper << pp_upper
@@ -677,9 +668,10 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
       end
        
       # adding PV surface and configuration for each surface
+      i=1
       list_points.zip(list_labels).each do |points, label|
-        runner.registerInfo("Adding PV surfaces to #{label} surfaces.")
 
+        runner.registerInfo("------------------------------------------------------------------------------------")
         # setting transmittance for opaque/transparent/all scenarios
         if label == "window"
           target_transmittance = 1.0
@@ -692,6 +684,7 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
           pv_eff = pv_eff_opq
           key = iqe_opaque
         end
+        runner.registerInfo("Adding PV surface to #{surface_reference.name} (#{label}).")
         inputs = {
             'name' => "PV Shading Transmittance Schedule Transparent",
             'winterTimeValuePairs' => { 24.0 => target_transmittance },
@@ -699,7 +692,7 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
             'defaultTimeValuePairs' => { 24.0 => target_transmittance }
         }
         shading_surface_transmittance_schedule = OsLib_Schedules.createSimpleSchedule(model,inputs)
-        runner.registerInfo("Setting transmittance of virtual PV surface to #{target_transmittance}.")
+        runner.registerInfo("Setting transmittance of virtual PV surface #{i} to #{target_transmittance}.")
 
         # simplifying label name for defining unique surface names for each PV surface
         label = label.gsub("(", "").gsub(")", "").gsub(" ", "").downcase
@@ -715,9 +708,9 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
         panel = OpenStudio::Model::GeneratorPhotovoltaic::simple(model)
         panel.setSurface(shading_surface)
 
-        runner.registerInfo("Added PV panel area: #{pv_area.round(2)} m^2 (#{pv_area_ip} ft^2)") if debug_mode
+        runner.registerInfo("### DEBUGGING: Added PV panel area: #{pv_area.round(2)} m^2 (#{pv_area_ip} ft^2)") if (debug_mode == true)
         panel_output = panel_rated_output * pv_area
-        runner.registerInfo("Added PV panel output: #{panel_output.round(1)} W (#{pv_area} m^2)") if debug_mode
+        runner.registerInfo("### DEBUGGING: Added PV panel output: #{panel_output.round(1)} W (#{pv_area} m^2)") if (debug_mode == true)
 
         panel.setRatedElectricPowerOutput(panel_output)
       
@@ -923,9 +916,12 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
         ######################################################
         elcd.addGenerator(panel)
 
+        i+=1
+
       end
 
      end
+     runner.registerInfo("------------------------------------------------------------------------------------")
 
     ######################################################
     # define outputs for server analyses
@@ -939,8 +935,8 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
       num_stories_above_grade = OsLib_HelperMethods.check_upstream_measure_for_arg(runner, 'num_stories_above_grade')
       pv_area_total_initial = pv_area_total
       pv_area_total = ((pv_area_total/3) * (num_stories_above_grade[:value].to_f - 2)) + ((pv_area_total/3) * 2)
-      runner.registerWarning("Zone multipliers in use (story multiplier method = #{story_multiplier[:value]}).") if debug_mode
-      runner.registerWarning("Scaling PV panel area to account for zone multipliers (initial: #{pv_area_total_initial}, scaled: #{pv_area_total}).") if debug_mode
+      runner.registerWarning("### DEBUGGING: Zone multipliers in use (story multiplier method = #{story_multiplier[:value]}).") if (debug_mode == true)
+      runner.registerWarning("### DEBUGGING: Scaling PV panel area to account for zone multipliers (initial: #{pv_area_total_initial}, scaled: #{pv_area_total}).") if (debug_mode == true)
     end
 
     ######################################################
