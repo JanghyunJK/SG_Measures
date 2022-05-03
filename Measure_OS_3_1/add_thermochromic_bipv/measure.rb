@@ -684,7 +684,7 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
           pv_eff = pv_eff_opq
           key = iqe_opaque
         end
-        runner.registerInfo("Adding PV surface to #{surface_reference.name} (#{label}).")
+        runner.registerInfo("Adding PV surface to #{surface_reference.name} - #{label}.")
         inputs = {
             'name' => "PV Shading Transmittance Schedule Transparent",
             'winterTimeValuePairs' => { 24.0 => target_transmittance },
