@@ -846,11 +846,6 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
           simplepv.setFixedEfficiency(pv_eff)
           runner.registerInfo("Constant power conversion efficiency of #{pv_eff} applied to #{simplepv.name.to_s}")
           
-        elsif (label == "window") && (switching_scenario == "Thermochromic") && (use_tint_iqe == "false")
-        
-          simplepv.setFixedEfficiency(dictionary_iqe_pce[key])
-          runner.registerInfo("Constant power conversion efficiency of #{dictionary_iqe_pce[key]} applied to #{simplepv.name.to_s}")
-          
         elsif ((label == "window") && (switching_scenario == "Static") && (use_tint_iqe == "true")) || ((label != "window") && (use_tint_iqe == "true"))
         
           pce_sch = OpenStudio::Model::ScheduleConstant.new(model)
