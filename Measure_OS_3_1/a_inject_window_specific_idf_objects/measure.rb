@@ -63,7 +63,7 @@ class AInjectWindowSpecificIDFObjects < OpenStudio::Ruleset::WorkspaceUserScript
     t_switching.setDisplayName("Switching temperature of a thermochromic window")
     t_switching.setDescription('Only applicable when thermochromic window is selected')
     t_switching.setUnits("C")
-    t_switching.setDefaultValue(35)
+    t_switching.setDefaultValue(25)
     args << t_switching
     
     # 
