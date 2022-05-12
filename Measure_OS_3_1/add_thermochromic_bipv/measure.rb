@@ -793,7 +793,7 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
           pce_sch_actuator = OpenStudio::Model::EnergyManagementSystemActuator.new(pce_sch,"Schedule:Constant","Schedule Value")
           pce_sch_actuator.setName("pce_sch_#{surface_name_updated}")
           runner.registerInfo("EMS Actuator object named '#{pce_sch_actuator.name}' representing the temporary schedule to #{surface_reference.name.to_s} added to the model.")       
-        
+
           # Create new EnergyManagementSystem:Program object 
           runner.registerInfo("EMS Program being created to simulate PCE variation for #{key}") 
           ems_pce_prg = OpenStudio::Model::EnergyManagementSystemProgram.new(model)
@@ -851,7 +851,7 @@ class AddThermochromicBIPV < OpenStudio::Measure::ModelMeasure
           simplepv.setFixedEfficiency(dictionary_iqe_pce[key])
           runner.registerInfo("Constant power conversion efficiency of #{dictionary_iqe_pce[key]} applied to #{simplepv.name.to_s}")
           
-        elsif (switching_scenario == "Static") && (use_tint_iqe == "true")
+        elsif ((label == "window") && (switching_scenario == "Static") && (use_tint_iqe == "true")) || ((label != "window") && (use_tint_iqe == "true"))
         
           pce_sch = OpenStudio::Model::ScheduleConstant.new(model)
           pce_sch.setName("PCE_SCH_#{surface_name_updated}")
